@@ -218,7 +218,17 @@ const Home = () => {
     fetchTodayQuestion(); // Ensure this is called only once on component mount
 
     const interval = setInterval(() => {
-      setCountdown(updateCountdown());
+      const updatedCountdown = updateCountdown();
+      setCountdown(updatedCountdown);
+      
+      if (
+        updatedCountdown === '00:00:00' ||
+        updatedCountdown === '00:00:01' ||
+        updatedCountdown === '23:59:59'
+      ) {
+        // Trigger the handleRefresh function
+        handleRefresh();
+      }
     }, 1000);
 
     return () => {
