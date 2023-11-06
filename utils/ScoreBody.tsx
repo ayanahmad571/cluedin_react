@@ -77,7 +77,7 @@ const ScoreBody = ({question, fetchTodayQuestion}) => {
       </View>
       <View style={styles.sixthRow}>
         <View style={styles.boxL}>
-          <Text style={styles.boxTextTitle}>Performance - (100 points)</Text>
+          <Text style={styles.boxTextTitle}>Performance - ({question.today_points} points)</Text>
           <Text style={styles.boxTextNormal}>
             Below is an analysis of your performance today, checkout the
             leaderboard for your ranking !
@@ -92,7 +92,7 @@ const ScoreBody = ({question, fetchTodayQuestion}) => {
           </Text>
           <Text style={styles.boxTextNormal}>
             <Text style={{fontWeight: 'bold'}}> Total Points Obtained:</Text>{' '}
-            {'TODO: Val to be Added'}
+            {question.today_points}
           </Text>
         </View>
       </View>

@@ -1,0 +1,184 @@
+import React, {useContext, useEffect, useState} from 'react';
+import {View, Text, ScrollView, StyleSheet, RefreshControl} from 'react-native';
+import RankDisplayBox from '../utils/RankDisplayBox';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import AuthContext from '../utils/AuthContext';
+import {API_BASE_URL} from '../utils/constants';
+// Create the RankDisplayBox component
+
+const LeaderboardPage = () => {
+  // Dummy data for RankDisplay boxes
+  const [leaderboard, setLeaderboard] = useState('');
+  const [errorMsg, setErrorMsg] = useState('Page is Loading ...');
+  const [refreshing, setRefreshing] = useState(false);
+  const {user, setUser} = useContext(AuthContext);
+
+  const handleRefresh = () => {
+    setRefreshing(true); // Show the loading indicator
+
+    // Perform data fetching or any other async operation
+    getLeaderBoard()
+      .then(() => {
+        setRefreshing(false); // Hide the loading indicator when done
+      })
+      .catch(error => {
+        setRefreshing(false); // Make sure to hide it even in case of an error
+        setErrorMsg('Error while refreshing:');
+      });
+  };
+
+  const getLeaderBoard = async () => {
+    try {
+      const jwtUser = await AsyncStorage.getItem('JWT_USER');
+
+      if (!jwtUser) {
+        setUser('');
+        setErrorMsg('User authorization needed to view this page.');
+        return;
+      }
+
+      const response = await fetch(`${API_BASE_URL}/get_leaderboard`, {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${jwtUser}`,
+        },
+      });
+      console.log('The API has been called');
+
+      if (response.status === 200) {
+        // Successful response, parse and set the question
+        const data = await response.json();
+        console.log(data);
+        const keysToCheck = ['leaderboard', 'user_rank', 'user_points'];
+
+        // Iterate through the keys and check if they exist in the data
+        for (const key of keysToCheck) {
+          if (!(key in data)) {
+            throw new Error('Response key invalid');
+          }
+        }
+
+        setLeaderboard(data);
+        setErrorMsg('');
+      } else if (response.status === 500) {
+        setErrorMsg('Internal Server Error - Please contact admin');
+      } else {
+        setErrorMsg('An error occurred - Please contact admin');
+      }
+    } catch (error) {
+      setErrorMsg(
+        'Your internet connection is unstable, please re-load the app at a later time!',
+      );
+    }
+  };
+
+  useEffect(() => {
+    getLeaderBoard(); // Ensure this is called only once on component mount
+  }, []); // Empty dependency array means this effect runs once on mount
+
+  return (
+    <ScrollView
+      style={styles.container}
+      refreshControl={
+        <RefreshControl
+          refreshing={refreshing}
+          onRefresh={handleRefresh}
+          colors={['#000']} // Customize the loading indicator color
+        />
+      }>
+      <Text style={styles.pageTitle}>Leaderboard</Text>
+      {errorMsg === '' ? (
+        <>
+        <View style={styles.row}>
+            <Text style={styles.textSubT}>Your Monthly Stats (Leaderboard is reset on the 1st of every month :) )</Text>
+        </View>
+          <View style={styles.row}>
+            <View style={styles.infoBox}>
+              <Text style={styles.infoText}>
+                Rank:{' '}
+                <Text style={{fontWeight: 'bold'}}>
+                  {leaderboard.user_rank}
+                </Text>
+              </Text>
+            </View>
+            <View style={styles.infoBox}>
+              <Text style={styles.infoText}>
+                Points:{' '}
+                <Text style={{fontWeight: 'bold'}}>
+                  {leaderboard.user_points}
+                </Text>
+              </Text>
+            </View>
+          </View>
+
+          {leaderboard.leaderboard.map(data => (
+            <RankDisplayBox
+              key={data.rank}
+              rank={data.rank}
+              points={data.points}
+              users={data.users}
+            />
+          ))}
+        </>
+      ) : (
+        <View style={styles.row}>
+          <View style={styles.infoBox}>
+            <Text style={styles.infoText}>{errorMsg}</Text>
+          </View>
+        </View>
+      )}
+    </ScrollView>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: 'black',
+  },
+  textSubT: {
+    color: 'white',
+    fontWeight: '300',
+    fontSize: 16,
+    textAlign: 'center',
+  },
+  pageTitle: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: 'white',
+    margin: 10,
+  },
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    margin: 10,
+  },
+  infoBox: {
+    backgroundColor: 'grey',
+    padding: 10,
+    borderRadius: 10,
+    margin: 1,
+    flex: 1,
+  },
+  infoText: {
+    fontSize: 22,
+    fontWeight: '300',
+    color: 'white',
+  },
+  rankDisplayBox: {
+    backgroundColor: 'darkgreen',
+    margin: 10,
+    padding: 10,
+    borderRadius: 10,
+  },
+  rankTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: 'white',
+  },
+  rankUser: {
+    fontSize: 16,
+    color: 'white',
+  },
+});
+
+export default LeaderboardPage;

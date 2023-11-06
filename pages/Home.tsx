@@ -75,6 +75,7 @@ const Home = () => {
           'answer',
           'options_used',
           'question_raw',
+          'today_points',
         ];
 
         // Iterate through the keys and check if they exist in the data

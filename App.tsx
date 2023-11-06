@@ -7,6 +7,8 @@ import OTPVerify from './pages/OTPVerify';
 import SplashScreen from './pages/SplashScreen';
 import Home from './pages/Home';
 import Logout from './pages/Logout';
+import HelpPage from './pages/HelpPage';
+import LeaderboardPage from './pages/LeaderboardPage';
 import {API_BASE_URL} from './utils/constants';
 import AuthContext from './utils/AuthContext'; // Import the AuthContext from your file
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -89,7 +91,7 @@ const LoggedInComponents = () => (
       // eslint-disable-next-line react/no-unstable-nested-components
       tabBarIcon: ({ focused, color, size }) => {
         let iconName;
-        const iconCol = focused ? 'grey' : 'white';
+        const iconCol = focused ? '#1098F7' : 'white';
 
         if (route.name === 'Home') {
           iconName = focused ? 'home' : 'home-outline';
@@ -102,7 +104,6 @@ const LoggedInComponents = () => (
         } else {
 
         }
-
         // You can return any component that you like here!
         return <Ionicons name={iconName} size={size}  style={{color: iconCol}}  />;
       },
@@ -122,9 +123,9 @@ const LoggedInComponents = () => (
       headerTitleAlign: 'center',
     })}>
     {/* <Tab.Screen name="LeaderBoard" component={Home} /> */}
-    <Tab.Screen name="Leaderboard" component={Home} />
+    <Tab.Screen name="Leaderboard" component={LeaderboardPage} />
     <Tab.Screen name="Home" component={Home} />
-    <Tab.Screen name="Help" component={Logout} />
+    <Tab.Screen name="Help" component={HelpPage} />
     <Tab.Screen name="Settings" component={Logout} />
   </Tab.Navigator>
 );
