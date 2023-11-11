@@ -1,9 +1,6 @@
 import React, {createContext, useState, useEffect} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import LoginPage from './pages/LoginPage';
-import OTPVerify from './pages/OTPVerify';
 import SplashScreenPage from './pages/SplashScreen';
 import Home from './pages/Home';
 import Logout from './pages/Logout';
@@ -15,6 +12,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import TopBarRealComponent from './utils/TopBarRealComponent';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import SplashScreen from 'react-native-splash-screen';
+import NotLoggedInComponents from './page_helper/NotLoggedInComps';
 
 // Create an AuthProvider component
 const AuthProvider = ({children}) => {
@@ -55,6 +53,7 @@ const AuthProvider = ({children}) => {
         }
       } catch (error) {
         // Network error or other issues, user is not logged in
+        setUser('');
         console.error('Error:', error);
       } finally {
         setIsLoading(false);
@@ -81,7 +80,6 @@ const AuthProvider = ({children}) => {
   );
 };
 
-const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const LoggedInComponents = () => (
@@ -129,27 +127,6 @@ const LoggedInComponents = () => (
     <Tab.Screen name="Help" component={HelpPage} />
     <Tab.Screen name="Settings" component={Logout} />
   </Tab.Navigator>
-);
-
-const NotLoggedInComponents = () => (
-  <Stack.Navigator
-    screenOptions={{
-      headerStyle: {
-        backgroundColor: 'black', // Change the background color
-      },
-      headerTintColor: 'white', // Set the text color to white
-      headerTitle: 'Clued In', // Set the title text to your company title
-      headerTitleStyle: {
-        fontSize: 24, // Customize the font size
-        fontWeight: 'bold', // Customize the font weight
-        color: 'white', // Set the text color to white
-      },
-      headerTitleAlign: 'center', // Center align the title
-    }}>
-    <Stack.Screen name="Login" component={LoginPage} />
-    <Stack.Screen name="Verify OTP" component={OTPVerify} />
-    {/* Add more screens for not-logged-in users */}
-  </Stack.Navigator>
 );
 
 const App = () => {
