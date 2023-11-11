@@ -14,6 +14,8 @@ import {API_BASE_URL} from '../utils/constants';
 import AuthContext from '../utils/AuthContext';
 import OverlayAnswerComponent from '../utils/OverlayAnswerComponent';
 import ScoreBody from '../utils/ScoreBody';
+import HomeTopInfoRow from '../page_helper/HomeTopInfoRow.tsx';
+import QuestionMainBody from '../page_helper/QuestionMainBody';
 
 const Home = () => {
   const [countdown, setCountdown] = useState('00:00:00');
@@ -134,24 +136,6 @@ const Home = () => {
       );
     }
   };
-  // Function to update the countdown
-  const updateCountdown = () => {
-    const now = new Date();
-    const targetTime = new Date(now);
-    targetTime.setUTCHours(14, 0, 0, 0);
-    if (targetTime <= now) {
-      targetTime.setUTCDate(targetTime.getUTCDate() + 1);
-    }
-    const timeDiff = targetTime - now;
-    const hoursRemaining = Math.floor(timeDiff / (1000 * 60 * 60));
-    const minutesRemaining = Math.floor(
-      (timeDiff % (1000 * 60 * 60)) / (1000 * 60),
-    );
-    const secondsRemaining = Math.floor((timeDiff % (1000 * 60)) / 1000);
-    return `${String(hoursRemaining).padStart(2, '0')}:${String(
-      minutesRemaining,
-    ).padStart(2, '0')}:${String(secondsRemaining).padStart(2, '0')}`;
-  };
 
   // Function to handle the answer button press
   const handleAnswerButtonPress = async rowNumber => {
@@ -217,24 +201,6 @@ const Home = () => {
 
   useEffect(() => {
     fetchTodayQuestion(); // Ensure this is called only once on component mount
-
-    const interval = setInterval(() => {
-      const updatedCountdown = updateCountdown();
-      setCountdown(updatedCountdown);
-      
-      if (
-        updatedCountdown === '00:00:00' ||
-        updatedCountdown === '00:00:01' ||
-        updatedCountdown === '23:59:59'
-      ) {
-        // Trigger the handleRefresh function
-        handleRefresh();
-      }
-    }, 1000);
-
-    return () => {
-      clearInterval(interval);
-    };
   }, []); // Empty dependency array means this effect runs once on mount
 
   return errorMsg === '' ? (
@@ -250,69 +216,18 @@ const Home = () => {
           />
         }>
         <View style={styles.container}>
-          <View style={styles.firstRow}>
-            <View style={styles.box}>
-              <Text style={styles.boxText}>Day</Text>
-            </View>
-            <View style={styles.box}>
-              <Text style={styles.boxText}>Next Refresh In</Text>
-            </View>
-          </View>
-          <View style={styles.secondRow}>
-            <View style={styles.box}>
-              <Text style={styles.boxText}>{question.question_raw.day}</Text>
-            </View>
-            <View style={styles.box}>
-              <Text style={styles.countdown}>{countdown}</Text>
-            </View>
-          </View>
-          <View style={styles.thirdRow}>
-            <View style={styles.box}>
-              <Text style={styles.boxTextL}>
-                Theme:{' '}
-                <Text style={{fontWeight: 'bold'}}>
-                  {question.question_raw.theme}
-                </Text>
-              </Text>
-            </View>
-          </View>
-          <View style={styles.forthRow}>
-            <View style={styles.box}>
-              <Text style={styles.boxTextL}>
-                Today's Question:{' '}
-                <Text style={{fontWeight: 'bold'}}>
-                  {question.question_raw.master_title}
-                </Text>
-              </Text>
-            </View>
-          </View>
+          <HomeTopInfoRow
+            handleRefresh={handleRefresh}
+            setCountdown={setCountdown}
+            question={question}
+            countdown={countdown}
+          />
           {question.complete === '0' ? (
-            <>
-              <View style={styles.fifthRow}>
-                <View style={styles.boxL}>
-                  <Text style={styles.boxTextTitle}>Clues</Text>
-                  <Text style={styles.boxTextNormal}>
-                    Picking the hardest clue maximizes your chances of scoring
-                    the highest point. Picking a clue deducts points based on
-                    the Clue Rating Matrix (Point Matrix).
-                  </Text>
-                </View>
-              </View>
-              <View style={styles.sixthRow}>
-                <View style={styles.buttonContainer}>{renderClueRows()}</View>
-              </View>
-              <View style={styles.sevenRow}>
-                <View style={styles.boxL}>
-                  <Text style={styles.boxTextTitle}>Answer</Text>
-                  <Text style={styles.boxTextNormal}>
-                    Lets answer - You must pick a clue before you can begin
-                    answering and remember, you have 5 total attempts (Point
-                    Matrix). Happy guessing !
-                  </Text>
-                </View>
-              </View>
-              <View style={styles.eightRow}>{renderAnswerRows()}</View>
-            </>
+            <QuestionMainBody
+              question={question}
+              handleAnswerButtonPress={handleAnswerButtonPress}
+              handleClueButtonPress={handleClueButtonPress}
+            />
           ) : (
             <ScoreBody
               question={question}
