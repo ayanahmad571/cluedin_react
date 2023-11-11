@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Text, ActivityIndicator, StyleSheet} from 'react-native';
 
-const SplashScreen = () => {
+const SplashScreenPage = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.cluedInText}>CluedIn</Text>
@@ -24,4 +24,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SplashScreen;
+export default SplashScreenPage;

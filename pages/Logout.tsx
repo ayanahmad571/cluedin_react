@@ -5,7 +5,7 @@ import TopBarComponent from '../utils/TopBarComponent';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useContext} from 'react';
 import AuthContext from '../utils/AuthContext'; // Adjust the import path as needed
-import SplashScreen from './SplashScreen';
+import SplashScreenPage from './SplashScreen';
 
 const Logout = ({navigation}) => {
   const {setUser} = useContext(AuthContext);
@@ -30,7 +30,7 @@ const Logout = ({navigation}) => {
     // Perform any additional logout logic here
   };
   return isSplash ? (
-    <SplashScreen />
+    <SplashScreenPage />
   ) : (
     // User is not logged in
     <View style={styles.container}>

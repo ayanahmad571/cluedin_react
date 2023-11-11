@@ -4,7 +4,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import LoginPage from './pages/LoginPage';
 import OTPVerify from './pages/OTPVerify';
-import SplashScreen from './pages/SplashScreen';
+import SplashScreenPage from './pages/SplashScreen';
 import Home from './pages/Home';
 import Logout from './pages/Logout';
 import HelpPage from './pages/HelpPage';
@@ -13,8 +13,8 @@ import {API_BASE_URL} from './utils/constants';
 import AuthContext from './utils/AuthContext'; // Import the AuthContext from your file
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import TopBarRealComponent from './utils/TopBarRealComponent';
-// react-native-vector-icons/Ionicons otherwise.
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import SplashScreen from 'react-native-splash-screen';
 
 // Create an AuthProvider component
 const AuthProvider = ({children}) => {
@@ -62,13 +62,14 @@ const AuthProvider = ({children}) => {
     };
 
     checkAuthentication();
+    SplashScreen.hide();
   }, []);
 
   return (
     <AuthContext.Provider value={{user, setUser}}>
       {isLoading ? (
-        // Render a SplashScreen or Loading component
-        <SplashScreen />
+        // Render a SplashScreenPage or Loading component
+        <SplashScreenPage />
       ) : user ? (
         // User is logged in
         <LoggedInComponents />
