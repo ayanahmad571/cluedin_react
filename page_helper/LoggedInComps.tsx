@@ -1,6 +1,6 @@
 import React from 'react';
 import Home from '../pages/Home';
-import Logout from '../pages/Logout';
+import SettingsPage from '../pages/SettingsPage';
 import HelpPage from '../pages/HelpPage';
 import LeaderboardPage from '../pages/LeaderboardPage';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -37,8 +37,7 @@ const LoggedInComponents = () => (
       // eslint-disable-next-line react/no-unstable-nested-components
       headerTitle: () => <TopBarRealComponent />,
       headerStyle: {
-        backgroundColor: 'black',
-        borderBottomWidth: 1,
+        backgroundColor: '#8E443D',
         borderBottomColor: 'grey',
       },
       tabBarStyle: {
@@ -54,7 +53,7 @@ const LoggedInComponents = () => (
     <Tab.Screen name="Leaderboard" component={LeaderboardPage} />
     <Tab.Screen name="Home" component={Home} />
     <Tab.Screen name="Help" component={HelpPage} />
-    <Tab.Screen name="Settings" component={Logout} />
+    <Tab.Screen name="Settings" component={SettingsPage} options={{ headerShown: false }}/>
   </Tab.Navigator>
 );
 

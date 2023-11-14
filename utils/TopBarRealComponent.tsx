@@ -11,7 +11,7 @@ const TopBarRealComponent = () => {
 
 const styles = StyleSheet.create({
   topBar: {
-    backgroundColor: 'black',
+    backgroundColor: '#8E443D',
     alignItems: 'center',
     justifyContent: 'center',
   },
