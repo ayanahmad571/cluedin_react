@@ -2,6 +2,7 @@ import React from 'react';
 import LoginPage from '../pages/LoginPage';
 import OTPVerify from '../pages/OTPVerify';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import { CLUEDIN_DARK_SCHEME } from '../utils/constants';
 
 const Stack = createNativeStackNavigator();
 
@@ -9,14 +10,14 @@ const NotLoggedInComponents = () => (
   <Stack.Navigator
     screenOptions={{
       headerStyle: {
-        backgroundColor: 'black', // Change the background color
+        backgroundColor: CLUEDIN_DARK_SCHEME.header_background, // Change the background color
       },
-      headerTintColor: 'white', // Set the text color to white
+      headerTintColor: CLUEDIN_DARK_SCHEME.header_background_text, // Set the text color to white
       headerTitle: 'Clued In', // Set the title text to your company title
       headerTitleStyle: {
         fontSize: 24, // Customize the font size
         fontWeight: 'bold', // Customize the font weight
-        color: 'white', // Set the text color to white
+        color: CLUEDIN_DARK_SCHEME.header_background_text, // Set the text color to white
       },
       headerTitleAlign: 'center', // Center align the title
     }}>

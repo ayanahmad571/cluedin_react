@@ -8,7 +8,7 @@ import {
   Keyboard,
 } from 'react-native';
 import LoaderOverlay from './LoaderOverlay'; // Import the LoaderOverlay component
-import {API_BASE_URL} from '../utils/constants';
+import {API_BASE_URL, CLUEDIN_DARK_SCHEME} from '../utils/constants';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const LoginPageBody = ({navigation}) => {
@@ -87,9 +87,7 @@ const LoginPageBody = ({navigation}) => {
     <View style={styles.loginPageBody}>
       <Text style={styles.loginText}>Login / Sign-up</Text>
       <Text style={styles.infoText}>
-        Enter your email below to receive a One Time Password. Once the email is
-        verified, you will be asked to create a username or re-confirm if the
-        existing name is good to go!
+        Enter your email below to receive a One Time Password.
       </Text>
       <Text style={styles.dangerText}>{errorMessage}</Text>
       <TextInput
@@ -108,7 +106,14 @@ const LoginPageBody = ({navigation}) => {
         activeOpacity={0.8}
         onPress={handleLogin}
         disabled={!isButtonEnabled}>
-        <Text style={styles.buttonText}>Login</Text>
+        <Text
+          style={
+            isButtonEnabled
+              ? styles.buttonTextEnabled
+              : styles.buttonTextDisabled
+          }>
+          Login
+        </Text>
       </TouchableOpacity>
       <LoaderOverlay visible={isLoading} />
     </View>
@@ -118,7 +123,7 @@ const LoginPageBody = ({navigation}) => {
 const styles = StyleSheet.create({
   loginPageBody: {
     flex: 1,
-    backgroundColor: 'black',
+    backgroundColor: CLUEDIN_DARK_SCHEME.background,
     justifyContent: 'center',
     padding: 20,
     alignItems: 'center',
@@ -126,46 +131,51 @@ const styles = StyleSheet.create({
   loginText: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: 'white',
+    color: CLUEDIN_DARK_SCHEME.text_on_background,
     marginBottom: 10,
     textAlign: 'center',
   },
   infoText: {
     fontSize: 16,
-    color: 'white',
+    color: CLUEDIN_DARK_SCHEME.text_on_background,
     marginBottom: 20,
     textAlign: 'center',
   },
   dangerText: {
     fontSize: 16,
-    color: 'red',
+    color: CLUEDIN_DARK_SCHEME.general_danger_text,
     marginBottom: 20,
     textAlign: 'left',
   },
   input: {
-    backgroundColor: 'white',
-    width: 300,
+    backgroundColor: CLUEDIN_DARK_SCHEME.login.input_background,
+    width: '100%',
     height: 50,
     paddingHorizontal: 15,
     borderRadius: 10,
-    marginBottom: 20,
+    margin: 20,
   },
   loginButton: {
     borderRadius: 10,
+    width: '100%',
     height: 50,
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 20,
   },
   loginButtonEnabled: {
-    backgroundColor: '#FF3333',
+    backgroundColor: CLUEDIN_DARK_SCHEME.login.btn_enabled_bg,
   },
   loginButtonDisabled: {
-    backgroundColor: '#707070',
+    backgroundColor: CLUEDIN_DARK_SCHEME.login.btn_disabled_bg,
   },
-  buttonText: {
+  buttonTextEnabled: {
     fontSize: 18,
-    color: 'white',
+    color: CLUEDIN_DARK_SCHEME.login.btn_enabled_txt,
+  },
+  buttonTextDisabled: {
+    fontSize: 18,
+    color: CLUEDIN_DARK_SCHEME.login.btn_disabled_txt,
   },
 });
 
