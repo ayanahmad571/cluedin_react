@@ -143,61 +143,6 @@ const Home = () => {
     setShowAnswerOverlay(true);
   };
 
-  // Render the rows with answer buttons
-  const renderAnswerRows = () => {
-    const rows = [];
-    let ansDisabled = true;
-    if (
-      question.clues_used['1'] === '1' ||
-      question.clues_used['2'] === '1' ||
-      question.clues_used['3'] === '1'
-    ) {
-      ansDisabled = false;
-    }
-    for (let i = 1; i <= 5; i++) {
-      const optionKey = `option_${i}`;
-      const isAnsUsed = question.options_used[i] === '1';
-      rows.push(
-        <View key={i} style={styles.optionRow}>
-          <Text style={styles.optionRowText}>Option {i}</Text>
-          <TouchableOpacity
-            disabled={ansDisabled || isAnsUsed}
-            style={[
-              ansDisabled ? styles.disabledButtonAnswer : styles.buttonAnswer,
-              isAnsUsed ? styles.usedAnsButton : null,
-            ]}
-            onPress={() => handleAnswerButtonPress(i)}>
-            <Text
-              style={isAnsUsed ? styles.usedAnsButtonText : styles.buttonText}>
-              {question.question_raw[optionKey]}
-            </Text>
-          </TouchableOpacity>
-        </View>,
-      );
-    }
-
-    return rows;
-  };
-
-  // Render the rows with answer buttons
-  const renderClueRows = () => {
-    const clue_master = ['Easy', 'Medium', 'Hard'];
-    const rows = [];
-    for (let i = 1; i <= 3; i++) {
-      const isClueUsed = question.clues_used[i] === '1';
-      rows.push(
-        <TouchableOpacity
-          key={'c' + i}
-          style={[styles.button, isClueUsed ? styles.usedClueButton : null]}
-          onPress={() => handleClueButtonPress(i)} // 1 for Easy
-        >
-          <Text style={styles.buttonText}>{clue_master[i - 1]}</Text>
-        </TouchableOpacity>,
-      );
-    }
-
-    return rows;
-  };
 
   useEffect(() => {
     fetchTodayQuestion(); // Ensure this is called only once on component mount
@@ -206,7 +151,6 @@ const Home = () => {
   return errorMsg === '' ? (
     <View style={{flex: 1}}>
       <ScrollView
-        style={{backgroundColor: 'black'}}
         contentContainerStyle={styles.scrollContainer}
         refreshControl={
           <RefreshControl

@@ -1,19 +1,16 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {
-  View,
-  TouchableOpacity,
-  Text,
-  StyleSheet,
-  ScrollView,
-} from 'react-native';
+import {View, Text, StyleSheet, ScrollView} from 'react-native';
 import AuthContext from '../utils/AuthContext';
 import {jwtDecode} from 'jwt-decode';
 import {decode} from 'base-64';
+import {CLUEDIN_DARK_SCHEME} from '../utils/constants';
+import SettingsRow from './SettingsRow';
+
 global.atob = decode;
 
 const SettingsBody = ({navigation}) => {
   const {user} = useContext(AuthContext);
-  const [user_jwt, setUserJwt] = useState({});
+  const [userJwt, setUserJwt] = useState({});
 
   useEffect(() => {
     const decodeUsername = () => {
@@ -35,32 +32,36 @@ const SettingsBody = ({navigation}) => {
   return (
     <ScrollView style={styles.SVcontainer}>
       <View style={styles.greetingContainer}>
-        <Text style={styles.greetingText}>Hi, {user_jwt.user_name} !</Text>
+        <Text style={styles.greetingText}>Hi, {userJwt.user_name} !</Text>
       </View>
 
-      <TouchableOpacity
-        style={styles.row}
-        onPress={() => handleButtonPress('Profile')}>
-        <Text style={styles.text}>My Profile</Text>
-      </TouchableOpacity>
+      <SettingsRow
+        icon="person-sharp"
+        title="My Profile"
+        description="View and edit your profile. You can change your username and view your login status."
+        onPress={() => handleButtonPress('Profile')}
+      />
 
-      <TouchableOpacity
-        style={styles.row}
-        onPress={() => handleButtonPress('Delete')}>
-        <Text style={styles.text}>Delete Account</Text>
-      </TouchableOpacity>
+      <SettingsRow
+        icon="trash-bin-sharp"
+        title="Delete Account"
+        description="Reqeust to Permanently delete your account. Are you sure you want to go?"
+        onPress={() => handleButtonPress('Delete')}
+      />
 
-      <TouchableOpacity
-        style={styles.row}
-        onPress={() => handleButtonPress('About Us')}>
-        <Text style={styles.text}>About Us</Text>
-      </TouchableOpacity>
+      <SettingsRow
+        icon="storefront"
+        title="About Us"
+        description="Learn more about our app, the team and our vision. This page also links to our Privacy Policy and T&Cs."
+        onPress={() => handleButtonPress('About Us')}
+      />
 
-      <TouchableOpacity
-        style={styles.row}
-        onPress={() => handleButtonPress('Logout')}>
-        <Text style={styles.text}>Logout</Text>
-      </TouchableOpacity>
+      <SettingsRow
+        icon="exit"
+        title="Logout"
+        description="Sign out of your account. Your progress is saved on the cloud, you just need to login again with the same email."
+        onPress={() => handleButtonPress('Logout')}
+      />
     </ScrollView>
   );
 };
@@ -69,32 +70,17 @@ const styles = StyleSheet.create({
   SVcontainer: {
     flex: 1,
     padding: 10,
-    backgroundColor: 'black',
-  },
-  container: {
-    flex: 1,
-    backgroundColor: 'black',
+    backgroundColor: CLUEDIN_DARK_SCHEME.header_background,
   },
   greetingContainer: {
     paddingVertical: 20,
-    alignItems: 'center',
+    alignItems: 'left',
   },
   greetingText: {
+    marginLeft: 25,
     fontSize: 24,
     fontWeight: 'bold',
-    color: 'white',
-  },
-  row: {
-    padding: 16,
-    backgroundColor: '#242323',
-    margin: 10,
-    borderRadius:15,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
-  },
-  text: {
-    fontSize: 20,
-    color: 'white',
+    color: CLUEDIN_DARK_SCHEME.header_background_text,
   },
 });
 

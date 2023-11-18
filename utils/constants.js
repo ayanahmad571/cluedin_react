@@ -9,6 +9,9 @@ export const CLUEDIN_THEME = {
     yellow: '#FAA307',
     white: '#f5f3f4',
     dark_grey: '#3f3f3f',
+    light_grey: '#858585',
+    deep_blue: '#003beb',
+    light_blue: '#245bff',
 }
 export const CLUEDIN_DARK_SCHEME = {
     background : CLUEDIN_THEME.black,
@@ -16,8 +19,10 @@ export const CLUEDIN_DARK_SCHEME = {
     header_background: CLUEDIN_THEME.black,
     header_background_text: CLUEDIN_THEME.white,
     general_danger_text: CLUEDIN_THEME.light_red,
+    general_email_link: CLUEDIN_THEME.light_blue,
     login: {
         input_background: CLUEDIN_THEME.white,
+        input_background_text: CLUEDIN_THEME.black,
         btn_enabled_bg: CLUEDIN_THEME.orange,
         btn_disabled_bg: CLUEDIN_THEME.dark_grey,
         btn_enabled_txt: CLUEDIN_THEME.white,
@@ -26,4 +31,29 @@ export const CLUEDIN_DARK_SCHEME = {
     otp: {
         otp_input_border: CLUEDIN_THEME.dark_grey,
     },
+    logout: {
+        btn_bg: CLUEDIN_THEME.light_red,
+        btn_bg_text: CLUEDIN_THEME.white,
+    },
+    about: {
+        btn_bg: CLUEDIN_THEME.dark_red,
+        btn_bg_text: CLUEDIN_THEME.white
+    },
+    help:{
+        container1_bg: CLUEDIN_THEME.dark_grey,
+        container1_bg_text: CLUEDIN_THEME.white,
+        container2_bg: CLUEDIN_THEME.dark_grey,
+        container2_bg_text: CLUEDIN_THEME.white,
+    },
+    home: {
+        row1_bg: CLUEDIN_THEME.orange,
+        row1_bg_text: CLUEDIN_THEME.black,
+        row2_bg: CLUEDIN_THEME.dark_grey,
+        row2_bg_text: CLUEDIN_THEME.white,
+        row3_bg: CLUEDIN_THEME.dark_grey,
+        row3_bg_text: CLUEDIN_THEME.white,
+        clue_btn_bg: CLUEDIN_THEME.white,
+        used_ans_bg: CLUEDIN_THEME.light_red,
+        used_ans_bg_text: CLUEDIN_THEME.black,
+    }
 };

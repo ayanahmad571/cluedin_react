@@ -5,7 +5,7 @@ import SettingsBody from '../page_helper/SettingsBody';
 import ProfileBody from '../page_helper/ProfileBody';
 import DeleteAccountBody from '../page_helper/DeleteAccountBody';
 import AboutUsBody from '../page_helper/AboutUsBody';
-import TopBarRealComponent from '../utils/TopBarRealComponent';
+import { CLUEDIN_DARK_SCHEME } from '../utils/constants';
 
 const Stack = createNativeStackNavigator();
 
@@ -16,15 +16,13 @@ const SettingsPage = () => {
       backBehavior="initialRoute"
       screenOptions={{
         headerStyle: {
-          backgroundColor: '#8E443D',
-          borderBottomWidth: 1,
-          borderBottomColor: 'grey',
+          backgroundColor: CLUEDIN_DARK_SCHEME.header_background,
         },
-        headerTintColor: 'white', // Set the text color to white
+        headerTintColor: CLUEDIN_DARK_SCHEME.header_background_text, // Set the text color to white
         headerTitleStyle: {
-          fontSize: 24, // Customize the font size
-          fontWeight: '400', // Customize the font weight
-          color: 'white', // Set the text color to white
+          fontSize: 20, // Customize the font size
+          fontWeight: '500', // Customize the font weight
+          color: CLUEDIN_DARK_SCHEME.header_background_text, // Set the text color to white
         },
         headerTitleAlign: 'center', // Center align the title
       }}>

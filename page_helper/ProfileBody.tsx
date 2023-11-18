@@ -11,7 +11,7 @@ import AuthContext from '../utils/AuthContext';
 import {jwtDecode} from 'jwt-decode';
 import {decode} from 'base-64';
 import LoaderOverlay from './LoaderOverlay';
-import {API_BASE_URL} from '../utils/constants';
+import {API_BASE_URL, CLUEDIN_DARK_SCHEME} from '../utils/constants';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 global.atob = decode;
@@ -185,11 +185,20 @@ const UserProfileBody = () => {
       <TouchableOpacity
         style={[
           styles.saveButton,
-          isSaveButtonActive ? styles.activeSaveButton : {},
+          isSaveButtonActive
+            ? styles.activeSaveButton
+            : styles.inActiveSaveButton,
         ]}
         onPress={handleSave}
         disabled={!isSaveButtonActive && !isLoading}>
-        <Text style={styles.saveButtonText}>Save</Text>
+        <Text
+          style={
+            isSaveButtonActive
+              ? styles.saveButtonTextEn
+              : styles.saveButtonTextDi
+          }>
+          Save
+        </Text>
       </TouchableOpacity>
       <LoaderOverlay visible={isLoading} />
     </View>
@@ -199,20 +208,18 @@ const UserProfileBody = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'black',
+    backgroundColor: CLUEDIN_DARK_SCHEME.header_background,
     padding: 20,
   },
   editText: {
-    color: 'white',
-    fontSize: 34,
+    color: CLUEDIN_DARK_SCHEME.header_background_text,
+    fontSize: 30,
     fontWeight: '500',
     marginBottom: 20,
   },
   row: {
     flexDirection: 'row',
-    marginBottom: 15,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
+    marginBottom: 25,
     paddingBottom: 10,
   },
   col1: {
@@ -221,14 +228,14 @@ const styles = StyleSheet.create({
   },
   col2Input: {
     flex: 2,
-    backgroundColor: 'white',
+    backgroundColor: CLUEDIN_DARK_SCHEME.login.input_background,
     padding: 10,
     borderRadius: 5,
-    color: 'black',
+    color: CLUEDIN_DARK_SCHEME.login.input_background_text,
   },
   col2Text: {
     flex: 2,
-    color: 'white',
+    color: CLUEDIN_DARK_SCHEME.header_background_text,
     padding: 10,
   },
   boldText: {
@@ -237,18 +244,26 @@ const styles = StyleSheet.create({
   saveButton: {
     marginTop: 20,
     padding: 15,
-    backgroundColor: '#3498db',
     borderRadius: 5,
     justifyContent: 'center',
     alignItems: 'center',
     opacity: 0.5,
   },
   activeSaveButton: {
+    backgroundColor: CLUEDIN_DARK_SCHEME.login.btn_enabled_bg,
     opacity: 1,
   },
-  saveButtonText: {
-    color: 'white',
+  inActiveSaveButton: {
+    backgroundColor: CLUEDIN_DARK_SCHEME.login.btn_disabled_bg,
+    opacity: 0.5,
+  },
+  saveButtonTextEn: {
+    color: CLUEDIN_DARK_SCHEME.login.btn_enabled_txt,
     fontSize: 18,
+  },
+  saveButtonTextDi: {
+    fontSize: 18,
+    color: CLUEDIN_DARK_SCHEME.login.btn_disabled_txt,
   },
 });
 

@@ -28,7 +28,13 @@ const QuestionMainBody = ({question, handleAnswerButtonPress, handleClueButtonPr
             ]}
             onPress={() => handleAnswerButtonPress(i)}>
             <Text
-              style={isAnsUsed ? styles.usedAnsButtonText : styles.buttonText}>
+              style={
+                isAnsUsed
+                  ? styles.usedAnsButtonText
+                  : ansDisabled
+                  ? styles.ansDisButtonText
+                  : styles.ansButtonText
+              }>
               {question.question_raw[optionKey]}
             </Text>
           </TouchableOpacity>
@@ -64,11 +70,6 @@ const QuestionMainBody = ({question, handleAnswerButtonPress, handleClueButtonPr
       <View style={styles.fifthRow}>
         <View style={styles.boxL}>
           <Text style={styles.boxTextTitle}>Clues</Text>
-          <Text style={styles.boxTextNormal}>
-            Picking the hardest clue maximizes your chances of scoring the
-            highest point. Picking a clue deducts points based on the Clue
-            Rating Matrix (Point Matrix).
-          </Text>
         </View>
       </View>
       <View style={styles.sixthRow}>
@@ -77,11 +78,6 @@ const QuestionMainBody = ({question, handleAnswerButtonPress, handleClueButtonPr
       <View style={styles.sevenRow}>
         <View style={styles.boxL}>
           <Text style={styles.boxTextTitle}>Answer</Text>
-          <Text style={styles.boxTextNormal}>
-            Lets answer - You must pick a clue before you can begin answering
-            and remember, you have 5 total attempts (Point Matrix). Happy
-            guessing !
-          </Text>
         </View>
       </View>
       <View style={styles.eightRow}>{renderAnswerRows()}</View>

@@ -6,6 +6,7 @@ import LeaderboardPage from '../pages/LeaderboardPage';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import TopBarRealComponent from '../utils/TopBarRealComponent';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { CLUEDIN_DARK_SCHEME, CLUEDIN_THEME } from '../utils/constants';
 
 const Tab = createBottomTabNavigator();
 
@@ -17,7 +18,7 @@ const LoggedInComponents = () => (
       // eslint-disable-next-line react/no-unstable-nested-components
       tabBarIcon: ({focused, color, size}) => {
         let iconName;
-        const iconCol = focused ? '#1098F7' : 'white';
+        const iconCol = focused ? CLUEDIN_THEME.orange : CLUEDIN_THEME.white;
 
         if (route.name === 'Home') {
           iconName = focused ? 'home' : 'home-outline';
@@ -37,14 +38,14 @@ const LoggedInComponents = () => (
       // eslint-disable-next-line react/no-unstable-nested-components
       headerTitle: () => <TopBarRealComponent />,
       headerStyle: {
-        backgroundColor: '#8E443D',
-        borderBottomColor: 'grey',
+        backgroundColor: CLUEDIN_DARK_SCHEME.header_background,
+        borderColor: CLUEDIN_DARK_SCHEME.header_background,
       },
       tabBarStyle: {
-        backgroundColor: 'black',
+        backgroundColor: CLUEDIN_DARK_SCHEME.header_background,
       },
       tabBarLabelStyle: {
-        color: 'white',
+        color: CLUEDIN_DARK_SCHEME.header_background_text,
         fontSize: 12,
       },
       headerTitleAlign: 'center',

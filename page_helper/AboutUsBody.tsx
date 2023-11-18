@@ -43,17 +43,17 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   header: {
-    color: 'white',
+    color: CLUEDIN_DARK_SCHEME.text_on_background,
     fontSize: 28,
     fontWeight: 'bold',
     marginBottom: 20,
-    textAlign: 'center',
+    textAlign: 'left',
   },
   description: {
-    color: 'white',
+    color: CLUEDIN_DARK_SCHEME.text_on_background,
     fontSize: 18,
     marginBottom: 15,
-    textAlign: 'center',
+    textAlign: 'left',
   },
   buttonsContainer: {
     marginTop: 20,
@@ -62,13 +62,13 @@ const styles = StyleSheet.create({
   },
   button: {
     padding: 10,
-    backgroundColor: '#3498db',
+    backgroundColor: CLUEDIN_DARK_SCHEME.about.btn_bg,
     borderRadius: 5,
     flex: 1,
     marginHorizontal: 10,
   },
   buttonText: {
-    color: 'white',
+    color: CLUEDIN_DARK_SCHEME.about.btn_bg_text,
     fontSize: 16,
     textAlign: 'center',
   },

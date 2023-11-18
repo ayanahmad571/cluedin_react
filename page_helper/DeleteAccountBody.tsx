@@ -1,5 +1,6 @@
 import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity, Linking} from 'react-native';
+import { CLUEDIN_DARK_SCHEME } from '../utils/constants';
 
 const DeleteAccountBody = () => {
   const sendEmail = () => {
@@ -33,28 +34,30 @@ const DeleteAccountBody = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'black',
+    backgroundColor: CLUEDIN_DARK_SCHEME.header_background,
     justifyContent: 'center',
     alignItems: 'center',
     padding: 10,
   },
   text: {
-    color: 'white',
-    fontSize: 20,
+    color: CLUEDIN_DARK_SCHEME.header_background_text,
+    fontSize: 18,
     textAlign: 'center',
   },
   emailLink: {
-    color: 'blue',
+    color: CLUEDIN_DARK_SCHEME.general_email_link,
     textDecorationLine: 'underline',
   },
   button: {
-    marginTop: 20,
     padding: 10,
-    backgroundColor: 'red',
+    backgroundColor: CLUEDIN_DARK_SCHEME.logout.btn_bg,
     borderRadius: 5,
+    alignItems: 'center',
+    marginTop: 30,
+    width: '80%',
   },
   buttonText: {
-    color: 'white',
+    color: CLUEDIN_DARK_SCHEME.logout.btn_bg_text,
     fontSize: 18,
     textAlign: 'center',
   },
