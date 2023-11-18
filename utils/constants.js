@@ -55,5 +55,9 @@ export const CLUEDIN_DARK_SCHEME = {
         clue_btn_bg: CLUEDIN_THEME.white,
         used_ans_bg: CLUEDIN_THEME.light_red,
         used_ans_bg_text: CLUEDIN_THEME.black,
+    },
+    leader: {
+        rank_bg: CLUEDIN_THEME.orange,
+        rank_bg_text: CLUEDIN_THEME.white,
     }
 };
