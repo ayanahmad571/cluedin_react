@@ -5,7 +5,8 @@ import TopBarComponent from '../utils/TopBarComponent';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useContext} from 'react';
 import AuthContext from '../utils/AuthContext'; // Adjust the import path as needed
-import SplashScreen from './SplashScreen';
+import SplashScreenPage from './SplashScreen';
+import { CLUEDIN_DARK_SCHEME } from '../utils/constants';
 
 const Logout = ({navigation}) => {
   const {setUser} = useContext(AuthContext);
@@ -30,7 +31,7 @@ const Logout = ({navigation}) => {
     // Perform any additional logout logic here
   };
   return isSplash ? (
-    <SplashScreen />
+    <SplashScreenPage />
   ) : (
     // User is not logged in
     <View style={styles.container}>
@@ -52,27 +53,29 @@ const Logout = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'black',
+    backgroundColor: CLUEDIN_DARK_SCHEME.header_background,
     justifyContent: 'center',
     alignItems: 'center',
   },
   text: {
-    color: 'white',
-    fontSize: 20,
+    color: CLUEDIN_DARK_SCHEME.header_background_text,
+    fontSize: 18,
     marginBottom: 20,
     marginHorizontal: 20, // Add horizontal margin
     textAlign: 'center',
   },
   logoutButton: {
-    backgroundColor: '#FF3333',
+    backgroundColor: CLUEDIN_DARK_SCHEME.logout.btn_bg,
     borderRadius: 10, // Add border-radius for rounded edges
     paddingHorizontal: 20, // Add horizontal padding
     height: 50, // Increase the button's height to make it bigger
     justifyContent: 'center',
     alignItems: 'center',
+    marginTop: 10,
+    width: '80%',
   },
   buttonText: {
-    color: 'white',
+    color: CLUEDIN_DARK_SCHEME.logout.btn_bg_text,
     fontSize: 18,
     fontWeight: 'bold',
   },

@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { CLUEDIN_DARK_SCHEME } from './constants';
 
 // Create the RankDisplayBox component
 const RankDisplayBox = ({rank, users, points}) => {
@@ -20,7 +21,7 @@ const RankDisplayBox = ({rank, users, points}) => {
 
 const styles = StyleSheet.create({
   rankDisplayBox: {
-    backgroundColor: '#B57F50',
+    backgroundColor: CLUEDIN_DARK_SCHEME.leader.rank_bg,
     margin: 10,
     padding: 10,
     borderRadius: 10,
@@ -28,11 +29,11 @@ const styles = StyleSheet.create({
   rankTitle: {
     fontSize: 25,
     fontWeight: 'bold',
-    color: 'white',
+    color: CLUEDIN_DARK_SCHEME.leader.rank_bg_text,
   },
   rankUser: {
     fontSize: 18,
-    color: 'white',
+    color: CLUEDIN_DARK_SCHEME.leader.rank_bg_text,
   },
 });
 

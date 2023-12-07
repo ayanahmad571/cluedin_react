@@ -3,7 +3,7 @@ import {View, Text, ScrollView, StyleSheet, RefreshControl} from 'react-native';
 import RankDisplayBox from '../utils/RankDisplayBox';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AuthContext from '../utils/AuthContext';
-import {API_BASE_URL} from '../utils/constants';
+import {API_BASE_URL, CLUEDIN_DARK_SCHEME, CLUEDIN_THEME} from '../utils/constants';
 // Create the RankDisplayBox component
 
 const LeaderboardPage = () => {
@@ -133,18 +133,18 @@ const LeaderboardPage = () => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'black',
+    backgroundColor: CLUEDIN_DARK_SCHEME.background,
   },
   textSubT: {
-    color: 'white',
+    color: CLUEDIN_DARK_SCHEME.text_on_background,
     fontWeight: '300',
     fontSize: 16,
-    textAlign: 'center',
+    textAlign: 'left',
   },
   pageTitle: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: 'white',
+    color: CLUEDIN_DARK_SCHEME.text_on_background,
     margin: 10,
   },
   row: {
@@ -153,31 +153,16 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   infoBox: {
-    backgroundColor: 'grey',
+    backgroundColor: CLUEDIN_DARK_SCHEME.home.row2_bg,
     padding: 10,
     borderRadius: 10,
     margin: 1,
     flex: 1,
   },
   infoText: {
-    fontSize: 22,
+    fontSize: 20,
     fontWeight: '300',
-    color: 'white',
-  },
-  rankDisplayBox: {
-    backgroundColor: 'darkgreen',
-    margin: 10,
-    padding: 10,
-    borderRadius: 10,
-  },
-  rankTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: 'white',
-  },
-  rankUser: {
-    fontSize: 16,
-    color: 'white',
+    color: CLUEDIN_DARK_SCHEME.home.row2_bg_text,
   },
 });
 

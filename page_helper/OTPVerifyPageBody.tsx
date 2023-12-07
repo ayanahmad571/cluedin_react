@@ -8,7 +8,7 @@ import {
   Keyboard,
 } from 'react-native';
 import LoaderOverlay from './LoaderOverlay';
-import {API_BASE_URL} from '../utils/constants';
+import {API_BASE_URL, CLUEDIN_DARK_SCHEME} from '../utils/constants';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useContext} from 'react';
 import AuthContext from '../utils/AuthContext'; // Adjust the import path as needed
@@ -19,6 +19,10 @@ const OTPVerifyPageBody = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [otpErrorMessage, setOtpErrorMessage] = useState('');
   const {user, setUser} = useContext(AuthContext);
+
+  const validateOtp = (otp) => {
+    return !otp.every(digit => digit.length === 1);
+  };
 
   const handleInputChange = (text, index) => {
     if (text.length === 1 && index < 3) {
@@ -120,6 +124,8 @@ const OTPVerifyPageBody = () => {
     }
   };
 
+  const isButtonEnabled = !isLoading && !validateOtp(otp);
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Enter OTP</Text>
@@ -143,14 +149,18 @@ const OTPVerifyPageBody = () => {
       <TouchableOpacity
         style={[
           styles.button,
-          {
-            opacity:
-              isLoading || !otp.every(digit => digit.length === 1) ? 0.5 : 1,
-          },
+          isButtonEnabled ? styles.otpButtonEnabled : styles.otpButtonDisabled,
         ]}
         onPress={handleButtonPress}
-        disabled={isLoading || !otp.every(digit => digit.length === 1)}>
-        <Text style={styles.buttonText}>Verify</Text>
+        disabled={!isButtonEnabled}>
+        <Text
+          style={
+            isButtonEnabled
+              ? styles.buttonTextEnabled
+              : styles.buttonTextDisabled
+          }>
+          Verify
+        </Text>
       </TouchableOpacity>
       <LoaderOverlay visible={isLoading} />
     </View>
@@ -160,24 +170,25 @@ const OTPVerifyPageBody = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'black',
+    backgroundColor: CLUEDIN_DARK_SCHEME.background,
     justifyContent: 'center',
     alignItems: 'center',
+    padding: 20,
   },
   title: {
-    color: 'white',
+    color: CLUEDIN_DARK_SCHEME.text_on_background,
     fontSize: 24,
     marginBottom: 10,
   },
   description: {
-    color: 'white',
+    color: CLUEDIN_DARK_SCHEME.text_on_background,
     fontSize: 16,
     textAlign: 'center',
     marginBottom: 20,
   },
   dangerText: {
     fontSize: 16,
-    color: 'red',
+    color: CLUEDIN_DARK_SCHEME.general_danger_text,
     marginBottom: 20,
     textAlign: 'left',
   },
@@ -189,23 +200,35 @@ const styles = StyleSheet.create({
   otpInput: {
     width: 60,
     height: 60,
-    backgroundColor: 'black',
+    backgroundColor: CLUEDIN_DARK_SCHEME.background,
     borderBottomWidth: 1,
-    borderBottomColor: 'grey',
+    borderBottomColor: CLUEDIN_DARK_SCHEME.otp.otp_input_border,
     fontSize: 24,
-    color: 'white',
+    color: CLUEDIN_DARK_SCHEME.text_on_background,
     textAlign: 'center',
     margin: 5,
   },
   button: {
     marginTop: 20,
-    backgroundColor: '#FF3333',
+    width: '100%',
+    backgroundColor: CLUEDIN_DARK_SCHEME.login.btn_enabled_bg,
     borderRadius: 10,
     padding: 10,
   },
-  buttonText: {
-    color: 'white',
+  otpButtonEnabled: {
+    backgroundColor: CLUEDIN_DARK_SCHEME.login.btn_enabled_bg,
+  },
+  otpButtonDisabled: {
+    backgroundColor: CLUEDIN_DARK_SCHEME.login.btn_disabled_bg,
+  },
+  buttonTextEnabled: {
     fontSize: 18,
+    color: CLUEDIN_DARK_SCHEME.login.btn_enabled_txt,
+    textAlign: 'center',
+  },
+  buttonTextDisabled: {
+    fontSize: 18,
+    color: CLUEDIN_DARK_SCHEME.login.btn_disabled_txt,
     textAlign: 'center',
   },
 });

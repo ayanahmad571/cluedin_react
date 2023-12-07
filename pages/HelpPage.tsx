@@ -1,14 +1,21 @@
 import React from 'react';
 import {View, Text, ScrollView} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import {CLUEDIN_DARK_SCHEME, CLUEDIN_THEME} from '../utils/constants';
 
 const styles = {
   container: {
     flex: 1,
-    backgroundColor: 'black',
+    backgroundColor: CLUEDIN_DARK_SCHEME.background,
   },
   sectionContainer: {
-    backgroundColor: '#B57F50', // Change to the desired background color
+    backgroundColor: CLUEDIN_DARK_SCHEME.help.container1_bg,
+    margin: 10,
+    borderRadius: 10,
+    padding: 10,
+  },
+  sectionContainerTwo: {
+    backgroundColor: CLUEDIN_DARK_SCHEME.help.container2_bg,
     margin: 10,
     borderRadius: 10,
     padding: 10,
@@ -16,53 +23,169 @@ const styles = {
   mainTitle: {
     fontSize: 40,
     fontWeight: 'bold',
-    color: 'white',
+    color: CLUEDIN_DARK_SCHEME.help.container1_bg_text,
+    margin: 10,
+  },
+  mainTitleTwo: {
+    fontSize: 40,
+    fontWeight: 'bold',
+    color: CLUEDIN_DARK_SCHEME.help.container2_bg_text,
     margin: 10,
   },
   bulletContainer: {
     marginLeft: 20,
   },
   bullet: {
-    color: 'white',
+    color: CLUEDIN_DARK_SCHEME.help.container1_bg_text,
     marginBottom: 5,
   },
+  bulletTwo: {
+    color: CLUEDIN_DARK_SCHEME.help.container2_bg_text,
+    marginBottom: 5,
+  },
+  table: {
+    borderWidth: 1,
+    borderColor: CLUEDIN_THEME.light_grey,
+    marginVertical: 10,
+  },
+  row: {
+    flexDirection: 'row',
+    borderBottomWidth: 1,
+    borderBottomColor: CLUEDIN_THEME.light_grey,
+  },
+  cell: {
+    flex: 1,
+    padding: 10,
+    alignItems: 'center',
+  },
+  cellText: {
+    fontSize: 16,
+    color: CLUEDIN_DARK_SCHEME.text_on_background,
+  },
 };
+const iconOneCol = CLUEDIN_DARK_SCHEME.help.container1_bg_text;
+const iconTwoCol = CLUEDIN_DARK_SCHEME.help.container2_bg_text;
 
 const HelpPage = () => {
+  const clueTableData = [
+    ['Easy', 'Medium', 'Hard'],
+    ['-10', '-20', '-30'],
+  ];
+  const optionTableData = [
+    ['1', '2', '3', '4', '5'],
+    ['-15', '-30', '-45', '-60', '-75'],
+  ];
+
   return (
     <ScrollView style={styles.container}>
       <View style={styles.sectionContainer}>
-        <Text style={styles.mainTitle}>Rules</Text>
+        <Text style={styles.mainTitle}>The Game</Text>
         <View style={styles.bulletContainer}>
           <Text style={styles.bullet}>
-            <Ionicons name='caret-forward-circle-sharp' style={{color: 'white'}}  /> You will be presented with 1 question each day at 2pm UTC.
+            <Ionicons
+              name="caret-forward-circle-sharp"
+              style={{color: iconOneCol}}
+            />{' '}
+            You will be presented with 1 question each day at 2pm UTC.
           </Text>
           <Text style={styles.bullet}>
-            <Ionicons name='caret-forward-circle-sharp' style={{color: 'white'}}  /> Questions of each month follow a set theme, all questions of that
+            <Ionicons
+              name="caret-forward-circle-sharp"
+              style={{color: iconOneCol}}
+            />{' '}
+            Questions of each month follow a set theme, all questions of that
             month will be of that theme.
           </Text>
           <Text style={styles.bullet}>
-            <Ionicons name='caret-forward-circle-sharp' style={{color: 'white'}}  /> You must pick a clue before you can answer any questions.
+            <Ionicons
+              name="caret-forward-circle-sharp"
+              style={{color: iconOneCol}}
+            />{' '}
+            You must pick a clue before you can answer any questions.
           </Text>
         </View>
       </View>
 
-      <View style={{...styles.sectionContainer, backgroundColor: '#4B543B'}}>
+      <View style={styles.sectionContainerTwo}>
         {/* Different background color */}
-        <Text style={styles.mainTitle}>Points</Text>
+        <Text style={styles.mainTitleTwo}>The Points</Text>
         <View style={styles.bulletContainer}>
-          <Text style={styles.bullet}>
-          <Ionicons name='caret-forward-circle-sharp' style={{color: 'white'}}  /> You start with a total of 125 points.
+          <Text style={styles.bulletTwo}>
+            <Ionicons
+              name="caret-forward-circle-sharp"
+              style={{color: iconTwoCol}}
+            />{' '}
+            Every day when a new question is loaded, you start with a total of
+            125 points. Think of this like your budget.
           </Text>
-          <Text style={styles.bullet}><Ionicons name='caret-forward-circle-sharp' style={{color: 'white'}}  /> Hard clue takes off 10 points.</Text>
-          <Text style={styles.bullet}><Ionicons name='caret-forward-circle-sharp' style={{color: 'white'}}  /> Medium takes off 20 points.</Text>
-          <Text style={styles.bullet}><Ionicons name='caret-forward-circle-sharp' style={{color: 'white'}}  /> Easy takes off 30 points.</Text>
-          <Text style={styles.bullet}>
-            <Ionicons name='caret-forward-circle-sharp' style={{color: 'white'}}  /> Each answer you guess takes off 15 points.
+          <Text style={styles.bulletTwo}>
+            <Ionicons
+              name="caret-forward-circle-sharp"
+              style={{color: iconTwoCol}}
+            />{' '}
+            Everyday you are presented with 3 clues and 5 options. You must pick
+            a clue before you can start answering. Each clue costs a certain
+            amount of points, refer to the table below:
           </Text>
-          <Text style={styles.bullet}>
-            <Ionicons name='caret-forward-circle-sharp' style={{color: 'white'}}  /> So best case scenario = Hard Clue and 1 guess, this gives you a
-            full score = 100 points.
+          <Text style={styles.bulletTwo}>
+            <View style={styles.table}>
+              {clueTableData.map((row, rowIndex) => (
+                <View key={rowIndex} style={styles.row}>
+                  {row.map((cell, cellIndex) => (
+                    <View key={cellIndex} style={styles.cell}>
+                      <Text style={styles.cellText}>{cell}</Text>
+                    </View>
+                  ))}
+                </View>
+              ))}
+            </View>
+          </Text>
+          <Text style={styles.bulletTwo}>
+            <Ionicons
+              name="caret-forward-circle-sharp"
+              style={{color: iconTwoCol}}
+            />{' '}
+            Easy, Medium, and Hard take off 10, 20, or 30 points respectively.
+          </Text>
+          <Text style={styles.bulletTwo}>
+            <Ionicons
+              name="caret-forward-circle-sharp"
+              style={{color: iconTwoCol}}
+            />{' '}
+            Once you selected the clues, the ability to select an answer will be
+            enabled. You must now pick at least 1 answer to obtain a score for
+            the day. Each answer you guess takes off 15 points. The table below
+            demonstrates number of points and their respective cost.
+          </Text>
+          <Text style={styles.bulletTwo}>
+            <View style={styles.table}>
+              {optionTableData.map((row, rowIndex) => (
+                <View key={rowIndex} style={styles.row}>
+                  {row.map((cell, cellIndex) => (
+                    <View key={cellIndex} style={styles.cell}>
+                      <Text style={styles.cellText}>{cell}</Text>
+                    </View>
+                  ))}
+                </View>
+              ))}
+            </View>
+          </Text>
+          <Text style={styles.bulletTwo}>
+            <Ionicons
+              name="caret-forward-circle-sharp"
+              style={{color: iconTwoCol}}
+            />{' '}
+            The highest number of points you can achieve in a day = 1 - Hard
+            Clue & 1 Option, this gives you a full score = 100 points.
+          </Text>
+          <Text style={styles.bulletTwo}>
+            <Ionicons
+              name="caret-forward-circle-sharp"
+              style={{color: iconTwoCol}}
+            />{' '}
+            Similarly, the lowest attainable score a day = All 3 clues - Hard,
+            Medium and Easy Clue & 5 Options, this gives you a full score of -10 
+            points {':('}
           </Text>
         </View>
       </View>

@@ -1,5 +1,6 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
+import { CLUEDIN_DARK_SCHEME } from './constants';
 
 const TopBarComponent = () => {
   return <View style={styles.topBar}></View>;
@@ -7,15 +8,13 @@ const TopBarComponent = () => {
 
 const styles = StyleSheet.create({
   topBar: {
-    backgroundColor: 'black',
+    backgroundColor: CLUEDIN_DARK_SCHEME.header_background,
     height: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    borderBottomWidth: 1, // Add a bottom border
-    borderBottomColor: 'grey', // Set the border color to grey
   },
   logoText: {
-    color: 'white',
+    color: CLUEDIN_DARK_SCHEME.header_background_text,
     fontSize: 24,
   },
 });

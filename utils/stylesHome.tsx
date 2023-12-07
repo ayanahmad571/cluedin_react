@@ -1,9 +1,10 @@
 import {StyleSheet} from 'react-native';
+import { CLUEDIN_DARK_SCHEME, CLUEDIN_THEME } from './constants';
 
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'black',
+    backgroundColor: CLUEDIN_DARK_SCHEME.background,
   },
   scrollContainer: {
     flexGrow: 1,
@@ -19,7 +20,7 @@ export const styles = StyleSheet.create({
     borderBottomRightRadius: 0,
     borderBottomLeftRadius: 0,
     overflow: 'hidden',
-    backgroundColor: '#384353',
+    backgroundColor: CLUEDIN_DARK_SCHEME.home.row1_bg,
   },
   secondRow: {
     flexDirection: 'row',
@@ -30,7 +31,7 @@ export const styles = StyleSheet.create({
     borderBottomRightRadius: 10,
     borderBottomLeftRadius: 10,
     overflow: 'hidden',
-    backgroundColor: '#384353',
+    backgroundColor: CLUEDIN_DARK_SCHEME.home.row1_bg,
   },
   thirdRow: {
     flexDirection: 'row',
@@ -38,7 +39,7 @@ export const styles = StyleSheet.create({
     margin: 10,
     marginBottom: 0,
     borderRadius: 10,
-    backgroundColor: '#091b26',
+    backgroundColor: CLUEDIN_DARK_SCHEME.home.row2_bg,
     borderBottomRightRadius: 0,
     borderBottomLeftRadius: 0, // Remove bottom left radius
   },
@@ -48,7 +49,7 @@ export const styles = StyleSheet.create({
     margin: 10,
     marginTop: 0,
     borderRadius: 10,
-    backgroundColor: '#091b26',
+    backgroundColor: CLUEDIN_DARK_SCHEME.home.row2_bg,
     borderTopRightRadius: 0,
     borderTopLeftRadius: 0, // Remove top left radius
   },
@@ -58,7 +59,7 @@ export const styles = StyleSheet.create({
     margin: 10,
     marginBottom: 0,
     borderRadius: 10,
-    backgroundColor: '#fa7268',
+    backgroundColor: CLUEDIN_DARK_SCHEME.home.row3_bg,
     borderBottomRightRadius: 0,
     borderBottomLeftRadius: 0, // Remove bottom left radius
   },
@@ -69,7 +70,7 @@ export const styles = StyleSheet.create({
     marginTop: 0,
     marginBottom: 1,
     borderRadius: 10,
-    backgroundColor: '#fa7268',
+    backgroundColor: CLUEDIN_DARK_SCHEME.home.row3_bg,
     borderTopRightRadius: 0,
     borderTopLeftRadius: 0, // Remove top left radius
   },
@@ -80,7 +81,7 @@ export const styles = StyleSheet.create({
     marginTop: 1,
     marginBottom: 0,
     borderRadius: 10,
-    backgroundColor: '#5c7829',
+    backgroundColor: CLUEDIN_DARK_SCHEME.home.row3_bg,
     borderBottomRightRadius: 0,
     borderBottomLeftRadius: 0, // Remove bottom left radius
   },
@@ -89,7 +90,7 @@ export const styles = StyleSheet.create({
     margin: 10,
     marginTop: 0,
     borderRadius: 10,
-    backgroundColor: '#5c7829',
+    backgroundColor: CLUEDIN_DARK_SCHEME.home.row3_bg,
     borderTopRightRadius: 0,
     borderTopLeftRadius: 0, // Remove top left radius
   },
@@ -100,11 +101,12 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 16, // Adjust as needed
     paddingVertical: 8, // Adjust as needed
     borderBottomWidth: 1, // Add a border to separate rows
-    borderColor: '#ccc', // Customize border color
+    borderColor: CLUEDIN_THEME.light_grey, // Customize border color
   },
   optionRowText: {
-    fontSize: 20,
-    fontWeight: '500',
+    fontSize: 16,
+    fontWeight: '300',
+    color: CLUEDIN_DARK_SCHEME.home.row3_bg_text,
   },
   buttonContainer: {
     flexDirection: 'row',
@@ -112,40 +114,50 @@ export const styles = StyleSheet.create({
     margin: 10,
   },
   buttonAnswer: {
-    backgroundColor: '#F4FAFF',
+    backgroundColor: CLUEDIN_DARK_SCHEME.home.clue_btn_bg,
     padding: 10,
     borderRadius: 10,
     width: '70%',
     alignItems: 'center',
   },
   disabledButtonAnswer: {
-    backgroundColor: 'black',
+    backgroundColor: CLUEDIN_THEME.yellow,
     padding: 10,
     borderRadius: 10,
     width: '70%',
     alignItems: 'center',
   },
   button: {
-    backgroundColor: '#F4FAFF',
+    backgroundColor: CLUEDIN_DARK_SCHEME.home.clue_btn_bg,
     padding: 10,
     borderRadius: 10,
     width: '32%',
     alignItems: 'center',
   },
   usedClueButton: {
-    backgroundColor: '#919191',
+    backgroundColor: CLUEDIN_THEME.light_grey,
   },
   usedAnsButton: {
-    backgroundColor: '#919191',
-    color: 'red',
+    backgroundColor: CLUEDIN_DARK_SCHEME.home.used_ans_bg,
+    color: CLUEDIN_DARK_SCHEME.home.used_ans_bg_text,
   },
   usedAnsButtonText: {
-    backgroundColor: '#919191',
-    fontSize: 18,
-    color: 'red',
+    backgroundColor: CLUEDIN_DARK_SCHEME.home.used_ans_bg,
+    fontSize: 16,
+    color: CLUEDIN_DARK_SCHEME.home.used_ans_bg_text,
+    textDecorationLine: 'line-through',
+    textDecorationStyle: 'solid',
   },
   buttonText: {
-    fontSize: 18,
+    fontSize: 16,
+  },
+  ansButtonText: {
+    fontSize: 16,
+    color: CLUEDIN_THEME.black,
+  },
+  ansDisButtonText: {
+    fontSize: 16,
+    color: CLUEDIN_THEME.yellow,
   },
   box: {
     flex: 1,
@@ -159,26 +171,26 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   boxText: {
-    color: 'white',
+    color: CLUEDIN_DARK_SCHEME.home.row2_bg_text,
     fontSize: 18,
     fontWeight: 'bold',
   },
   boxTextL: {
-    color: 'white',
+    color: CLUEDIN_DARK_SCHEME.home.row2_bg_text,
     fontSize: 18,
   },
   boxTextTitle: {
-    color: 'white',
+    color: CLUEDIN_DARK_SCHEME.home.row2_bg_text,
     fontWeight: 'bold',
     fontSize: 24,
   },
   boxTextNormal: {
-    color: 'white',
+    color: CLUEDIN_DARK_SCHEME.home.row2_bg_text,
     fontSize: 16,
     fontWeight: '200',
   },
   countdown: {
-    color: 'white',
+    color: CLUEDIN_DARK_SCHEME.home.row2_bg_text,
     fontSize: 18,
   },
 });

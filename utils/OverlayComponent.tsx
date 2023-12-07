@@ -99,7 +99,7 @@ const OverlayComponent = ({id, onClose, question, setQuestion, user}) => {
 const styles = StyleSheet.create({
   overlayContainer: {
     flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+    backgroundColor: 'rgba(0, 0, 0, 0.9)',
     justifyContent: 'center',
     alignItems: 'center',
   },
