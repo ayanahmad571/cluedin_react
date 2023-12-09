@@ -68,7 +68,7 @@ const iconTwoCol = CLUEDIN_DARK_SCHEME.help.container2_bg_text;
 
 const HelpPage = () => {
   const clueTableData = [
-    ['Easy', 'Medium', 'Hard'],
+    ['Hard', 'Medium', 'Easy'],
     ['-10', '-20', '-30'],
   ];
   const optionTableData = [
@@ -145,17 +145,18 @@ const HelpPage = () => {
               name="caret-forward-circle-sharp"
               style={{color: iconTwoCol}}
             />{' '}
-            Easy, Medium, and Hard take off 10, 20, or 30 points respectively.
+            Easy, Medium, and Hard take off 30, 20, & 10 points respectively.
           </Text>
           <Text style={styles.bulletTwo}>
             <Ionicons
               name="caret-forward-circle-sharp"
               style={{color: iconTwoCol}}
             />{' '}
-            Once you selected the clues, the ability to select an answer will be
-            enabled. You must now pick at least 1 answer to obtain a score for
-            the day. Each answer you guess takes off 15 points. The table below
-            demonstrates number of points and their respective cost.
+            Once you select at least 1 clue, the ability to select an answer
+            will be enabled. You must now pick at least 1 option as your answer
+            to obtain a score for the day. Each option you select takes off 15
+            points. The table below demonstrates number of points and
+            their respective costs.
           </Text>
           <Text style={styles.bulletTwo}>
             <View style={styles.table}>
@@ -175,17 +176,19 @@ const HelpPage = () => {
               name="caret-forward-circle-sharp"
               style={{color: iconTwoCol}}
             />{' '}
-            The highest number of points you can achieve in a day = 1 - Hard
-            Clue & 1 Option, this gives you a full score = 100 points.
+            The highest number of points you can achieve in a day = 100 points.
+            This is achieved through selecting 1 Hard Clue (125 - 10 = 115) &
+            1 Option (115 - 15) {'=>'} 100 points.
           </Text>
           <Text style={styles.bulletTwo}>
             <Ionicons
               name="caret-forward-circle-sharp"
               style={{color: iconTwoCol}}
             />{' '}
-            Similarly, the lowest attainable score a day = All 3 clues - Hard,
-            Medium and Easy Clue & 5 Options, this gives you a full score of -10 
-            points {':('}
+            Similarly, the lowest attainable score a day = -10 points. This can be
+            achieved by selecting all clues (125 - 10 - 20 - 30 = 65),
+            & then selecting 5 Options (65 - 15 - 15 - 15 - 15 - 15 = -10). 
+            This gives you a score of -10 points {':('}
           </Text>
         </View>
       </View>
