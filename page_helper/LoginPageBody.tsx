@@ -64,6 +64,12 @@ const LoginPageBody = ({navigation}) => {
         setErrorMessage('Invalid Email, please re-enter and try again!');
 
         // Handle bad request, e.g., show an error message to the user
+      } else if (response.status === 429) {
+        // Unauthorized (HTTP status code 401)
+        // Handle unauthorized access, e.g., show an error message
+        setErrorMessage(
+          'Maximum number of attempts reached. Please wait 3 minutes before requesting a new OTP.',
+        );
       } else {
         // Handle other response codes
         setErrorMessage('Unable to login, please contact Site Admin');
