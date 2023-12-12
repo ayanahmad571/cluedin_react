@@ -100,6 +100,12 @@ const OTPVerifyPageBody = () => {
         // Unauthorized (HTTP status code 401)
         // Handle unauthorized access, e.g., show an error message
         setOtpErrorMessage('OTP Incorrect or Expired');
+      } else if (response.status === 406) {
+        // Unauthorized (HTTP status code 401)
+        // Handle unauthorized access, e.g., show an error message
+        setOtpErrorMessage(
+          'Maximum number of attempts reached. Request New OTP',
+        );
       } else if (response.status === 500) {
         // Internal Server Error (HTTP status code 500)
         // Handle server error, e.g., show an error message
