@@ -127,19 +127,17 @@ const HelpPage = () => {
             a clue before you can start answering. Each clue costs a certain
             amount of points, refer to the table below:
           </Text>
-          <Text style={styles.bulletTwo}>
-            <View style={styles.table}>
-              {clueTableData.map((row, rowIndex) => (
-                <View key={rowIndex} style={styles.row}>
-                  {row.map((cell, cellIndex) => (
-                    <View key={cellIndex} style={styles.cell}>
-                      <Text style={styles.cellText}>{cell}</Text>
-                    </View>
-                  ))}
-                </View>
-              ))}
-            </View>
-          </Text>
+          <View style={styles.table}>
+            {clueTableData.map((row, rowIndex) => (
+              <View key={rowIndex} style={styles.row}>
+                {row.map((cell, cellIndex) => (
+                  <View key={cellIndex} style={styles.cell}>
+                    <Text style={styles.cellText}>{cell}</Text>
+                  </View>
+                ))}
+              </View>
+            ))}
+          </View>
           <Text style={styles.bulletTwo}>
             <Ionicons
               name="caret-forward-circle-sharp"
@@ -158,19 +156,19 @@ const HelpPage = () => {
             points. The table below demonstrates number of points and
             their respective costs.
           </Text>
-          <Text style={styles.bulletTwo}>
-            <View style={styles.table}>
-              {optionTableData.map((row, rowIndex) => (
-                <View key={rowIndex} style={styles.row}>
-                  {row.map((cell, cellIndex) => (
-                    <View key={cellIndex} style={styles.cell}>
-                      <Text style={styles.cellText}>{cell}</Text>
-                    </View>
-                  ))}
-                </View>
-              ))}
-            </View>
-          </Text>
+        
+          <View style={styles.table}>
+            {optionTableData.map((row, rowIndex) => (
+              <View key={rowIndex} style={styles.row}>
+                {row.map((cell, cellIndex) => (
+                  <View key={cellIndex} style={styles.cell}>
+                    <Text style={styles.cellText}>{cell}</Text>
+                  </View>
+                ))}
+              </View>
+            ))}
+          </View>
+        
           <Text style={styles.bulletTwo}>
             <Ionicons
               name="caret-forward-circle-sharp"
