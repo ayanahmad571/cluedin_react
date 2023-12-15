@@ -6,6 +6,8 @@ import {
   TouchableOpacity,
   StyleSheet,
   Keyboard,
+  KeyboardAvoidingView,
+  Platform,
 } from 'react-native';
 import LoaderOverlay from './LoaderOverlay'; // Import the LoaderOverlay component
 import {API_BASE_URL, CLUEDIN_DARK_SCHEME} from '../utils/constants';
@@ -90,43 +92,50 @@ const LoginPageBody = ({navigation}) => {
   const isButtonEnabled = validateEmail(email) && !isLoading;
 
   return (
-    <View style={styles.loginPageBody}>
-      <Text style={styles.loginText}>Login / Sign-up</Text>
-      <Text style={styles.infoText}>
-        Enter your email below to receive a One Time Password.
-      </Text>
-      <Text style={styles.dangerText}>{errorMessage}</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Enter your email"
-        value={email}
-        onChangeText={setEmail}
-      />
-      <TouchableOpacity
-        style={[
-          styles.loginButton,
-          isButtonEnabled
-            ? styles.loginButtonEnabled
-            : styles.loginButtonDisabled,
-        ]}
-        activeOpacity={0.8}
-        onPress={handleLogin}
-        disabled={!isButtonEnabled}>
-        <Text
-          style={
-            isButtonEnabled
-              ? styles.buttonTextEnabled
-              : styles.buttonTextDisabled
-          }>
-          Login
+    <KeyboardAvoidingView 
+    behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+    style={styles.kb_cont}>
+      <View style={styles.loginPageBody}>
+        <Text style={styles.loginText}>Login / Sign-up</Text>
+        <Text style={styles.infoText}>
+          Enter your email below to receive a One Time Password.
         </Text>
-      </TouchableOpacity>
-      <LoaderOverlay visible={isLoading} />
-    </View>
+        <Text style={styles.dangerText}>{errorMessage}</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Enter your email"
+          value={email}
+          onChangeText={setEmail}
+        />
+        <TouchableOpacity
+          style={[
+            styles.loginButton,
+            isButtonEnabled
+              ? styles.loginButtonEnabled
+              : styles.loginButtonDisabled,
+          ]}
+          activeOpacity={0.8}
+          onPress={handleLogin}
+          disabled={!isButtonEnabled}>
+          <Text
+            style={
+              isButtonEnabled
+                ? styles.buttonTextEnabled
+                : styles.buttonTextDisabled
+            }>
+            Login
+          </Text>
+        </TouchableOpacity>
+        <LoaderOverlay visible={isLoading} />
+      </View>
+    </KeyboardAvoidingView>
   );
 };
 
 const styles = StyleSheet.create({
+  kb_cont: {
+    flex: 1
+  },
   loginPageBody: {
     flex: 1,
     backgroundColor: CLUEDIN_DARK_SCHEME.background,

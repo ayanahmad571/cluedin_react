@@ -77,63 +77,72 @@ const LeaderboardPage = () => {
   }, []); // Empty dependency array means this effect runs once on mount
 
   return (
-    <ScrollView
-      style={styles.container}
-      refreshControl={
-        <RefreshControl
-          refreshing={refreshing}
-          onRefresh={handleRefresh}
-          colors={['#000']} // Customize the loading indicator color
-        />
-      }>
-      <Text style={styles.pageTitle}>Leaderboard</Text>
-      {errorMsg === '' ? (
-        <>
-        <View style={styles.row}>
-            <Text style={styles.textSubT}>Your Monthly Stats (Leaderboard is reset on the 1st of every month :) )</Text>
-        </View>
-          <View style={styles.row}>
-            <View style={styles.infoBox}>
-              <Text style={styles.infoText}>
-                Rank:{' '}
-                <Text style={{fontWeight: 'bold'}}>
-                  {leaderboard.user_rank}
-                </Text>
-              </Text>
-            </View>
-            <View style={styles.infoBox}>
-              <Text style={styles.infoText}>
-                Points:{' '}
-                <Text style={{fontWeight: 'bold'}}>
-                  {leaderboard.user_points}
-                </Text>
-              </Text>
-            </View>
-          </View>
+    <View style={{flex: 1}}>
+      <ScrollView
+        contentContainerStyle={{
+          flexGrow: 1,
+          flex: 1,
+          padding: 0,
+        }}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={handleRefresh}
+            colors={['#fff']} // Customize the loading indicator color
+          />
+        }>
+          <View style={styles.container}>
+            <Text style={styles.pageTitle}>Leaderboard</Text>
+            {errorMsg === '' ? (
+              <>
+              <View style={styles.row}>
+                  <Text style={styles.textSubT}>Your Monthly Stats (Leaderboard is reset on the 1st of every month :) )</Text>
+              </View>
+                <View style={styles.row}>
+                  <View style={styles.infoBox}>
+                    <Text style={styles.infoText}>
+                      Rank:{' '}
+                      <Text style={{fontWeight: 'bold'}}>
+                        {leaderboard.user_rank}
+                      </Text>
+                    </Text>
+                  </View>
+                  <View style={styles.infoBox}>
+                    <Text style={styles.infoText}>
+                      Points:{' '}
+                      <Text style={{fontWeight: 'bold'}}>
+                        {leaderboard.user_points}
+                      </Text>
+                    </Text>
+                  </View>
+                </View>
 
-          {leaderboard.leaderboard.map(data => (
-            <RankDisplayBox
-              key={data.rank}
-              rank={data.rank}
-              points={data.points}
-              users={data.users}
-            />
-          ))}
-        </>
-      ) : (
-        <View style={styles.row}>
-          <View style={styles.infoBox}>
-            <Text style={styles.infoText}>{errorMsg}</Text>
-          </View>
+                {leaderboard.leaderboard.map(data => (
+                  <RankDisplayBox
+                    key={data.rank}
+                    rank={data.rank}
+                    points={data.points}
+                    users={data.users}
+                  />
+                ))}
+              </>
+            ) : (
+              <View style={styles.row}>
+                <View style={styles.infoBox}>
+                  <Text style={styles.infoText}>{errorMsg}</Text>
+                </View>
+              </View>
+            )}
         </View>
-      )}
-    </ScrollView>
+      </ScrollView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     backgroundColor: CLUEDIN_DARK_SCHEME.background,
+    flex: 1,
   },
   textSubT: {
     color: CLUEDIN_DARK_SCHEME.text_on_background,
