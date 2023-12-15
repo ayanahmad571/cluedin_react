@@ -54,8 +54,8 @@ if(os === 'android'){
 // Function to check if the current time is 2pm UTC
 const isTwoPMUTC = () => {
   const now = new Date();
-  const hours_req = 18;
-  const mins_req = 38;
+  const hours_req = 14;
+  const mins_req = 0;
   const checker = (now.getUTCHours() === hours_req && now.getUTCMinutes() === mins_req)
   return checker;
 };
