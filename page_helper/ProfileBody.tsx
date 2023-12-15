@@ -33,7 +33,7 @@ const UserProfileBody = () => {
         setUserJwt(decodedToken);
         setUsername(decodedToken.user_name);
       } catch (error) {
-        console.error('Error decoding JWT:', error.message);
+        // console.error('Error decoding JWT:', error.message);
       }
     };
 
@@ -58,7 +58,7 @@ const UserProfileBody = () => {
         setUser('');
       }, 2000);
     } catch (error) {
-      console.log('Error whilst deleting storage');
+      // console.log('Error whilst deleting storage');
     }
     // Perform any additional logout logic here
   };
@@ -127,8 +127,8 @@ const UserProfileBody = () => {
 
   const handleSave = () => {
     setIsLoading(true);
-    console.log('Username saved:', username);
-    console.log(user_jwt);
+    // console.log('Username saved:', username);
+    // console.log(user_jwt);
 
     // Send a request to your API using the provided id
     // For demonstration, we'll simulate an API response after 2 seconds

@@ -25,7 +25,7 @@ const AuthProvider = ({children}) => {
       try {
         // Check if the user has a JWT_USER token in AsyncStorage
         const jwtUser = await AsyncStorage.getItem('JWT_USER');
-        console.log('User Store at APP Level', jwtUser);
+        // console.log('User Store at APP Level', jwtUser);
         if (jwtUser !== null && jwtUser !== '') {
           // Token exists, send a request to validate it
           const response = await fetch(`${API_BASE_URL}/check_login_status`, {
@@ -55,7 +55,7 @@ const AuthProvider = ({children}) => {
       } catch (error) {
         // Network error or other issues, user is not logged in
         setUser('');
-        console.error('Error:', error);
+        // console.error('Error:', error);
       } finally {
         // setIsLoading(false);
       }
@@ -76,7 +76,7 @@ const AuthProvider = ({children}) => {
           body: `v=${API_V}`,
         });
 
-        console.log('STATUS from SERVER', API_V, response.status);
+        // console.log('STATUS from SERVER', API_V, response.status);
 
         if (response.status === 405) {
           // we only need to handle this case as this is when the app is outdated
@@ -89,7 +89,7 @@ const AuthProvider = ({children}) => {
       } catch (error) {
         // Network error or other issues, user is not logged in
         setUpdateAPI(false);
-        console.error('Error:', error);
+        // console.error('Error:', error);
       }
     };
 

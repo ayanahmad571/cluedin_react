@@ -26,7 +26,7 @@ const Logout = ({navigation}) => {
         setUser('');
       }, 2000);
     } catch (error) {
-      console.log('Error whilst deleting storage');
+      // console.log('Error whilst deleting storage');
     }
     // Perform any additional logout logic here
   };

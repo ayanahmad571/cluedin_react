@@ -39,7 +39,7 @@ const Home = () => {
       })
       .catch(error => {
         setRefreshing(false); // Make sure to hide it even in case of an error
-        console.error('Error while refreshing:', error);
+        // console.error('Error while refreshing:', error);
       });
   };
 
@@ -64,12 +64,12 @@ const Home = () => {
           Authorization: `Bearer ${jwtUser}`,
         },
       });
-      console.log('The API has been called');
+      // console.log('The API has been called');
 
       if (response.status === 200) {
         // Successful response, parse and set the question
         const data = await response.json();
-        console.log(data);
+        // console.log(data);
         const keysToCheck = [
           'clues_used',
           'clues_used_values',

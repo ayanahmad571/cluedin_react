@@ -19,7 +19,7 @@ const SettingsBody = ({navigation}) => {
         const decodedToken = jwtDecode(user);
         setUserJwt(decodedToken);
       } catch (error) {
-        console.error('Error decoding JWT:', error.message);
+        // console.error('Error decoding JWT:', error.message);
       }
     };
 

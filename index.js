@@ -12,11 +12,11 @@ const os = Platform.OS; // 'ios' or 'android'
 
 PushNotification.configure({
   onRegister: function (token) {
-    console.log("TOKEN:", token);
+    // console.log("TOKEN:", token);
   },
 
   onNotification: function (notification) {
-    // console.log("NOTIFICATION:", notification);
+    // // console.log("NOTIFICATION:", notification);
     // Remove badge number when notification is opened
     PushNotification.setApplicationIconBadgeNumber(0);
 
@@ -47,7 +47,7 @@ if(os === 'android'){
       soundName: 'default',
       importance: 4,
     },
-    // created => console.log(`Channel created: ${created}`)
+    // created => // console.log(`Channel created: ${created}`)
   );
 }
 
@@ -62,7 +62,7 @@ const isTwoPMUTC = () => {
 
 // Function to be executed by the timer
 const timerFunction = () => {
-  // console.log('Timer executed at:', new Date());
+  // // console.log('Timer executed at:', new Date());
 
   // Check if the current time is 2pm UTC
   if (isTwoPMUTC()) {

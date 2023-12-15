@@ -43,12 +43,12 @@ const LeaderboardPage = () => {
           Authorization: `Bearer ${jwtUser}`,
         },
       });
-      console.log('The API has been called');
+      // console.log('The API has been called');
 
       if (response.status === 200) {
         // Successful response, parse and set the question
         const data = await response.json();
-        console.log(data);
+        // console.log(data);
         const keysToCheck = ['leaderboard', 'user_rank', 'user_points'];
 
         // Iterate through the keys and check if they exist in the data
