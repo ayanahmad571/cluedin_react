@@ -134,7 +134,7 @@ const LoginPageBody = ({navigation}) => {
 
 const styles = StyleSheet.create({
   kb_cont: {
-    flex: 1
+    flex: 1,
   },
   loginPageBody: {
     flex: 1,
