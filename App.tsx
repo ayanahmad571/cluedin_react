@@ -2,16 +2,23 @@ import React, {createContext, useState, useEffect} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import SplashScreenPage from './pages/SplashScreen';
-import {API_BASE_URL} from './utils/constants';
+import {
+  ANDROID_APP_VERSION,
+  API_BASE_URL,
+  IOS_APP_VERSION,
+} from './utils/constants';
 import AuthContext from './utils/AuthContext'; // Import the AuthContext from your file
 import SplashScreen from 'react-native-splash-screen';
 import NotLoggedInComponents from './page_helper/NotLoggedInComps';
 import LoggedInComponents from './page_helper/LoggedInComps';
+import {Platform} from 'react-native';
+import ForceAPIUpdate from './pages/ForceAPIUpdate';
 
 // Create an AuthProvider component
 const AuthProvider = ({children}) => {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [updateAPI, setUpdateAPI] = useState(false);
 
   useEffect(() => {
     const checkAuthentication = async () => {
@@ -50,17 +57,53 @@ const AuthProvider = ({children}) => {
         setUser('');
         console.error('Error:', error);
       } finally {
-        setIsLoading(false);
+        // setIsLoading(false);
+      }
+    };
+
+    const checkApiVersion = async () => {
+      try {
+        // Check if the user has a JWT_USER token in AsyncStorage
+        // Token exists, send a request to validate it
+        const os = Platform.OS; // 'ios' or 'android'
+        const API_V = os === 'ios' ? IOS_APP_VERSION : ANDROID_APP_VERSION;
+
+        const response = await fetch(`${API_BASE_URL}/version`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          body: `v=${API_V}`,
+        });
+
+        console.log('STATUS from SERVER', API_V, response.status);
+
+        if (response.status === 405) {
+          // we only need to handle this case as this is when the app is outdated
+          setUpdateAPI(true);
+        } else {
+          // Token is expired or other error, user is not logged in
+          // Set JWT_USER to an empty string
+          setUpdateAPI(false);
+        }
+      } catch (error) {
+        // Network error or other issues, user is not logged in
+        setUpdateAPI(false);
+        console.error('Error:', error);
       }
     };
 
     checkAuthentication();
+    checkApiVersion();
+    setIsLoading(false);
     SplashScreen.hide();
   }, []);
 
   return (
     <AuthContext.Provider value={{user, setUser}}>
-      {isLoading ? (
+      {updateAPI ? (
+        <ForceAPIUpdate />
+      ) : isLoading ? (
         // Render a SplashScreenPage or Loading component
         <SplashScreenPage />
       ) : user ? (
@@ -73,7 +116,6 @@ const AuthProvider = ({children}) => {
     </AuthContext.Provider>
   );
 };
-
 
 const App = () => {
   return (
