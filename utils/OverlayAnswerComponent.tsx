@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
-import {API_BASE_URL} from './constants';
+import {API_BASE_URL, CLUEDIN_DARK_SCHEME, CLUEDIN_THEME} from './constants';
 
 const OverlayAnswerComponent = ({id, onClose, question, setQuestion, user}) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -69,63 +69,99 @@ const OverlayAnswerComponent = ({id, onClose, question, setQuestion, user}) => {
   }, [id]);
 
   return (
-    <View style={styles.overlayContainer}>
-      <TouchableOpacity style={styles.closeButton} onPress={onClose}>
-        <Text style={styles.closeButtonText}>X</Text>
+    <TouchableOpacity style={styles.modalContainer} onPress={onClose}>
+      <TouchableOpacity activeOpacity={1} style={styles.overlayContainer}>
+        <View style={styles.popupContainer}>
+          <View style={styles.row}>
+            <TouchableOpacity style={styles.closeButton} onPress={onClose}>
+              <Text style={styles.closeButtonText}>X</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.contentRow}>
+            <View style={styles.row}>
+              {errorOptionMsg !== '' ? (
+                <Text style={styles.body}>{errorOptionMsg}</Text>
+              ) : isLoading ? (
+                <Text style={styles.body}>
+                  Please Wait: Checking Answer ...
+                </Text>
+              ) : (
+                <>
+                  <Text style={styles.body}>
+                    {ansTextDisplay[question['complete']]}
+                  </Text>
+                </>
+              )}
+            </View>
+          </View>
+          <View style={styles.row}>
+            <TouchableOpacity
+              style={styles.closeBtnBottomBtn}
+              onPress={onClose}>
+              <Text style={styles.closeBtnBottomText}>Close</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
       </TouchableOpacity>
-      <View style={styles.overlayContent}>
-        {errorOptionMsg !== '' ? (
-          <Text style={styles.apiResponse}>{errorOptionMsg}</Text>
-        ) : isLoading ? (
-          <Text style={styles.loadingText}>
-            Please Wait: Checking Answer with the Cloud ...
-          </Text>
-        ) : (
-          <Text style={styles.apiResponse}>
-            <Text style={styles.apiResponseHeader}>
-              {ansTextDisplay[question['complete']]}
-            </Text>
-          </Text>
-        )}
-      </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
-  overlayContainer: {
+  popupContainer: {
+    height: '100%',
+    width: '100%',
+    backgroundColor: CLUEDIN_DARK_SCHEME.text_on_background,
+    borderRadius: 2,
+  },
+  modalContainer: {
     flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+    backgroundColor: 'rgba(0, 0, 0, 0.9)',
     justifyContent: 'center',
     alignItems: 'center',
   },
+  contentRow: {
+    flex: 1,
+    width: '100%',
+    padding: 5,
+  },
+  row: {
+    width: '100%',
+    padding: 5,
+  },
+  overlayContainer: {
+    width: '80%',
+    height: '40%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  closeBtnBottomBtn: {
+    padding: 10,
+    margin: 2,
+    backgroundColor: CLUEDIN_DARK_SCHEME.about.btn_bg,
+  },
+  closeBtnBottomText: {
+    textAlign: 'center',
+    fontWeight: '700',
+    fontSize: 15,
+    color: CLUEDIN_DARK_SCHEME.about.btn_bg_text,
+  },
   closeButton: {
-    position: 'absolute',
-    top: 20,
-    right: 20,
-    backgroundColor: 'white',
+    textAlign: 'right',
     padding: 20,
-    borderRadius: 20,
   },
   closeButtonText: {
+    textAlign: 'right',
     color: 'black',
   },
-  overlayContent: {
-    backgroundColor: 'white',
-    padding: 20,
-    borderRadius: 10,
-    width: '80%',
-  },
-  apiResponseHeader: {
-    fontSize: 20,
+  title: {
+    fontSize: 25,
     fontWeight: 'bold',
+    marginBottom: 10,
   },
-  apiResponse: {
-    fontSize: 18,
-  },
-  loadingText: {
+  body: {
+    marginTop: 10,
     fontSize: 20,
-    color: 'gray',
     fontWeight: '500',
   },
 });

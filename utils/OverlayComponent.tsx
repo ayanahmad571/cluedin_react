@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import {API_BASE_URL, CLUEDIN_DARK_SCHEME, CLUEDIN_THEME} from './constants';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const OverlayComponent = ({id, onClose, question, setQuestion, user}) => {
   const [isLoading, setIsLoading] = useState(true);
