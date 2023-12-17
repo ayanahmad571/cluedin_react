@@ -21,6 +21,32 @@ const AuthProvider = ({children}) => {
   const [updateAPI, setUpdateAPI] = useState(false);
 
   useEffect(() => {
+    const checkApiVersion = async () => {
+      try {
+        const os = Platform.OS; // 'ios' or 'android'
+        const API_V = os === 'ios' ? IOS_APP_VERSION : ANDROID_APP_VERSION;
+
+        const response = await fetch(`${API_BASE_URL}/version`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          body: `v=${API_V}`,
+        });
+
+        if (response.status === 405) {
+          // we only need to handle this case as this is when the app is outdated
+          setUpdateAPI(true);
+        } else {
+          // for all other cases, the app v is okay
+          setUpdateAPI(false);
+        }
+      } catch (error) {
+        // Network error its okay for the app to bypass api check
+        setUpdateAPI(false);
+      }
+    };
+
     const checkAuthentication = async () => {
       try {
         // Check if the user has a JWT_USER token in AsyncStorage
@@ -57,46 +83,13 @@ const AuthProvider = ({children}) => {
         setUser('');
         // console.error('Error:', error);
       } finally {
-        // setIsLoading(false);
-      }
-    };
-
-    const checkApiVersion = async () => {
-      try {
-        // Check if the user has a JWT_USER token in AsyncStorage
-        // Token exists, send a request to validate it
-        const os = Platform.OS; // 'ios' or 'android'
-        const API_V = os === 'ios' ? IOS_APP_VERSION : ANDROID_APP_VERSION;
-
-        const response = await fetch(`${API_BASE_URL}/version`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-          },
-          body: `v=${API_V}`,
-        });
-
-        // console.log('STATUS from SERVER', API_V, response.status);
-
-        if (response.status === 405) {
-          // we only need to handle this case as this is when the app is outdated
-          setUpdateAPI(true);
-        } else {
-          // Token is expired or other error, user is not logged in
-          // Set JWT_USER to an empty string
-          setUpdateAPI(false);
-        }
-      } catch (error) {
-        // Network error or other issues, user is not logged in
-        setUpdateAPI(false);
-        // console.error('Error:', error);
+        setIsLoading(false);
+        SplashScreen.hide();
       }
     };
 
     checkAuthentication();
     checkApiVersion();
-    setIsLoading(false);
-    SplashScreen.hide();
   }, []);
 
   return (

@@ -83,3 +83,4 @@ const timerFunction = () => {
 
 // Start the timer with a 1-minute interval
 BackgroundTimer.runBackgroundTimer(timerFunction, 60000);
+PushNotification.setApplicationIconBadgeNumber(0);
