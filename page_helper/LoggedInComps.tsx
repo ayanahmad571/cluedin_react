@@ -36,10 +36,14 @@ const LoggedInComponents = () => (
         );
       },
       // eslint-disable-next-line react/no-unstable-nested-components
-      headerTitle: () => <TopBarRealComponent />,
       headerStyle: {
         backgroundColor: CLUEDIN_DARK_SCHEME.header_background,
-        borderColor: CLUEDIN_DARK_SCHEME.header_background,
+      },
+      headerTintColor: CLUEDIN_DARK_SCHEME.header_background_text, // Set the text color to white
+      headerTitleStyle: {
+        fontSize: 20, // Customize the font size
+        fontWeight: '500', // Customize the font weight
+        color: CLUEDIN_DARK_SCHEME.header_background_text, // Set the text color to white
       },
       tabBarStyle: {
         backgroundColor: CLUEDIN_DARK_SCHEME.header_background,

@@ -3,7 +3,11 @@ import {View, Text, ScrollView, StyleSheet, RefreshControl} from 'react-native';
 import RankDisplayBox from '../utils/RankDisplayBox';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AuthContext from '../utils/AuthContext';
-import {API_BASE_URL, CLUEDIN_DARK_SCHEME, CLUEDIN_THEME} from '../utils/constants';
+import {
+  API_BASE_URL,
+  CLUEDIN_DARK_SCHEME,
+  CLUEDIN_THEME,
+} from '../utils/constants';
 // Create the RankDisplayBox component
 
 const LeaderboardPage = () => {
@@ -91,48 +95,50 @@ const LeaderboardPage = () => {
             colors={['#fff']} // Customize the loading indicator color
           />
         }>
-          <View style={styles.container}>
-            <Text style={styles.pageTitle}>Leaderboard</Text>
-            {errorMsg === '' ? (
-              <>
+        <View style={styles.container}>
+          {errorMsg === '' ? (
+            <>
               <View style={styles.row}>
-                  <Text style={styles.textSubT}>Your Monthly Stats (Leaderboard is reset on the 1st of every month :) )</Text>
+                <Text style={styles.textSubT}>
+                  Your Monthly Stats (Leaderboard is reset on the 1st of every
+                  month :) )
+                </Text>
               </View>
-                <View style={styles.row}>
-                  <View style={styles.infoBox}>
-                    <Text style={styles.infoText}>
-                      Rank:{' '}
-                      <Text style={{fontWeight: 'bold'}}>
-                        {leaderboard.user_rank}
-                      </Text>
-                    </Text>
-                  </View>
-                  <View style={styles.infoBox}>
-                    <Text style={styles.infoText}>
-                      Points:{' '}
-                      <Text style={{fontWeight: 'bold'}}>
-                        {leaderboard.user_points}
-                      </Text>
-                    </Text>
-                  </View>
-                </View>
-
-                {leaderboard.leaderboard.map(data => (
-                  <RankDisplayBox
-                    key={data.rank}
-                    rank={data.rank}
-                    points={data.points}
-                    users={data.users}
-                  />
-                ))}
-              </>
-            ) : (
               <View style={styles.row}>
                 <View style={styles.infoBox}>
-                  <Text style={styles.infoText}>{errorMsg}</Text>
+                  <Text style={styles.infoText}>
+                    Rank:{' '}
+                    <Text style={{fontWeight: 'bold'}}>
+                      {leaderboard.user_rank}
+                    </Text>
+                  </Text>
+                </View>
+                <View style={styles.infoBox}>
+                  <Text style={styles.infoText}>
+                    Points:{' '}
+                    <Text style={{fontWeight: 'bold'}}>
+                      {leaderboard.user_points}
+                    </Text>
+                  </Text>
                 </View>
               </View>
-            )}
+
+              {leaderboard.leaderboard.map(data => (
+                <RankDisplayBox
+                  key={data.rank}
+                  rank={data.rank}
+                  points={data.points}
+                  users={data.users}
+                />
+              ))}
+            </>
+          ) : (
+            <View style={styles.row}>
+              <View style={styles.infoBox}>
+                <Text style={styles.infoText}>{errorMsg}</Text>
+              </View>
+            </View>
+          )}
         </View>
       </ScrollView>
     </View>
