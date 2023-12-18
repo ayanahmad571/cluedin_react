@@ -10,7 +10,7 @@ import {
 import OverlayComponent from '../utils/OverlayComponent';
 import {styles} from '../utils/stylesHome';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {API_BASE_URL} from '../utils/constants';
+import {API_BASE_URL, CLUEDIN_DARK_SCHEME} from '../utils/constants';
 import AuthContext from '../utils/AuthContext';
 import OverlayAnswerComponent from '../utils/OverlayAnswerComponent';
 import ScoreBody from '../utils/ScoreBody';
@@ -149,7 +149,7 @@ const Home = () => {
   }, []); // Empty dependency array means this effect runs once on mount
 
   return errorMsg === '' ? (
-    <View style={{flex: 1}}>
+    <View style={{flex: 1, backgroundColor: CLUEDIN_DARK_SCHEME.background}}>
       <ScrollView
         contentContainerStyle={styles.scrollContainer}
         refreshControl={

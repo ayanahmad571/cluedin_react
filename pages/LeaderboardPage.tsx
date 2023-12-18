@@ -81,12 +81,10 @@ const LeaderboardPage = () => {
   }, []); // Empty dependency array means this effect runs once on mount
 
   return (
-    <View style={{flex: 1}}>
+    <View style={{flex: 1, backgroundColor: CLUEDIN_DARK_SCHEME.background}}>
       <ScrollView
         contentContainerStyle={{
           flexGrow: 1,
-          flex: 1,
-          padding: 0,
         }}
         refreshControl={
           <RefreshControl
@@ -149,6 +147,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: CLUEDIN_DARK_SCHEME.background,
     flex: 1,
+    paddingBottom: 20,
   },
   textSubT: {
     color: CLUEDIN_DARK_SCHEME.text_on_background,
