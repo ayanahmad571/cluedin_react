@@ -156,7 +156,8 @@ const Home = () => {
           <RefreshControl
             refreshing={refreshing}
             onRefresh={handleRefresh}
-            colors={['#000']} // Customize the loading indicator color
+            colors={["000"]} // Customize the loading indicator color
+            tintColor='white'
           />
         }>
         <View style={styles.container}>
