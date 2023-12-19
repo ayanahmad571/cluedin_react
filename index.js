@@ -2,6 +2,7 @@ import { AppRegistry, Platform } from 'react-native';
 import App from './App';
 import { name as appName } from './app.json';
 import PushNotification from 'react-native-push-notification';
+import PushNotificationIOS from '@react-native-community/push-notification-ios';
 import messaging from '@react-native-firebase/messaging'; // Import messaging from @react-native-firebase/messaging
 
 
@@ -10,11 +11,9 @@ AppRegistry.registerComponent(appName, () => App);
 
 // Initialize Firebase
 messaging().setBackgroundMessageHandler(async remoteMessage => {
+  PushNotification.setApplicationIconBadgeNumber(1);
   console.log('Message handled in the background!', remoteMessage);
 });
-
-// Register the main component
-AppRegistry.registerComponent(appName, () => App);
 
 // Get the FCM token
 messaging().getToken().then(token => {
@@ -34,8 +33,7 @@ PushNotification.configure({
   },
 
   onNotification: function (notification) {
-    PushNotification.setApplicationIconBadgeNumber(0);
-    notification.finish(PushNotificationIOS.FetchResult.NoData);
+    notification.finish(PushNotificationIOSicationIOS.FetchResult.NoData);
     PushNotification.removeAllDeliveredNotifications();
   },
 
@@ -50,7 +48,4 @@ PushNotification.configure({
   senderID: '188135123071', // For Android
 });
 
-
-
-
-// PushNotification.setApplicationIconBadgeNumber(0);
+PushNotification.setApplicationIconBadgeNumber(0);
