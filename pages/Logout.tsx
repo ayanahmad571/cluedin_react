@@ -7,6 +7,7 @@ import {useContext} from 'react';
 import AuthContext from '../utils/AuthContext'; // Adjust the import path as needed
 import SplashScreenPage from './SplashScreen';
 import { CLUEDIN_DARK_SCHEME } from '../utils/constants';
+import {unSetFirebase} from '../utils/firebaseScripts';
 
 const Logout = ({navigation}) => {
   const {setUser} = useContext(AuthContext);
@@ -23,6 +24,7 @@ const Logout = ({navigation}) => {
       setTimeout(() => {
         // Code to be executed after a 2-second delay
         setSpash(false);
+        unSetFirebase();
         setUser('');
       }, 2000);
     } catch (error) {

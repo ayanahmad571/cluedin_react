@@ -13,6 +13,7 @@ import {API_BASE_URL, CLUEDIN_DARK_SCHEME} from '../utils/constants';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useContext} from 'react';
 import AuthContext from '../utils/AuthContext'; // Adjust the import path as needed
+import {setupFirebase} from '../utils/firebaseScripts';
 
 const OTPVerifyPageBody = () => {
   const [otp, setOTP] = useState(['', '', '', '']);
@@ -84,6 +85,7 @@ const OTPVerifyPageBody = () => {
           try {
             await AsyncStorage.setItem('JWT_USER', otpRespData['Access-Token']);
             // Navigate to the EnterOtp.tsx screen (make sure to import the necessary modules for navigation)
+            setupFirebase();
             setUser(otpRespData['Access-Token']);
             return;
           } catch (error) {

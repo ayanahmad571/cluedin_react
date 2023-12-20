@@ -13,6 +13,7 @@ import NotLoggedInComponents from './page_helper/NotLoggedInComps';
 import LoggedInComponents from './page_helper/LoggedInComps';
 import {Platform} from 'react-native';
 import ForceAPIUpdate from './pages/ForceAPIUpdate';
+import {setupFirebase, unSetFirebase} from './utils/firebaseScripts';
 
 // Create an AuthProvider component
 const AuthProvider = ({children}) => {
@@ -63,23 +64,28 @@ const AuthProvider = ({children}) => {
 
           if (response.status === 200) {
             // Token is valid, user is logged in
+            await setupFirebase();
             setUser(jwtUser);
           } else if (response.status === 500) {
             // Server is down, display a message to the user
             // You can navigate to an error screen if needed
             // For now, just set JWT_USER to an empty string
+            await unSetFirebase();
             setUser('');
           } else {
             // Token is expired or other error, user is not logged in
             // Set JWT_USER to an empty string
+            await unSetFirebase();
             setUser('');
           }
         } else {
           // Token doesn't exist or is an empty string, user is not logged in
+          await unSetFirebase();
           setUser('');
         }
       } catch (error) {
         // Network error or other issues, user is not logged in
+        await unSetFirebase();
         setUser('');
         // console.error('Error:', error);
       } finally {

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "188135123071",
+    "project_id": "cluedin-d2189",
+    "storage_bucket": "cluedin-d2189.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:188135123071:android:50204ff607e6755cd4774a",
+        "android_client_info": {
+          "package_name": "com.cluedin"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD7xHVtNJ5GUxsy-Vx9NI_TlF-pAgg5V28"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
