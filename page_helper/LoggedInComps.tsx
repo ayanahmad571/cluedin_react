@@ -15,6 +15,7 @@ const LoggedInComponents = () => (
     initialRouteName="Home" // Set the initial route name to "Home"
     backBehavior="initialRoute" // Set the back behavior to initialRou
     screenOptions={({route}) => ({
+      // unmountOnBlur: true,
       // eslint-disable-next-line react/no-unstable-nested-components
       tabBarIcon: ({focused, color, size}) => {
         let iconName;

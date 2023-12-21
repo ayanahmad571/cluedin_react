@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, {useState, useEffect, useContext, useRef} from 'react';
 import {
   View,
   Text,
@@ -6,6 +6,7 @@ import {
   Modal,
   ScrollView,
   RefreshControl,
+  AppState,
 } from 'react-native';
 import OverlayComponent from '../utils/OverlayComponent';
 import {styles} from '../utils/stylesHome';
@@ -16,6 +17,7 @@ import OverlayAnswerComponent from '../utils/OverlayAnswerComponent';
 import ScoreBody from '../utils/ScoreBody';
 import HomeTopInfoRow from '../page_helper/HomeTopInfoRow.tsx';
 import QuestionMainBody from '../page_helper/QuestionMainBody';
+import { appStateJS } from '../utils/appStateScript';
 
 const Home = () => {
   const [countdown, setCountdown] = useState('00:00:00');
@@ -28,6 +30,7 @@ const Home = () => {
   const {user, setUser} = useContext(AuthContext);
   const [answerOption, setAnswerOption] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
+  const appState = useRef(AppState.currentState);
 
   const handleRefresh = () => {
     setRefreshing(true); // Show the loading indicator
@@ -147,6 +150,8 @@ const Home = () => {
   useEffect(() => {
     fetchTodayQuestion(); // Ensure this is called only once on component mount
   }, []); // Empty dependency array means this effect runs once on mount
+
+  appStateJS(appState, handleRefresh);
 
   return errorMsg === '' ? (
     <View style={{flex: 1, backgroundColor: CLUEDIN_DARK_SCHEME.background}}>
