@@ -10,3 +10,10 @@ Deploy on MAC with Release Profile
 
 ### Android
 Deploy on HP Small.
+
+
+# Version
+
+## Version 1.3
+Add Firebase supports and enhance notifications
+Fix minor bugs in UI

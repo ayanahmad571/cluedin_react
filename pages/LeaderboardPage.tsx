@@ -1,5 +1,5 @@
-import React, {useContext, useEffect, useState} from 'react';
-import {View, Text, ScrollView, StyleSheet, RefreshControl} from 'react-native';
+import React, {useContext, useEffect, useRef, useState} from 'react';
+import {View, Text, ScrollView, StyleSheet, RefreshControl, AppState} from 'react-native';
 import RankDisplayBox from '../utils/RankDisplayBox';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AuthContext from '../utils/AuthContext';
@@ -8,6 +8,7 @@ import {
   CLUEDIN_DARK_SCHEME,
   CLUEDIN_THEME,
 } from '../utils/constants';
+import {appStateJS} from '../utils/appStateScript';
 // Create the RankDisplayBox component
 
 const LeaderboardPage = () => {
@@ -16,6 +17,7 @@ const LeaderboardPage = () => {
   const [errorMsg, setErrorMsg] = useState('Page is Loading ...');
   const [refreshing, setRefreshing] = useState(false);
   const {user, setUser} = useContext(AuthContext);
+  const appState = useRef(AppState.currentState);
 
   const handleRefresh = () => {
     setRefreshing(true); // Show the loading indicator
@@ -80,6 +82,8 @@ const LeaderboardPage = () => {
     getLeaderBoard(); // Ensure this is called only once on component mount
   }, []); // Empty dependency array means this effect runs once on mount
 
+  appStateJS(appState, handleRefresh);
+  
   return (
     <View style={{flex: 1, backgroundColor: CLUEDIN_DARK_SCHEME.background}}>
       <ScrollView
@@ -90,7 +94,7 @@ const LeaderboardPage = () => {
           <RefreshControl
             refreshing={refreshing}
             onRefresh={handleRefresh}
-            colors={["000"]} // Customize the loading indicator color
+            colors={['#000']} // Customize the loading indicator color
             tintColor='white'
           />
         }>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyAfDD2qo4t1NhZnqGH_YWP6_BqWSv-gm5w</string>
+	<key>GCM_SENDER_ID</key>
+	<string>188135123071</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.cluedin.trivia</string>
+	<key>PROJECT_ID</key>
+	<string>cluedin-d2189</string>
+	<key>STORAGE_BUCKET</key>
+	<string>cluedin-d2189.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:188135123071:ios:ef80e2e7c8dc409bd4774a</string>
+</dict>
+</plist>
