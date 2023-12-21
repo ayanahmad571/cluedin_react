@@ -92,9 +92,9 @@ const LoginPageBody = ({navigation}) => {
   const isButtonEnabled = validateEmail(email) && !isLoading;
 
   return (
-    <KeyboardAvoidingView 
-    behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-    style={styles.kb_cont}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={styles.kb_cont}>
       <View style={styles.loginPageBody}>
         <Text style={styles.loginText}>Login / Sign-up</Text>
         <Text style={styles.infoText}>

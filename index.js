@@ -7,7 +7,7 @@ import messaging from '@react-native-firebase/messaging';
 
 // Register background handler
 messaging().setBackgroundMessageHandler(async remoteMessage => {
-  console.log('Message handled in the background!', remoteMessage);
+  // console.log('Message handled in the background!', remoteMessage);
 });
 
 // Register the main component
@@ -16,7 +16,7 @@ AppRegistry.registerComponent(appName, () => App);
 // Centralized PushNotification configuration
 const pushNotificationConfig = {
   onRegister: function (token) {
-    console.log("TOKEN:", token);
+    // console.log("TOKEN:", token);
   },
   onNotification: function (notification) {
 
@@ -38,4 +38,5 @@ const pushNotificationConfig = {
 PushNotification.configure(pushNotificationConfig);
 
 // Set the badge number elsewhere in your code if needed
+PushNotification.removeAllDeliveredNotifications();
 PushNotification.setApplicationIconBadgeNumber(0);
