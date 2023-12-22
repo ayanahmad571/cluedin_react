@@ -7,6 +7,7 @@ import {
   StyleSheet,
   Keyboard,
   KeyboardAvoidingView,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import LoaderOverlay from './LoaderOverlay';
 import {API_BASE_URL, CLUEDIN_DARK_SCHEME} from '../utils/constants';
@@ -22,7 +23,7 @@ const OTPVerifyPageBody = () => {
   const [otpErrorMessage, setOtpErrorMessage] = useState('');
   const {user, setUser} = useContext(AuthContext);
 
-  const validateOtp = (otp) => {
+  const validateOtp = otp => {
     return !otp.every(digit => digit.length === 1);
   };
 
@@ -84,6 +85,7 @@ const OTPVerifyPageBody = () => {
         } else {
           try {
             await AsyncStorage.setItem('JWT_USER', otpRespData['Access-Token']);
+            await AsyncStorage.setItem('NEW_LOGIN', 'yes');
             // Navigate to the EnterOtp.tsx screen (make sure to import the necessary modules for navigation)
             setupFirebase();
             setUser(otpRespData['Access-Token']);
@@ -133,56 +135,62 @@ const OTPVerifyPageBody = () => {
     }
   };
 
+  const keyboardClose = () => Keyboard.dismiss();
+
   const isButtonEnabled = !isLoading && !validateOtp(otp);
 
   return (
-    <KeyboardAvoidingView 
-    behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-    style={styles.kb_cont}>
-      <View style={styles.container}>
-        <Text style={styles.title}>Enter OTP</Text>
-        <Text style={styles.description}>
-          An email has been sent to your account with the One Time Password.
-        </Text>
-        <Text style={styles.dangerText}>{otpErrorMessage}</Text>
-        <View style={styles.otpContainer}>
-          {otp.map((digit, index) => (
-            <TextInput
-              key={index}
-              style={styles.otpInput}
-              maxLength={1}
-              keyboardType="numeric"
-              value={digit}
-              onChangeText={text => handleInputChange(text, index)}
-              ref={inputRefs[index]}
-            />
-          ))}
-        </View>
-        <TouchableOpacity
-          style={[
-            styles.button,
-            isButtonEnabled ? styles.otpButtonEnabled : styles.otpButtonDisabled,
-          ]}
-          onPress={handleButtonPress}
-          disabled={!isButtonEnabled}>
-          <Text
-            style={
-              isButtonEnabled
-                ? styles.buttonTextEnabled
-                : styles.buttonTextDisabled
-            }>
-            Verify
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={styles.kb_cont}>
+      <TouchableWithoutFeedback onPress={keyboardClose}>
+        <View style={styles.container}>
+          <Text style={styles.title}>Enter OTP</Text>
+          <Text style={styles.description}>
+            An email has been sent to your account with the One Time Password.
           </Text>
-        </TouchableOpacity>
-        <LoaderOverlay visible={isLoading} />
-      </View>
+          <Text style={styles.dangerText}>{otpErrorMessage}</Text>
+          <View style={styles.otpContainer}>
+            {otp.map((digit, index) => (
+              <TextInput
+                key={index}
+                style={styles.otpInput}
+                maxLength={1}
+                keyboardType="numeric"
+                value={digit}
+                onChangeText={text => handleInputChange(text, index)}
+                ref={inputRefs[index]}
+              />
+            ))}
+          </View>
+          <TouchableOpacity
+            style={[
+              styles.button,
+              isButtonEnabled
+                ? styles.otpButtonEnabled
+                : styles.otpButtonDisabled,
+            ]}
+            onPress={handleButtonPress}
+            disabled={!isButtonEnabled}>
+            <Text
+              style={
+                isButtonEnabled
+                  ? styles.buttonTextEnabled
+                  : styles.buttonTextDisabled
+              }>
+              Verify
+            </Text>
+          </TouchableOpacity>
+          <LoaderOverlay visible={isLoading} />
+        </View>
+      </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
   );
 };
 
 const styles = StyleSheet.create({
   kb_cont: {
-    flex: 1
+    flex: 1,
   },
   container: {
     flex: 1,

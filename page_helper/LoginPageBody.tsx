@@ -8,6 +8,7 @@ import {
   Keyboard,
   KeyboardAvoidingView,
   Platform,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import LoaderOverlay from './LoaderOverlay'; // Import the LoaderOverlay component
 import {API_BASE_URL, CLUEDIN_DARK_SCHEME} from '../utils/constants';
@@ -89,45 +90,50 @@ const LoginPageBody = ({navigation}) => {
     }
   };
 
+  const keyboardClose = () => Keyboard.dismiss();
+
   const isButtonEnabled = validateEmail(email) && !isLoading;
 
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={styles.kb_cont}>
-      <View style={styles.loginPageBody}>
-        <Text style={styles.loginText}>Login / Sign-up</Text>
-        <Text style={styles.infoText}>
-          Enter your email below to receive a One Time Password.
-        </Text>
-        <Text style={styles.dangerText}>{errorMessage}</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Enter your email"
-          value={email}
-          onChangeText={setEmail}
-        />
-        <TouchableOpacity
-          style={[
-            styles.loginButton,
-            isButtonEnabled
-              ? styles.loginButtonEnabled
-              : styles.loginButtonDisabled,
-          ]}
-          activeOpacity={0.8}
-          onPress={handleLogin}
-          disabled={!isButtonEnabled}>
-          <Text
-            style={
-              isButtonEnabled
-                ? styles.buttonTextEnabled
-                : styles.buttonTextDisabled
-            }>
-            Login
+      <TouchableWithoutFeedback onPress={keyboardClose}>
+        <View style={styles.loginPageBody}>
+          <Text style={styles.loginText}>Login / Sign-up</Text>
+          <Text style={styles.infoText}>
+            Enter your email below to receive a One Time Password.
           </Text>
-        </TouchableOpacity>
-        <LoaderOverlay visible={isLoading} />
-      </View>
+          <Text style={styles.dangerText}>{errorMessage}</Text>
+          <TextInput
+            keyboardType='email-address'
+            style={styles.input}
+            placeholder="Enter your email"
+            value={email}
+            onChangeText={setEmail}
+          />
+          <TouchableOpacity
+            style={[
+              styles.loginButton,
+              isButtonEnabled
+                ? styles.loginButtonEnabled
+                : styles.loginButtonDisabled,
+            ]}
+            activeOpacity={0.8}
+            onPress={handleLogin}
+            disabled={!isButtonEnabled}>
+            <Text
+              style={
+                isButtonEnabled
+                  ? styles.buttonTextEnabled
+                  : styles.buttonTextDisabled
+              }>
+              Login
+            </Text>
+          </TouchableOpacity>
+          <LoaderOverlay visible={isLoading} />
+        </View>
+      </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
   );
 };

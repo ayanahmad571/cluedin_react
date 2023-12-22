@@ -6,24 +6,26 @@ import {
   StyleSheet,
   TouchableOpacity,
   Alert,
-  TouchableWithoutFeedback,
   KeyboardAvoidingView,
   Keyboard,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import AuthContext from '../utils/AuthContext';
 import {jwtDecode} from 'jwt-decode';
 import {decode} from 'base-64';
 import LoaderOverlay from './LoaderOverlay';
-import {API_BASE_URL, CLUEDIN_DARK_SCHEME} from '../utils/constants';
+import {
+  API_BASE_URL,
+  CLUEDIN_DARK_SCHEME,
+  CLUEDIN_THEME,
+} from '../utils/constants';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 global.atob = decode;
 
-const UserProfileBody = () => {
+const NewLoginUsername = ({setIsNewLogin}) => {
   const [username, setUsername] = useState('Loading..');
   const [username_initial, setUsernameInitial] = useState('Loading..');
-  const [user_jwt, setUserJwt] = useState({});
-  const [isUsernameChanged, setIsUsernameChanged] = useState(false);
   const [isSaveButtonActive, setIsSaveButtonActive] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const {user, setUser} = useContext(AuthContext);
@@ -33,7 +35,6 @@ const UserProfileBody = () => {
       try {
         const decodedToken = jwtDecode(user);
         setUsernameInitial(decodedToken.user_name);
-        setUserJwt(decodedToken);
         setUsername(decodedToken.user_name);
       } catch (error) {
         // console.error('Error decoding JWT:', error.message);
@@ -44,8 +45,6 @@ const UserProfileBody = () => {
   }, [user]);
 
   useEffect(() => {
-    // setUsername(username_initial);
-    setIsUsernameChanged(username !== username_initial);
     setIsSaveButtonActive(username !== username_initial);
   }, [username]);
 
@@ -69,7 +68,6 @@ const UserProfileBody = () => {
   const getUsernameApi = async () => {
     try {
       const requestBody = `new_username=${username}`;
-
       const response = await fetch(`${API_BASE_URL}/update_username`, {
         method: 'POST',
         headers: {
@@ -80,22 +78,28 @@ const UserProfileBody = () => {
       });
 
       if (response.status === 200) {
-        // Successfully submitted the answer, update the question data
-        Alert.alert(
-          'Success',
-          'Username has been updated, you will now be logged out.',
-        );
-        handleLogout();
+        const respData = await response.json();
+        // Successfully submitted the username, it has been accepted
+        if (!respData['Access-Token']) {
+          Alert.alert('Error: Please re-launch the application.');
+          handleLogout();
+        }
+        await AsyncStorage.setItem('JWT_USER', respData['Access-Token']);
         setIsLoading(false);
+        setUser(respData['Access-Token']);
+        setIsNewLogin('');
       } else if (response.status === 406) {
         Alert.alert(
           'Error',
-          'Username is not unique, please choose another one :)',
+          'This username is taken, please choose another one :)',
         );
         setIsLoading(false);
       } else {
         // Handle the error cases as needed
-        Alert.alert('Error', 'Failed to update username, contact site admin.');
+        Alert.alert(
+          'Error',
+          'Failed to update username, contact site admin. Re-Load/Update the application',
+        );
         setIsLoading(false);
       }
     } catch (error) {
@@ -136,9 +140,7 @@ const UserProfileBody = () => {
     // Send a request to your API using the provided id
     // For demonstration, we'll simulate an API response after 2 seconds
     if (validateUsername(username)) {
-      setTimeout(() => {
-        getUsernameApi();
-      }, 2000);
+      getUsernameApi();
     } else {
       setIsLoading(false);
     }
@@ -146,14 +148,27 @@ const UserProfileBody = () => {
 
   const keyboardClose = () => Keyboard.dismiss();
 
+  const handleSkip = () => {
+    keyboardClose();
+    setIsNewLogin(false);
+  };
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={{flex: 1}}>
       <TouchableWithoutFeedback onPress={keyboardClose}>
         <View style={styles.container}>
-          <Text style={styles.editText}>Edit User Info</Text>
-          <Text style={styles.editText}> </Text>
+          <Text style={styles.editText}>Username</Text>
+          <Text style={styles.editTextSub}>
+            Make changes to your username using the form below.
+          </Text>
+          <Text style={styles.editTextSmall}>
+            - Username must be between 3 to 15 characters long.
+          </Text>
+          <Text style={styles.editTextSmall}>
+            - Only number and alphabets are allowed, no special characters
+            (i.e., spaces, !, ., etc).
+          </Text>
 
           <View style={styles.row}>
             <Text style={[styles.col1, styles.boldText]}>Username</Text>
@@ -162,35 +177,9 @@ const UserProfileBody = () => {
               value={username}
               onChangeText={text => {
                 setUsername(text);
-                setIsUsernameChanged(username !== username_initial);
                 setIsSaveButtonActive(username !== username_initial);
               }}
             />
-          </View>
-
-          <View>
-            <View style={styles.row}>
-              <Text style={[styles.col1, styles.boldText]}>Email</Text>
-              <Text style={styles.col2Text}>{user_jwt.user_email}</Text>
-            </View>
-
-            <View style={styles.row}>
-              <Text style={[styles.col1, styles.boldText]}>
-                User Login Time
-              </Text>
-              <Text style={styles.col2Text}>
-                {new Date(Number(user_jwt.iat) * 1000).toLocaleString()}
-              </Text>
-            </View>
-
-            <View style={styles.row}>
-              <Text style={[styles.col1, styles.boldText]}>
-                User Login Expiry Time
-              </Text>
-              <Text style={styles.col2Text}>
-                {new Date(Number(user_jwt.exp) * 1000).toLocaleString()}
-              </Text>
-            </View>
           </View>
 
           <TouchableOpacity
@@ -211,6 +200,13 @@ const UserProfileBody = () => {
               Save
             </Text>
           </TouchableOpacity>
+
+          <TouchableOpacity
+            style={[styles.saveButton, styles.activeSkipButton]}
+            onPress={handleSkip}>
+            <Text style={styles.skipButtonText}>Skip</Text>
+          </TouchableOpacity>
+
           <LoaderOverlay visible={isLoading} />
         </View>
       </TouchableWithoutFeedback>
@@ -223,17 +219,32 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: CLUEDIN_DARK_SCHEME.header_background,
     padding: 20,
+    justifyContent: 'center',
   },
   editText: {
     color: CLUEDIN_DARK_SCHEME.header_background_text,
     fontSize: 30,
     fontWeight: '500',
     marginBottom: 20,
+    textAlign: 'center',
+  },
+  editTextSub: {
+    color: CLUEDIN_DARK_SCHEME.header_background_text,
+    fontSize: 18,
+    fontWeight: '500',
+    marginBottom: 20,
+  },
+  editTextSmall: {
+    color: CLUEDIN_THEME.dark_grey,
+    fontSize: 14,
+    fontWeight: '400',
+    marginBottom: 5,
   },
   row: {
     flexDirection: 'row',
     marginBottom: 25,
     paddingBottom: 10,
+    marginTop: 35,
   },
   col1: {
     color: 'white',
@@ -278,6 +289,13 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: CLUEDIN_DARK_SCHEME.login.btn_disabled_txt,
   },
+  activeSkipButton: {
+    opacity: 1,
+  },
+  skipButtonText: {
+    color: CLUEDIN_THEME.white,
+    fontSize: 18,
+  },
 });
 
-export default UserProfileBody;
+export default NewLoginUsername;
