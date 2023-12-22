@@ -17,7 +17,8 @@ import OverlayAnswerComponent from '../utils/OverlayAnswerComponent';
 import ScoreBody from '../utils/ScoreBody';
 import HomeTopInfoRow from '../page_helper/HomeTopInfoRow.tsx';
 import QuestionMainBody from '../page_helper/QuestionMainBody';
-import { appStateJS } from '../utils/appStateScript';
+import {appStateJS} from '../utils/appStateScript';
+import PushNotification from 'react-native-push-notification';
 
 const Home = () => {
   const [countdown, setCountdown] = useState('00:00:00');
@@ -34,7 +35,8 @@ const Home = () => {
 
   const handleRefresh = () => {
     setRefreshing(true); // Show the loading indicator
-
+    PushNotification.removeAllDeliveredNotifications();
+    PushNotification.setApplicationIconBadgeNumber(0);
     // Perform data fetching or any other async operation
     fetchTodayQuestion()
       .then(() => {
@@ -149,6 +151,8 @@ const Home = () => {
 
   useEffect(() => {
     fetchTodayQuestion(); // Ensure this is called only once on component mount
+    PushNotification.removeAllDeliveredNotifications();
+    PushNotification.setApplicationIconBadgeNumber(0);
   }, []); // Empty dependency array means this effect runs once on mount
 
   appStateJS(appState, handleRefresh);
@@ -209,7 +213,7 @@ const Home = () => {
   ) : (
     <View style={styles.container}>
       <View style={styles.fifthRow}>
-        <Text>{errorMsg}</Text>
+        <Text>{errorMsg} - Restart the app.</Text>
       </View>
     </View>
   );

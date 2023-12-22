@@ -150,6 +150,7 @@ export const styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: 16,
+    color: CLUEDIN_THEME.black,
   },
   ansButtonText: {
     fontSize: 16,
