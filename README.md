@@ -17,3 +17,4 @@ Deploy on HP Small.
 ## Version 1.3
 Add Firebase supports and enhance notifications
 Fix minor bugs in UI
+Add username-change prompt post login
