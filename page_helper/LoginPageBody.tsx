@@ -128,7 +128,7 @@ const LoginPageBody = ({navigation}) => {
                   ? styles.buttonTextEnabled
                   : styles.buttonTextDisabled
               }>
-              Login
+              Next
             </Text>
           </TouchableOpacity>
           <LoaderOverlay visible={isLoading} />

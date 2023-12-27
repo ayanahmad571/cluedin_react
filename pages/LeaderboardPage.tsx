@@ -1,6 +1,14 @@
 import React, {useContext, useEffect, useRef, useState} from 'react';
-import {View, Text, ScrollView, StyleSheet, RefreshControl, AppState} from 'react-native';
-import RankDisplayBox from '../utils/RankDisplayBox';
+import {
+  View,
+  Text,
+  ScrollView,
+  StyleSheet,
+  RefreshControl,
+  AppState,
+  Touchable,
+  TouchableOpacity,
+} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AuthContext from '../utils/AuthContext';
 import {
@@ -9,142 +17,111 @@ import {
   CLUEDIN_THEME,
 } from '../utils/constants';
 import {appStateJS} from '../utils/appStateScript';
+import PastLBS from '../page_helper/Leaderboards/PastLBS';
+import LeaderboardWrapper from '../page_helper/Leaderboards/LeaderboardWrapper';
+import LoadingPageBody from '../utils/LoadingPageBody';
 // Create the RankDisplayBox component
 
 const LeaderboardPage = () => {
   // Dummy data for RankDisplay boxes
-  const [leaderboard, setLeaderboard] = useState('');
-  const [errorMsg, setErrorMsg] = useState('Page is Loading ...');
-  const [refreshing, setRefreshing] = useState(false);
-  const {user, setUser} = useContext(AuthContext);
   const appState = useRef(AppState.currentState);
+  const [activeButton, setActiveButton] = useState(1);
+  const [monthYear, setMonthYear] = useState('');
+  const [monthPrevYear, setMonthPrevYear] = useState('');
+  const [monthYearString, setMonthYearString] = useState('');
+  const [monthPrevYearString, setMonthPrevYearString] = useState('');
 
-  const handleRefresh = () => {
-    setRefreshing(true); // Show the loading indicator
-
-    // Perform data fetching or any other async operation
-    getLeaderBoard()
-      .then(() => {
-        setRefreshing(false); // Hide the loading indicator when done
-      })
-      .catch(error => {
-        setRefreshing(false); // Make sure to hide it even in case of an error
-        setErrorMsg('Error while refreshing:');
-      });
+  const handleButtonClick = buttonName => {
+    console.log(buttonName);
+    setActiveButton(buttonName);
+    // Add logic here to render different parts of the display based on the clicked button
   };
 
-  const getLeaderBoard = async () => {
-    try {
-      const jwtUser = await AsyncStorage.getItem('JWT_USER');
+  // Function to get short month string
+  const getShortMonthString = monthNumber => {
+    const monthNames = [
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
+    ];
+    return monthNames[monthNumber - 1];
+  };
 
-      if (!jwtUser) {
-        setUser('');
-        setErrorMsg('User authorization needed to view this page.');
-        return;
-      }
+  const setMonthYVars = () => {
+    // Set logic here to set the month year to the current UTC times month and year in the form MMYYYY
+    const currentDate = new Date();
 
-      const response = await fetch(`${API_BASE_URL}/get_leaderboard`, {
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${jwtUser}`,
-        },
-      });
-      // console.log('The API has been called');
+    const month = String(currentDate.getUTCMonth() + 1).padStart(2, '0'); // Month is zero-based
+    const year = String(currentDate.getUTCFullYear());
 
-      if (response.status === 200) {
-        // Successful response, parse and set the question
-        const data = await response.json();
-        // console.log(data);
-        const keysToCheck = ['leaderboard', 'user_rank', 'user_points'];
+    const currentMonthYear = `${month}${year}`;
+    const currentMonthYearString =
+      getShortMonthString(Number(month)) + ' ' + year.slice(-2);
+    setMonthYear(currentMonthYear);
+    setMonthYearString(currentMonthYearString);
 
-        // Iterate through the keys and check if they exist in the data
-        for (const key of keysToCheck) {
-          if (!(key in data)) {
-            throw new Error('Response key invalid');
-          }
-        }
+    // TODO: Populate the monthPrevYear variable with the value of the previous month
+    const prevMonthDate = new Date(currentDate);
+    prevMonthDate.setUTCMonth(currentDate.getUTCMonth() - 1);
 
-        setLeaderboard(data);
-        setErrorMsg('');
-      } else if (response.status === 500) {
-        setErrorMsg('Internal Server Error - Please contact admin');
-      } else {
-        setErrorMsg('An error occurred - Please contact admin');
-      }
-    } catch (error) {
-      setErrorMsg(
-        'Your internet connection is unstable, please re-load the app at a later time!',
-      );
-    }
+    const prevMonth = String(prevMonthDate.getUTCMonth() + 1).padStart(2, '0');
+    const prevYear = String(prevMonthDate.getUTCFullYear());
+
+    const prevMonthYear = `${prevMonth}${prevYear}`;
+    const currentMonthPrevYearString =
+      getShortMonthString(Number(prevMonth)) + ' ' + prevYear.slice(-2);
+    setMonthPrevYear(prevMonthYear);
+    setMonthPrevYearString(currentMonthPrevYearString);
   };
 
   useEffect(() => {
-    getLeaderBoard(); // Ensure this is called only once on component mount
+    setMonthYVars();
   }, []); // Empty dependency array means this effect runs once on mount
 
-  appStateJS(appState, handleRefresh);
-  
-  return (
+  return (monthYear !== '') && (monthPrevYear !== '') ? (
     <View style={{flex: 1, backgroundColor: CLUEDIN_DARK_SCHEME.background}}>
-      <ScrollView
-        contentContainerStyle={{
-          flexGrow: 1,
-        }}
-        refreshControl={
-          <RefreshControl
-            refreshing={refreshing}
-            onRefresh={handleRefresh}
-            colors={['#000']} // Customize the loading indicator color
-            tintColor='white'
-          />
-        }>
-        <View style={styles.container}>
-          {errorMsg === '' ? (
-            <>
-              <View style={styles.row}>
-                <Text style={styles.textSubT}>
-                  Your Monthly Stats (Leaderboard is reset on the 1st of every
-                  month :) )
-                </Text>
-              </View>
-              <View style={styles.row}>
-                <View style={styles.infoBox}>
-                  <Text style={styles.infoText}>
-                    Rank:{' '}
-                    <Text style={{fontWeight: 'bold'}}>
-                      {leaderboard.user_rank}
-                    </Text>
-                  </Text>
-                </View>
-                <View style={styles.infoBox}>
-                  <Text style={styles.infoText}>
-                    Points:{' '}
-                    <Text style={{fontWeight: 'bold'}}>
-                      {leaderboard.user_points}
-                    </Text>
-                  </Text>
-                </View>
-              </View>
+      <View style={styles.row}>
+        <View style={styles.navigatorRow}>
+          <TouchableOpacity
+            style={[styles.button, activeButton === 1 && styles.activeButton]}
+            onPress={() => handleButtonClick(1)}>
+            <Text style={styles.buttonText}>{monthYearString}</Text>
+          </TouchableOpacity>
 
-              {leaderboard.leaderboard.map(data => (
-                <RankDisplayBox
-                  key={data.rank}
-                  rank={data.rank}
-                  points={data.points}
-                  users={data.users}
-                />
-              ))}
-            </>
-          ) : (
-            <View style={styles.row}>
-              <View style={styles.infoBox}>
-                <Text style={styles.infoText}>{errorMsg}</Text>
-              </View>
-            </View>
-          )}
+          <TouchableOpacity
+            style={[styles.button, activeButton === 2 && styles.activeButton]}
+            onPress={() => handleButtonClick(2)}>
+            <Text style={styles.buttonText}>{monthPrevYearString}</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={[styles.button, activeButton === 3 && styles.activeButton]}
+            onPress={() => handleButtonClick(3)}>
+            <Text style={styles.buttonText}>Past..</Text>
+          </TouchableOpacity>
         </View>
-      </ScrollView>
-    </View>
+      </View>
+      <View style={styles.container}>
+        {activeButton === 1 ? (
+          <LeaderboardWrapper monthYear={monthYear} />
+        ) : activeButton === 2 ? (
+          <LeaderboardWrapper monthYear={monthPrevYear} />
+        ) : (
+          <PastLBS />
+        )}
+      </View>
+  </View>
+  ) : (
+    <LoadingPageBody />
   );
 };
 
@@ -152,7 +129,6 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: CLUEDIN_DARK_SCHEME.background,
     flex: 1,
-    paddingBottom: 20,
   },
   textSubT: {
     color: CLUEDIN_DARK_SCHEME.text_on_background,
@@ -182,6 +158,43 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: '300',
     color: CLUEDIN_DARK_SCHEME.home.row2_bg_text,
+  },
+  rankText: {
+    color: CLUEDIN_THEME.white,
+    textAlign: 'center',
+    fontSize: 18,
+    fontWeight: '700',
+  },
+  navigatorRow: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    backgroundColor: CLUEDIN_THEME.dark_grey,
+    padding: 5,
+    borderRadius: 10,
+    marginRight: 10,
+    marginLeft: 10,
+  },
+  button: {
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    borderRadius: 5,
+    backgroundColor: '#ccc',
+    flex: 1,
+    alignItems: 'center',
+    color: CLUEDIN_THEME.white,
+    backgroundColor: CLUEDIN_THEME.dark_grey, // Change to your active color
+  },
+  activeButton: {
+    backgroundColor: CLUEDIN_THEME.dark_grey, // Change to your active color
+    borderBottomWidth: 3,
+    borderBottomColor: CLUEDIN_THEME.orange,
+  },
+  buttonText: {
+    fontSize: 16,
+    fontWeight: '500',
+    color: CLUEDIN_THEME.white,
   },
 });
 
