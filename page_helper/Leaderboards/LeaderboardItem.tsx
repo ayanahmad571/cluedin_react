@@ -17,6 +17,15 @@ const LeaderboardItem = ({leaderboard}) => {
       flex: 1,
       paddingBottom: 20,
     },
+    containerRanks: {
+      backgroundColor: CLUEDIN_THEME.white,
+      flex: 1,
+      paddingBottom: 20,
+      marginRight: 10,
+      marginLeft: 10,
+      borderTopRightRadius: 30,
+      borderTopLeftRadius: 30,
+    },
     textSubT: {
       color: CLUEDIN_DARK_SCHEME.text_on_background,
       fontWeight: '300',
@@ -145,7 +154,7 @@ const LeaderboardItem = ({leaderboard}) => {
   });
 
   const diffFromFirst = (first, current) => {
-    const percentageDiff = (1 - ((first - current) / first)) * 50;
+    const percentageDiff = (1 - (first - current) / first) * 50;
     console.log(percentageDiff);
     return percentageDiff;
   };
@@ -178,11 +187,11 @@ const LeaderboardItem = ({leaderboard}) => {
     setthirdPoints(thirdVal);
 
     if (firstVal !== 'N/A') {
-      if (secondVal !== 'N/A'){
+      if (secondVal !== 'N/A') {
         const secondMarginTemp = diffFromFirst(firstVal, secondVal);
         setsecondMargin(secondMarginTemp);
       }
-      if (thirdVal !== 'N/A'){
+      if (thirdVal !== 'N/A') {
         const thirdMarginTemp = diffFromFirst(firstVal, thirdVal);
         setthirdMargin(thirdMarginTemp);
       }
@@ -193,76 +202,78 @@ const LeaderboardItem = ({leaderboard}) => {
   }, [leaderboard]);
 
   return (
-    <View style={{flex: 1, backgroundColor: CLUEDIN_DARK_SCHEME.background}}>
-      <View style={styles.container}>
-        <View style={styles.row}>
-          <View style={styles.leaderRow}>
-            <View style={styles.leaderCol}>
-              <View style={{flex: 1}} />
-              <Text style={styles.rankText}>3rd</Text>
-              <View style={styles.thirdCol}>
-                <View>
-                  <Text style={styles.pointsText}>{secondPoints}</Text>
-                  <Text style={styles.pointsInfo}>pts</Text>
-                </View>
+    <View
+      style={{
+        flex: 1,
+        backgroundColor: CLUEDIN_DARK_SCHEME.background,
+      }}>
+      <View style={styles.row}>
+        <View style={styles.leaderRow}>
+          <View style={styles.leaderCol}>
+            <View style={{flex: 1}} />
+            <Text style={styles.rankText}>3rd</Text>
+            <View style={styles.thirdCol}>
+              <View>
+                <Text style={styles.pointsText}>{thirdPoints}</Text>
+                <Text style={styles.pointsInfo}>pts</Text>
               </View>
             </View>
-            <View style={styles.leaderCol}>
-              <View style={{flex: 1}} />
-              <Text style={styles.rankText}>1st</Text>
-              <View style={styles.firstCol}>
-                <View>
-                  <Text style={styles.pointsText}>{firstPoints}</Text>
-                  <Text style={styles.pointsInfo}>pts</Text>
-                </View>
+          </View>
+          <View style={styles.leaderCol}>
+            <View style={{flex: 1}} />
+            <Text style={styles.rankText}>1st</Text>
+            <View style={styles.firstCol}>
+              <View>
+                <Text style={styles.pointsText}>{firstPoints}</Text>
+                <Text style={styles.pointsInfo}>pts</Text>
               </View>
             </View>
-            <View style={styles.leaderCol}>
-              <View style={{flex: 1}} />
-              <Text style={styles.rankText}>2nd</Text>
-              <View style={styles.secondCol}>
-                <View>
-                  <Text style={styles.pointsText}>{thirdPoints}</Text>
-                  <Text style={styles.pointsInfo}>pts</Text>
-                </View>
+          </View>
+          <View style={styles.leaderCol}>
+            <View style={{flex: 1}} />
+            <Text style={styles.rankText}>2nd</Text>
+            <View style={styles.secondCol}>
+              <View>
+                <Text style={styles.pointsText}>{secondPoints}</Text>
+                <Text style={styles.pointsInfo}>pts</Text>
               </View>
             </View>
           </View>
         </View>
-        <View
-          style={{flex: 1, backgroundColor: CLUEDIN_DARK_SCHEME.background}}>
-          <ScrollView contentContainerStyle={{flexGrow: 1}}>
-            <View style={styles.container}>
-              <View style={styles.row}>
-                <View style={styles.infoBox}>
-                  <Text style={styles.infoText}>
-                    Rank:{' '}
-                    <Text style={{fontWeight: 'bold'}}>
-                      {leaderboard.user_rank}
-                    </Text>
+      </View>
+      <View style={{flex: 1, backgroundColor: CLUEDIN_DARK_SCHEME.background}}>
+        <ScrollView contentContainerStyle={{flexGrow: 1}}>
+          <View style={styles.containerRanks}>
+            {/* <View style={styles.row}>
+              <View style={styles.infoBox}>
+                <Text style={styles.infoText}>
+                  Rank:{' '}
+                  <Text style={{fontWeight: 'bold'}}>
+                    {leaderboard.user_rank}
                   </Text>
-                </View>
-                <View style={styles.infoBox}>
-                  <Text style={styles.infoText}>
-                    Points:{' '}
-                    <Text style={{fontWeight: 'bold'}}>
-                      {leaderboard.user_points}
-                    </Text>
-                  </Text>
-                </View>
+                </Text>
               </View>
+              <View style={styles.infoBox}>
+                <Text style={styles.infoText}>
+                  Points:{' '}
+                  <Text style={{fontWeight: 'bold'}}>
+                    {leaderboard.user_points}
+                  </Text>
+                </Text>
+              </View>
+            </View> */}
 
-              {leaderboard.leaderboard.map(data => (
-                <RankDisplayBox
-                  key={data.rank}
-                  rank={data.rank}
-                  points={data.points}
-                  users={data.users}
-                />
-              ))}
-            </View>
-          </ScrollView>
-        </View>
+            {leaderboard.leaderboard.map(data => (
+              <RankDisplayBox
+                key={data.rank}
+                rank={data.rank}
+                points={data.points}
+                users={data.users}
+                currentUser={leaderboard.user_rank}
+              />
+            ))}
+          </View>
+        </ScrollView>
       </View>
     </View>
   );
