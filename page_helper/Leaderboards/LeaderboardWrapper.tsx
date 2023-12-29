@@ -91,6 +91,11 @@ const LeaderboardWrapper = ({monthYear}) => {
         setLeaderboard(data);
         setErrorMsg('');
         setLoading(false);
+      } else if (response.status === 401 || response.status === 403) {
+        setErrorMsg(
+          'Your login session has been terminated. Please Re-Login to continue.',
+        );
+        setLoading(false);
       } else if (response.status === 500) {
         setErrorMsg('Internal Server Error - Please contact admin');
         setLoading(false);

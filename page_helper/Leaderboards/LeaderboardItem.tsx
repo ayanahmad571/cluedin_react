@@ -155,7 +155,6 @@ const LeaderboardItem = ({leaderboard}) => {
 
   const diffFromFirst = (first, current) => {
     const percentageDiff = (1 - (first - current) / first) * 50;
-    console.log(percentageDiff);
     return percentageDiff;
   };
 

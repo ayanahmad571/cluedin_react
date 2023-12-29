@@ -19,6 +19,7 @@ import HomeTopInfoRow from '../page_helper/HomeTopInfoRow.tsx';
 import QuestionMainBody from '../page_helper/QuestionMainBody';
 import {appStateJS} from '../utils/appStateScript';
 import PushNotification from 'react-native-push-notification';
+import ErrorPageBody from '../utils/ErrorPageBody';
 
 const Home = () => {
   const [countdown, setCountdown] = useState('00:00:00');
@@ -130,6 +131,10 @@ const Home = () => {
         }
         setQuestion(data);
         setErrorMsg('');
+      } else if (response.status === 401 || response.status === 403) {
+        setErrorMsg(
+          'Your login session has been terminated. Please Re-Login to continue.',
+        );
       } else if (response.status === 500) {
         setErrorMsg('Internal Server Error - Please contact admin');
       } else {
@@ -211,11 +216,7 @@ const Home = () => {
       </ScrollView>
     </View>
   ) : (
-    <View style={styles.container}>
-      <View style={styles.fifthRow}>
-        <Text>{errorMsg} - Restart the app.</Text>
-      </View>
-    </View>
+    <ErrorPageBody errorMsg={errorMsg} />
   );
 };
 
