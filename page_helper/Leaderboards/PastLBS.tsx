@@ -1,21 +1,27 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import {CLUEDIN_DARK_SCHEME, CLUEDIN_THEME} from '../../utils/constants';
+import PastOptions from './PastOptions';
 
-const PastLBS = () => {
+const LastMonthLB = ({monthToStop}) => {
+  const [selectedYear, setselectedYear] = useState(1);
+
   return (
-    <View style={styles.row}>
-      <View style={styles.infoBox}>
-        <Text style={styles.infoText}>This is a dummy PastLBS</Text>
-      </View>
+    <View style={styles.container}>
+      {selectedYear === 1 ? (
+        <PastOptions
+          setselectedYear={setselectedYear}
+          monthToStop={monthToStop}
+        />
+      ) : (
+        <Text style={styles.infoText}>Current Year</Text>
+      )}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  row: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
+  container: {
     margin: 10,
   },
   infoBox: {
@@ -32,4 +38,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PastLBS;
+export default LastMonthLB;

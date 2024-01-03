@@ -57,21 +57,27 @@ const LeaderboardPage = () => {
   };
 
   const setMonthYVars = () => {
-    // Set logic here to set the month year to the current UTC times month and year in the form MMYYYY
     const currentDate = new Date();
+    const currentUTCHour = currentDate.getUTCHours();
 
-    const month = String(currentDate.getUTCMonth() + 1).padStart(2, '0'); // Month is zero-based
-    const year = String(currentDate.getUTCFullYear());
+    // Adjust the current date based on UTC time
+    const adjustedDate =
+      currentUTCHour >= 14
+        ? currentDate
+        : new Date(currentDate.getTime() - 24 * 60 * 60 * 1000);
+    const month = String(adjustedDate.getUTCMonth() + 1).padStart(2, '0');
+    const year = String(adjustedDate.getUTCFullYear());
 
     const currentMonthYear = `${month}${year}`;
     const currentMonthYearString =
       getShortMonthString(Number(month)) + ' ' + year.slice(-2);
     setMonthYear(currentMonthYear);
+    console.log(monthYear);
     setMonthYearString(currentMonthYearString);
 
-    // TODO: Populate the monthPrevYear variable with the value of the previous month
-    const prevMonthDate = new Date(currentDate);
-    prevMonthDate.setUTCMonth(currentDate.getUTCMonth() - 1);
+    // Populate the monthPrevYear variable with the value of the previous month
+    const prevMonthDate = new Date(adjustedDate);
+    prevMonthDate.setUTCMonth(adjustedDate.getUTCMonth() - 1);
 
     const prevMonth = String(prevMonthDate.getUTCMonth() + 1).padStart(2, '0');
     const prevYear = String(prevMonthDate.getUTCFullYear());
@@ -82,6 +88,7 @@ const LeaderboardPage = () => {
     setMonthPrevYear(prevMonthYear);
     setMonthPrevYearString(currentMonthPrevYearString);
   };
+  
 
   useEffect(() => {
     setMonthYVars();
@@ -116,7 +123,7 @@ const LeaderboardPage = () => {
         ) : activeButton === 2 ? (
           <LeaderboardWrapper monthYear={monthPrevYear} />
         ) : (
-          <PastLBS />
+          <PastLBS monthToStop={monthYear} />
         )}
       </View>
   </View>
