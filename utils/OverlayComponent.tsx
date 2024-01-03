@@ -171,11 +171,13 @@ const styles = StyleSheet.create({
     fontSize: 25,
     fontWeight: 'bold',
     marginBottom: 10,
+    color: CLUEDIN_THEME.black,
   },
   body: {
     marginTop: 10,
     fontSize: 20,
     fontWeight: '300',
+    color: CLUEDIN_THEME.black,
   },
 });
 

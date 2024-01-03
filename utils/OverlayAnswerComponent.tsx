@@ -163,6 +163,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     fontSize: 20,
     fontWeight: '500',
+    color: CLUEDIN_THEME.black,
   },
 });
 
