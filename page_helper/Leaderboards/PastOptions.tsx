@@ -1,6 +1,13 @@
 import React from 'react';
-import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  ScrollView,
+} from 'react-native';
 import {CLUEDIN_THEME} from '../../utils/constants';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const PastOptions = ({setselectedYear, monthToStop}) => {
   const renderOption = (formattedDate: string, date: Date) => {
@@ -9,7 +16,26 @@ const PastOptions = ({setselectedYear, monthToStop}) => {
         key={formattedDate}
         style={styles.optionBox}
         onPress={handlePress.bind(null, date)}>
-        <Text style={styles.optionText}>{formattedDate}</Text>
+        <View style={styles.row}>
+          {/* Column 1 */}
+          <View style={styles.col1}>
+            <Ionicons name="bar-chart" style={{color: CLUEDIN_THEME.black, fontSize: 20}} />
+          </View>
+
+          {/* Column 2 */}
+          <View style={styles.col2}>
+            <Text style={styles.infoText}>CluedIn - Global Leaderboard</Text>
+            <Text style={styles.optionText}>{formattedDate}</Text>
+          </View>
+
+          {/* Column 3 */}
+          <View style={styles.col3}>
+            <Ionicons
+              name="arrow-forward-circle"
+              style={{color: CLUEDIN_THEME.black, fontSize: 30}}
+            />
+          </View>
+        </View>
       </TouchableOpacity>
     );
   };
@@ -55,7 +81,11 @@ const PastOptions = ({setselectedYear, monthToStop}) => {
     );
   };
 
-  return <View style={styles.container}>{renderPastOptions()}</View>;
+  return (
+    <ScrollView>
+      <View style={styles.container}>{renderPastOptions()}</View>
+    </ScrollView>
+  );
 };
 
 const styles = StyleSheet.create({
@@ -64,14 +94,38 @@ const styles = StyleSheet.create({
   },
   optionBox: {
     backgroundColor: CLUEDIN_THEME.white,
-    padding: 10,
+    padding: 20,
     margin: 5,
-    borderRadius: 5,
-    alignItems: 'center',
+    marginBottom: 20,
+    borderRadius: 20,
   },
   optionText: {
     color: CLUEDIN_THEME.black,
-    fontSize: 20,
+    fontSize: 24,
+    fontWeight: '600',
+  },
+  infoText: {
+    color: CLUEDIN_THEME.black,
+    fontSize: 14,
+    fontWeight: '300',
+  },
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  col1: {
+    flex: 1,
+    alignItems: 'flex-start',
+    justifyContent: 'center',
+  },
+  col2: {
+    flex: 4,
+  },
+  col3: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 
