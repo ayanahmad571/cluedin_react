@@ -17,7 +17,7 @@ import {
   CLUEDIN_THEME,
 } from '../utils/constants';
 import {appStateJS} from '../utils/appStateScript';
-import PastLBS from '../page_helper/Leaderboards/PastLBS';
+import LastMonthLB from '../page_helper/Leaderboards/LastMonthLB';
 import LeaderboardWrapper from '../page_helper/Leaderboards/LeaderboardWrapper';
 import LoadingPageBody from '../utils/LoadingPageBody';
 // Create the RankDisplayBox component
@@ -123,7 +123,7 @@ const LeaderboardPage = () => {
         ) : activeButton === 2 ? (
           <LeaderboardWrapper monthYear={monthPrevYear} />
         ) : (
-          <PastLBS monthToStop={monthYear} />
+          <LastMonthLB monthToStop={monthPrevYear} />
         )}
       </View>
   </View>
