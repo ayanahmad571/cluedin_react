@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import {CLUEDIN_DARK_SCHEME, CLUEDIN_THEME} from '../../utils/constants';
 import PastOptions from './PastOptions';
+import ShowSelectedOption from './ShowSelectedOption';
 
 const LastMonthLB = ({monthToStop}) => {
   const [selectedYear, setselectedYear] = useState(1);
@@ -14,7 +15,10 @@ const LastMonthLB = ({monthToStop}) => {
           monthToStop={monthToStop}
         />
       ) : (
-        <Text style={styles.infoText}>Current Year</Text>
+        <ShowSelectedOption
+          setselectedYear={setselectedYear}
+          selectedYear={selectedYear}
+        />
       )}
     </View>
   );

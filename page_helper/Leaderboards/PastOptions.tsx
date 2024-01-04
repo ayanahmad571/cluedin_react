@@ -44,7 +44,7 @@ const PastOptions = ({setselectedYear, monthToStop}) => {
     const formattedMonthYear = `${(date.getUTCMonth() + 1)
       .toString()
       .padStart(2, '0')}${date.getUTCFullYear()}`;
-    // setselectedYear(parseInt(formattedMonthYear, 10));
+    setselectedYear(formattedMonthYear);
     console.log(formattedMonthYear);
   };
 
