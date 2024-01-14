@@ -36,7 +36,7 @@ const RankDisplayBox = ({rank, users, points, currentUser}) => {
       textAlign: 'center',
       borderWidth: 1,
       borderColor: accentCol,
-      borderRadius: 50, // Make it a circle by setting borderRadius to half of width and height
+      borderRadius: 15, // Make it a circle by setting borderRadius to half of width and height
       width: 40,
       height: 40,
       lineHeight: 38, // Center text vertically
