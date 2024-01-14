@@ -1,6 +1,6 @@
 export const API_BASE_URL = 'https://3s0yl5owik.execute-api.eu-west-2.amazonaws.com';
-export const IOS_APP_VERSION = 'i1.3';
-export const ANDROID_APP_VERSION = 'a1.3';
+export const IOS_APP_VERSION = 'i2.0';
+export const ANDROID_APP_VERSION = 'a2.0';
 export const MAX_RETRIES = 3;
 export const DEFAULT_THEME_COLOR = '#FF3333';
 export const CLUEDIN_THEME = {
