@@ -9,21 +9,34 @@ import {
   KeyboardAvoidingView,
   Platform,
   TouchableWithoutFeedback,
+  Linking,
 } from 'react-native';
 import LoaderOverlay from './LoaderOverlay'; // Import the LoaderOverlay component
-import {API_BASE_URL, CLUEDIN_DARK_SCHEME} from '../utils/constants';
+import {
+  API_BASE_URL,
+  CLUEDIN_DARK_SCHEME,
+  CLUEDIN_THEME,
+} from '../utils/constants';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {Modal} from 'react-native';
 
 const LoginPageBody = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   // Function to validate email format using a regular expression
   const validateEmail = email => {
     // setErrorMessage('');
     const emailPattern = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
     return emailPattern.test(email);
+  };
+
+  const clickedNext = () => {
+    keyboardClose();
+    // Show the email in a modal
+    setIsModalVisible(true);
   };
 
   const handleLogin = async () => {
@@ -94,6 +107,10 @@ const LoginPageBody = ({navigation}) => {
 
   const isButtonEnabled = validateEmail(email) && !isLoading;
 
+  const handleTermsOfUsePress = () => {
+    Linking.openURL('https://cluedin.me/terms-and-conditions');
+  };
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -106,7 +123,7 @@ const LoginPageBody = ({navigation}) => {
           </Text>
           <Text style={styles.dangerText}>{errorMessage}</Text>
           <TextInput
-            keyboardType='email-address'
+            keyboardType="email-address"
             style={styles.input}
             placeholder="Enter your email"
             value={email}
@@ -120,7 +137,7 @@ const LoginPageBody = ({navigation}) => {
                 : styles.loginButtonDisabled,
             ]}
             activeOpacity={0.8}
-            onPress={handleLogin}
+            onPress={clickedNext}
             disabled={!isButtonEnabled}>
             <Text
               style={
@@ -132,6 +149,46 @@ const LoginPageBody = ({navigation}) => {
             </Text>
           </TouchableOpacity>
           <LoaderOverlay visible={isLoading} />
+          {/* Modal for showing the email */}
+          <Modal
+            visible={isModalVisible}
+            transparent={true}
+            animationType="slide">
+            <View style={styles.modalContainer}>
+              <View style={styles.modalContent}>
+                <Text style={styles.mTitle}>Are you sure?</Text>
+                <Text style={styles.mSubText}>
+                  Please ensure that the email provided is free of any typos. By
+                  clicking "Yes," you acknowledge and accept our
+                  <Text style={{color: 'blue'}} onPress={handleTermsOfUsePress}>
+                    {' '}
+                    Terms of Use
+                  </Text>
+                  , which can be reviewed on our website. Upon proceeding, an
+                  OTP (One-Time Password) will be sent to the provided email for
+                  verification.
+                </Text>
+                <View style={styles.emailCont}>
+                  <Text style={styles.robotFont}>{email}</Text>
+                </View>
+                <View style={styles.modalButtonsContainer}>
+                  <TouchableOpacity
+                    onPress={() => setIsModalVisible(false)}
+                    style={styles.noButton}>
+                    <Text style={styles.buttonText}>No</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => {
+                      setIsModalVisible(false);
+                      handleLogin();
+                    }}
+                    style={styles.yesButton}>
+                    <Text style={styles.buttonText}>Yes</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </View>
+          </Modal>
         </View>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
@@ -197,6 +254,68 @@ const styles = StyleSheet.create({
   buttonTextDisabled: {
     fontSize: 18,
     color: CLUEDIN_DARK_SCHEME.login.btn_disabled_txt,
+  },
+  mTitle: {
+    fontSize: 24,
+    color: CLUEDIN_THEME.black,
+    fontWeight: '800',
+    margin: 10,
+    marginLeft: 0,
+    marginBottom: 20,
+  },
+  mSubText: {
+    fontSize: 13,
+    color: CLUEDIN_THEME.black,
+    marginBottom: 20,
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+  },
+  modalContent: {
+    backgroundColor: 'white',
+    borderRadius: 10,
+    padding: 20,
+    width: '80%',
+  },
+  emailCont: {
+    alignContent: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.1)',
+    marginBottom: 20,
+    padding: 5,
+    borderRadius: 10,
+  },
+  robotFont: {
+    fontSize: 18,
+    fontWeight: '800',
+    color: CLUEDIN_THEME.black,
+    textAlign: 'center',
+  },
+  modalButtonsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  noButton: {
+    backgroundColor: CLUEDIN_THEME.dark_red, // Replace with your desired color
+    borderRadius: 10,
+    padding: 10,
+    flex: 1,
+    marginRight: 10,
+    alignItems: 'center',
+  },
+  yesButton: {
+    backgroundColor: CLUEDIN_THEME.yellow, // Replace with your desired color
+    borderRadius: 10,
+    padding: 10,
+    flex: 1,
+    marginLeft: 10,
+    alignItems: 'center',
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 16,
   },
 });
 
