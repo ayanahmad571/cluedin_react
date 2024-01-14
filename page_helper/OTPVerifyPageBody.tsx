@@ -15,8 +15,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useContext} from 'react';
 import AuthContext from '../utils/AuthContext'; // Adjust the import path as needed
 import {setupFirebase} from '../utils/firebaseScripts';
+import OTPResend from '../utils/OTPResend';
 
-const OTPVerifyPageBody = () => {
+const OTPVerifyPageBody = ({route, navigation}) => {
+  const {emailID} = route.params;
   const [otp, setOTP] = useState(['', '', '', '']);
   const inputRefs = [useRef(null), useRef(null), useRef(null), useRef(null)];
   const [isLoading, setIsLoading] = useState(false);
@@ -135,6 +137,69 @@ const OTPVerifyPageBody = () => {
     }
   };
 
+  const handleResend = async () => {
+    setOtpErrorMessage('');
+    Keyboard.dismiss();
+    setIsLoading(true);
+
+    const requestOptions = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: `email=${emailID}`,
+    };
+
+    try {
+      setOtpErrorMessage('');
+      const response = await fetch(`${API_BASE_URL}/login`, requestOptions);
+
+      if (response.status === 200) {
+        // Successful response (HTTP status code 200)
+        const data = await response.json();
+
+        // Check if "consumer_ref_id" and "otp_sent" keys exist
+        if (!data.consumer_ref_id || !data.otp_status) {
+          setOtpErrorMessage('Bad server response, contact site admin');
+        } else {
+          try {
+            await AsyncStorage.setItem('TR_REF', data.consumer_ref_id);
+            // Navigate to the EnterOtp.tsx screen (make sure to import the necessary modules for navigation)
+          } catch (error) {
+            // Handle storage error
+            setOtpErrorMessage(
+              'Credentials were not authenticated, please contact admin',
+            );
+          }
+        }
+      } else if (response.status === 400) {
+        // Bad request (HTTP status code 400)
+        setOtpErrorMessage('Invalid Email, please re-enter and try again!');
+
+        // Handle bad request, e.g., show an error message to the user
+      } else if (response.status === 429) {
+        // Unauthorized (HTTP status code 401)
+        // Handle unauthorized access, e.g., show an error message
+        setOtpErrorMessage(
+          'Maximum number of attempts reached. Please wait 1 minute before requesting a new OTP.',
+        );
+      } else {
+        // Handle other response codes
+        setOtpErrorMessage('Unable to login, please contact Site Admin');
+
+        // Handle other response codes as needed
+      }
+
+      // Do something with the response data
+    } catch (error) {
+      setOtpErrorMessage(
+        'Your internet connection is currently unstable, please retry at a later time',
+      );
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const keyboardClose = () => Keyboard.dismiss();
 
   const isButtonEnabled = !isLoading && !validateOtp(otp);
@@ -147,7 +212,10 @@ const OTPVerifyPageBody = () => {
         <View style={styles.container}>
           <Text style={styles.title}>Enter OTP</Text>
           <Text style={styles.description}>
-            An email has been sent to your account with the One Time Password.
+            An email has been sent to{' '}
+            <Text style={{fontWeight: 'bold'}}>"{emailID}"</Text> with the One
+            Time Password. If you haven't received the OTP, you can request a
+            new one in 60 seconds.
           </Text>
           <Text style={styles.dangerText}>{otpErrorMessage}</Text>
           <View style={styles.otpContainer}>
@@ -162,6 +230,9 @@ const OTPVerifyPageBody = () => {
                 ref={inputRefs[index]}
               />
             ))}
+          </View>
+          <View style={styles.resendRow}>
+            <OTPResend emailID={emailID} handleResend={handleResend }/>
           </View>
           <TouchableOpacity
             style={[
@@ -202,13 +273,14 @@ const styles = StyleSheet.create({
   title: {
     color: CLUEDIN_DARK_SCHEME.text_on_background,
     fontSize: 24,
+    fontWeight: '600',
     marginBottom: 10,
   },
   description: {
     color: CLUEDIN_DARK_SCHEME.text_on_background,
     fontSize: 16,
     textAlign: 'center',
-    marginBottom: 20,
+    marginBottom: 10,
   },
   dangerText: {
     fontSize: 16,
@@ -217,6 +289,11 @@ const styles = StyleSheet.create({
     textAlign: 'left',
   },
   otpContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  resendRow: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',

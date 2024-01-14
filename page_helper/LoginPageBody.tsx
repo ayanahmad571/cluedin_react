@@ -67,7 +67,7 @@ const LoginPageBody = ({navigation}) => {
           try {
             await AsyncStorage.setItem('TR_REF', data.consumer_ref_id);
             // Navigate to the EnterOtp.tsx screen (make sure to import the necessary modules for navigation)
-            navigation.navigate('Verify OTP');
+            navigation.navigate('Verify OTP', {emailID: email});
           } catch (error) {
             // Handle storage error
             setErrorMessage(
@@ -84,7 +84,7 @@ const LoginPageBody = ({navigation}) => {
         // Unauthorized (HTTP status code 401)
         // Handle unauthorized access, e.g., show an error message
         setErrorMessage(
-          'Maximum number of attempts reached. Please wait 3 minutes before requesting a new OTP.',
+          'Maximum number of attempts reached. Please wait 1 minute before requesting a new OTP.',
         );
       } else {
         // Handle other response codes
