@@ -23,7 +23,6 @@ const RankDisplayBox = ({rank, users, points, currentUser}) => {
       marginBottom: 5,
       padding: 10,
       borderRadius: 10,
-      borderWidth: 1,
       borderColor: accentCol,
     },
     rankColumn: {
