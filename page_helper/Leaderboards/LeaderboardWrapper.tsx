@@ -34,7 +34,7 @@ const LeaderboardWrapper = ({monthYear}) => {
   const [activeButton, setActiveButton] = useState(1);
 
   const handleRefresh = () => {
-    console.log('Current Leaderboard Refresh');
+    // console.log('Current Leaderboard Refresh');
     setRefreshing(true); // Show the loading indicator
     setLoading(true);
 
@@ -53,7 +53,7 @@ const LeaderboardWrapper = ({monthYear}) => {
 
   const getLeaderBoard = async () => {
     try {
-      console.log('this is: ', monthYear);
+      // console.log('this is: ', monthYear);
       const jwtUser = await AsyncStorage.getItem('JWT_USER');
 
       if (!jwtUser) {
@@ -73,7 +73,7 @@ const LeaderboardWrapper = ({monthYear}) => {
         body: requestBody,
       });
 
-      console.log('The API has been called');
+      // console.log('The API has been called');
 
       if (response.status === 200) {
         // Successful response, parse and set the question

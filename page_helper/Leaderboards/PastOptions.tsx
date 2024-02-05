@@ -45,7 +45,7 @@ const PastOptions = ({setselectedYear, monthToStop}) => {
       .toString()
       .padStart(2, '0')}${date.getUTCFullYear()}`;
     setselectedYear(formattedMonthYear);
-    console.log(formattedMonthYear);
+    // console.log(formattedMonthYear);
   };
 
   const renderPastOptions = () => {

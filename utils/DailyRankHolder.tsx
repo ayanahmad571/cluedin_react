@@ -75,9 +75,9 @@ const DailyRankHolder = ({refreshCount}) => {
 
   const loadDailyRank = async () => {
     setLoading(true);
-    console.log('fetch daily called');
+    // console.log('fetch daily called');
     await fetchDailyLeaderboard(); // Ensure this is called only once on component mount
-    console.log('fetch daily and sorted ended');
+    // console.log('fetch daily and sorted ended');
     setLoading(false);
   };
 
