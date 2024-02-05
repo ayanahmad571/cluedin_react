@@ -65,7 +65,7 @@ const DailyRankHolder = ({refreshCount}) => {
 
   const sortAllArray = inAr => {
     if (inAr.length > 0) {
-      const sortedRanks = [...JSON.parse(inAr)].sort((a, b) => b[3] - a[3]);
+      const sortedRanks = [...JSON.parse(inAr)];
       return sortedRanks;
     } else {
       const basicAr = [[[0, 0, 0], [0, 0, 0, 0, 0], 'N/A', 0]];
