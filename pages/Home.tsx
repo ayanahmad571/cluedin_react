@@ -33,9 +33,11 @@ const Home = () => {
   const [answerOption, setAnswerOption] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
   const appState = useRef(AppState.currentState);
+  const [refreshCount, setrefreshCount] = useState(1);
 
   const handleRefresh = () => {
     setRefreshing(true); // Show the loading indicator
+    setrefreshCount(refreshCount + 1);
     PushNotification.removeAllDeliveredNotifications();
     PushNotification.setApplicationIconBadgeNumber(0);
     // Perform data fetching or any other async operation
@@ -191,6 +193,7 @@ const Home = () => {
             <ScoreBody
               question={question}
               fetchTodayQuestion={fetchTodayQuestion}
+              refreshCount={refreshCount}
             />
           )}
 

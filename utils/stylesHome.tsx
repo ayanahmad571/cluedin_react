@@ -80,10 +80,9 @@ export const styles = StyleSheet.create({
     margin: 10,
     marginTop: 1,
     marginBottom: 0,
-    borderRadius: 10,
-    backgroundColor: CLUEDIN_DARK_SCHEME.home.row3_bg,
-    borderBottomRightRadius: 0,
-    borderBottomLeftRadius: 0, // Remove bottom left radius
+    borderRadius: 20,
+    padding: 10,
+    backgroundColor: CLUEDIN_THEME.white,
   },
   eightRow: {
     justifyContent: 'center',
@@ -194,4 +193,24 @@ export const styles = StyleSheet.create({
     color: CLUEDIN_DARK_SCHEME.home.row2_bg_text,
     fontSize: 18,
   },
+  blackText: {
+    color: CLUEDIN_THEME.black
+  },
+  summary_title: {
+    fontWeight: '700',
+    fontSize: 24,
+    marginBottom: 5,
+  },
+  summary_boxTextNormal: {
+    color: CLUEDIN_THEME.black,
+    fontSize: 16,
+    fontWeight: '200',
+  },
+  onBgTitle: {
+    color: CLUEDIN_THEME.white,
+    fontWeight: '600',
+    fontSize: 25,
+    marginBottom: 10,
+    textAlign: 'center',
+  }
 });

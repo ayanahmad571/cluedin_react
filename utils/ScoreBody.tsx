@@ -1,8 +1,9 @@
 import React, {useEffect} from 'react';
 import {View, Text} from 'react-native';
 import {styles} from './stylesHome';
+import DailyRankHolder from './DailyRankHolder';
 
-const ScoreBody = ({question, fetchTodayQuestion}) => {
+const ScoreBody = ({question, fetchTodayQuestion, refreshCount}) => {
   const cluesUsedNumber = Object.values(question.clues_used).reduce(
     (count, value) => {
       return count + (value === '1' ? 1 : 0);
@@ -47,55 +48,28 @@ const ScoreBody = ({question, fetchTodayQuestion}) => {
 
   return (
     <>
+    <Text style={styles.onBgTitle}>Today's Summary</Text>
       <View style={styles.sevenRow}>
         <View style={styles.boxL}>
-          <Text style={styles.boxTextTitle}>Congratulations !!</Text>
-          <Text style={styles.boxTextNormal}>
-            You have finished todays quiz!! Below are the answers for today.
-          </Text>
-          <Text style={styles.boxTextNormal}>
-            <Text style={{fontWeight: 'bold'}}> Question:</Text>{' '}
-            {question.question_raw.master_title}
-          </Text>
-          <Text style={styles.boxTextNormal}>
+          <Text style={styles.summary_boxTextNormal}>
             <Text style={{fontWeight: 'bold'}}> Clue 1 (Easy):</Text>{' '}
             {question.clues_used_values['1']}
           </Text>
-          <Text style={styles.boxTextNormal}>
+          <Text style={styles.summary_boxTextNormal}>
             <Text style={{fontWeight: 'bold'}}> Clue 2 (Medium):</Text>{' '}
             {question.clues_used_values['2']}
           </Text>
-          <Text style={styles.boxTextNormal}>
+          <Text style={styles.summary_boxTextNormal}>
             <Text style={{fontWeight: 'bold'}}> Clue 3 (Hard):</Text>{' '}
             {question.clues_used_values['3']}
           </Text>
-          <Text style={styles.boxTextNormal}>
+          <Text style={styles.summary_boxTextNormal}>
             <Text style={{fontWeight: 'bold'}}> Answer:</Text>{' '}
             {question.question_raw[`option_${question.answer}`]}
           </Text>
         </View>
       </View>
-      <View style={styles.sixthRow}>
-        <View style={styles.boxL}>
-          <Text style={styles.boxTextTitle}>Performance - ({question.today_points} points)</Text>
-          <Text style={styles.boxTextNormal}>
-            Below is an analysis of your performance today, checkout the
-            leaderboard for your ranking !
-          </Text>
-          <Text style={styles.boxTextNormal}>
-            <Text style={{fontWeight: 'bold'}}> Clues Used:</Text>{' '}
-            {cluesUsedNumber} - {usedCluesString}
-          </Text>
-          <Text style={styles.boxTextNormal}>
-            <Text style={{fontWeight: 'bold'}}> Number of Options Used:</Text>{' '}
-            {optionsUsedNumber}
-          </Text>
-          <Text style={styles.boxTextNormal}>
-            <Text style={{fontWeight: 'bold'}}> Total Points Obtained:</Text>{' '}
-            {question.today_points}
-          </Text>
-        </View>
-      </View>
+      <DailyRankHolder refreshCount={refreshCount} />
     </>
   );
 };
