@@ -44,23 +44,18 @@ const HomeTopInfoRow = ({handleRefresh, setCountdown, question, countdown}) => {
 
   return (
     <View>
+      <View style={styles.firstPillRow}>
+        <View style={styles.box}>
+          <Text style={styles.boxText}>Day</Text>
+          <Text style={styles.boxText}>{question.question_raw.day}</Text>
+        </View>
+        <View style={styles.box}>
+          <Text style={styles.boxText}>Next Refresh In</Text>
+          <Text style={styles.countdown}>{countdown}</Text>
+        </View>
+      </View>
       <View style={styles.container}>
-        <View style={styles.firstRow}>
-          <View style={styles.box}>
-            <Text style={styles.boxText}>Day</Text>
-          </View>
-          <View style={styles.box}>
-            <Text style={styles.boxText}>Next Refresh In</Text>
-          </View>
-        </View>
-        <View style={styles.secondRow}>
-          <View style={styles.box}>
-            <Text style={styles.boxText}>{question.question_raw.day}</Text>
-          </View>
-          <View style={styles.box}>
-            <Text style={styles.countdown}>{countdown}</Text>
-          </View>
-        </View>
+        <Text style={styles.onBgTitle}>Today's Question</Text>
         <View style={styles.thirdRow}>
           <View style={styles.box}>
             <Text style={styles.boxTextL}>

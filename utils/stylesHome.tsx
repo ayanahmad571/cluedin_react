@@ -11,6 +11,13 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     padding: 0,
   },
+  firstPillRow: {
+    flexDirection: 'row',
+    margin: 10,
+    borderRadius: 20,
+    overflow: 'hidden',
+    backgroundColor: CLUEDIN_DARK_SCHEME.home.row1_bg,
+  },
   firstRow: {
     flexDirection: 'row',
     margin: 10,
