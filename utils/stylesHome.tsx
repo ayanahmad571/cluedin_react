@@ -66,6 +66,7 @@ export const styles = StyleSheet.create({
     margin: 10,
     marginBottom: 0,
     borderRadius: 10,
+    padding: 10,
     backgroundColor: CLUEDIN_DARK_SCHEME.home.row3_bg,
     borderBottomRightRadius: 0,
     borderBottomLeftRadius: 0, // Remove bottom left radius
@@ -90,6 +91,18 @@ export const styles = StyleSheet.create({
     borderRadius: 20,
     padding: 10,
     backgroundColor: CLUEDIN_THEME.white,
+  },
+  answerHolderTextRow: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    margin: 10,
+    marginTop: 1,
+    marginBottom: 0,
+    borderRadius: 20,
+    padding: 10,
+    backgroundColor: CLUEDIN_DARK_SCHEME.home.row3_bg,
+    borderBottomRightRadius: 0,
+    borderBottomLeftRadius: 0, // Remove top left radius
   },
   eightRow: {
     justifyContent: 'center',

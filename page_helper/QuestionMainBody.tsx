@@ -75,7 +75,7 @@ const QuestionMainBody = ({question, handleAnswerButtonPress, handleClueButtonPr
       <View style={styles.sixthRow}>
         <View style={styles.buttonContainer}>{renderClueRows()}</View>
       </View>
-      <View style={styles.sevenRow}>
+      <View style={styles.answerHolderTextRow}>
         <View style={styles.boxL}>
           <Text style={styles.boxTextTitle}>Answer</Text>
         </View>
