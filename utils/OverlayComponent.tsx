@@ -1,5 +1,12 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {useEffect, useState} from 'react';
-import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  ScrollView,
+} from 'react-native';
 import {API_BASE_URL, CLUEDIN_DARK_SCHEME, CLUEDIN_THEME} from './constants';
 
 const OverlayComponent = ({id, onClose, question, setQuestion, user}) => {
@@ -74,8 +81,8 @@ const OverlayComponent = ({id, onClose, question, setQuestion, user}) => {
   }, [id]);
 
   return (
-    <TouchableOpacity style={styles.modalContainer} onPress={onClose}>
-      <TouchableOpacity activeOpacity={1} style={styles.overlayContainer}>
+    <View style={styles.modalContainer}>
+      <View style={styles.overlayContainer}>
         <View style={styles.popupContainer}>
           <View style={styles.row}>
             <TouchableOpacity style={styles.closeButton} onPress={onClose}>
@@ -100,9 +107,13 @@ const OverlayComponent = ({id, onClose, question, setQuestion, user}) => {
                       borderBottomWidth: 2,
                     }}
                   />
-                  <Text style={styles.body}>
-                    {question.clues_used_values[id]}
-                  </Text>
+                  <View>
+                    <ScrollView>
+                      <Text style={styles.body}>
+                        {question.clues_used_values[id]}
+                      </Text>
+                    </ScrollView>
+                  </View>
                 </>
               )}
             </View>
@@ -115,8 +126,8 @@ const OverlayComponent = ({id, onClose, question, setQuestion, user}) => {
             </TouchableOpacity>
           </View>
         </View>
-      </TouchableOpacity>
-    </TouchableOpacity>
+      </View>
+    </View>
   );
 };
 
@@ -137,6 +148,7 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '100%',
     padding: 5,
+    marginBottom: 80,
   },
   row: {
     width: '100%',
@@ -144,9 +156,7 @@ const styles = StyleSheet.create({
   },
   overlayContainer: {
     width: '80%',
-    height: '40%',
-    justifyContent: 'center',
-    alignItems: 'center',
+    height: '60%',
   },
   closeBtnBottomBtn: {
     padding: 10,
