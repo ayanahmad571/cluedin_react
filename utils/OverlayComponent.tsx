@@ -84,41 +84,36 @@ const OverlayComponent = ({id, onClose, question, setQuestion, user}) => {
     <View style={styles.modalContainer}>
       <View style={styles.overlayContainer}>
         <View style={styles.popupContainer}>
-          <View style={styles.row}>
-            <TouchableOpacity style={styles.closeButton} onPress={onClose}>
-              <Text style={styles.closeButtonText}>X</Text>
-            </TouchableOpacity>
+          <View style={styles.titleContainer}>
+            <Text style={styles.title}>{difficulty} Clue</Text>
+            <View
+              style={{
+                width: '100%',
+                borderBottomColor: CLUEDIN_THEME.dark_grey,
+                borderBottomWidth: 2,
+              }}
+            />
           </View>
-          <View style={styles.contentRow}>
-            <View style={styles.row}>
-              {errorClueMsg !== '' ? (
-                <Text style={styles.body}>{errorClueMsg}</Text>
-              ) : isLoading ? (
-                <Text style={styles.body}>
-                  Please Wait: Extracting Clue ...
-                </Text>
-              ) : (
-                <>
-                  <Text style={styles.title}>{difficulty} Clue</Text>
-                  <View
-                    style={{
-                      width: '100%',
-                      borderBottomColor: CLUEDIN_THEME.dark_grey,
-                      borderBottomWidth: 2,
-                    }}
-                  />
-                  <View>
-                    <ScrollView>
-                      <Text style={styles.body}>
-                        {question.clues_used_values[id]}
-                      </Text>
-                    </ScrollView>
-                  </View>
-                </>
-              )}
-            </View>
+
+          <View style={styles.bodyContainer}>
+            {errorClueMsg !== '' ? (
+              <Text style={styles.body}>{errorClueMsg}</Text>
+            ) : isLoading ? (
+              <Text style={styles.body}>Please Wait: Extracting Clue ...</Text>
+            ) : (
+              <>
+                <View>
+                  <ScrollView>
+                    <Text style={styles.body}>
+                      {question.clues_used_values[id]}
+                    </Text>
+                  </ScrollView>
+                </View>
+              </>
+            )}
           </View>
-          <View style={styles.row}>
+
+          <View style={styles.closeContainer}>
             <TouchableOpacity
               style={styles.closeBtnBottomBtn}
               onPress={onClose}>
@@ -137,6 +132,18 @@ const styles = StyleSheet.create({
     width: '100%',
     backgroundColor: CLUEDIN_DARK_SCHEME.text_on_background,
     borderRadius: 2,
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+  },
+  titleContainer: {
+    padding: 10,
+  },
+  bodyContainer: {
+    padding: 10,
+    maxHeight: '70%',
+  },
+  closeContainer: {
+    padding: 10,
   },
   modalContainer: {
     flex: 1,
@@ -148,7 +155,11 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '100%',
     padding: 5,
-    marginBottom: 80,
+  },
+  rowCloseBtn: {
+    width: '100%',
+    height: '10%',
+    padding: 5,
   },
   row: {
     width: '100%',
@@ -169,14 +180,6 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: CLUEDIN_DARK_SCHEME.about.btn_bg_text,
   },
-  closeButton: {
-    textAlign: 'right',
-    padding: 20,
-  },
-  closeButtonText: {
-    textAlign: 'right',
-    color: 'black',
-  },
   title: {
     fontSize: 25,
     fontWeight: 'bold',
@@ -184,7 +187,6 @@ const styles = StyleSheet.create({
     color: CLUEDIN_THEME.black,
   },
   body: {
-    marginTop: 10,
     fontSize: 20,
     fontWeight: '300',
     color: CLUEDIN_THEME.black,
