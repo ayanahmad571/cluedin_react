@@ -19,7 +19,6 @@ const QuestionMainBody = ({question, handleAnswerButtonPress, handleClueButtonPr
       const isAnsUsed = question.options_used[i] === '1';
       rows.push(
         <View key={i} style={styles.optionRow}>
-          <Text style={styles.optionRowText}>Option {i}</Text>
           <TouchableOpacity
             disabled={ansDisabled || isAnsUsed}
             style={[
@@ -28,14 +27,14 @@ const QuestionMainBody = ({question, handleAnswerButtonPress, handleClueButtonPr
             ]}
             onPress={() => handleAnswerButtonPress(i)}>
             <Text
-              style={
+              style={[styles.baseAnsText,
                 isAnsUsed
                   ? styles.usedAnsButtonText
                   : ansDisabled
                   ? styles.ansDisButtonText
                   : styles.ansButtonText
-              }>
-              {question.question_raw[optionKey]}
+              ]}>
+              {i}. {question.question_raw[optionKey]}
             </Text>
           </TouchableOpacity>
         </View>,
@@ -70,6 +69,7 @@ const QuestionMainBody = ({question, handleAnswerButtonPress, handleClueButtonPr
       <View style={styles.fifthRow}>
         <View style={styles.boxL}>
           <Text style={styles.boxTextTitle}>Clues</Text>
+          <Text style={styles.blackText}>Pick a clue to get started!</Text>
         </View>
       </View>
       <View style={styles.sixthRow}>

@@ -56,19 +56,17 @@ const HomeTopInfoRow = ({handleRefresh, setCountdown, question, countdown}) => {
       </View>
       <View style={styles.container}>
         <Text style={styles.onBgTitle}>Today's Question</Text>
-        <View style={styles.thirdRow}>
+        <View style={styles.todayQHolder}>
           <View style={styles.box}>
-            <Text style={styles.boxTextL}>
+            <Text style={styles.boxTextLBl}>
               Theme:{' '}
               <Text style={{fontWeight: 'bold'}}>
                 {question.question_raw.theme}
               </Text>
             </Text>
           </View>
-        </View>
-        <View style={styles.forthRow}>
           <View style={styles.box}>
-            <Text style={styles.boxTextL}>
+            <Text style={styles.boxTextLBl}>
               Today's Question:{' '}
               <Text style={{fontWeight: 'bold'}}>
                 {question.question_raw.master_title}

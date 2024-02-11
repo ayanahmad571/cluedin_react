@@ -14,7 +14,7 @@ export const styles = StyleSheet.create({
   firstPillRow: {
     flexDirection: 'row',
     margin: 10,
-    borderRadius: 20,
+    borderRadius: 25,
     overflow: 'hidden',
     backgroundColor: CLUEDIN_DARK_SCHEME.home.row1_bg,
   },
@@ -40,47 +40,35 @@ export const styles = StyleSheet.create({
     overflow: 'hidden',
     backgroundColor: CLUEDIN_DARK_SCHEME.home.row1_bg,
   },
-  thirdRow: {
-    flexDirection: 'row',
+  todayQHolder: {
+    flexDirection: 'column',
     justifyContent: 'center',
     margin: 10,
     marginBottom: 0,
-    borderRadius: 10,
-    backgroundColor: CLUEDIN_DARK_SCHEME.home.row2_bg,
-    borderBottomRightRadius: 0,
-    borderBottomLeftRadius: 0, // Remove bottom left radius
-  },
-  forthRow: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    margin: 10,
-    marginTop: 0,
-    borderRadius: 10,
-    backgroundColor: CLUEDIN_DARK_SCHEME.home.row2_bg,
-    borderTopRightRadius: 0,
-    borderTopLeftRadius: 0, // Remove top left radius
+    borderRadius: 25,
+    backgroundColor: CLUEDIN_THEME.white,
+    padding: 5,
   },
   fifthRow: {
     flexDirection: 'row',
     justifyContent: 'center',
     margin: 10,
     marginBottom: 0,
-    borderRadius: 10,
+    borderRadius: 25,
     padding: 10,
-    backgroundColor: CLUEDIN_DARK_SCHEME.home.row3_bg,
+    backgroundColor: CLUEDIN_THEME.white,
     borderBottomRightRadius: 0,
     borderBottomLeftRadius: 0, // Remove bottom left radius
+    paddingTop: 5,
   },
   sixthRow: {
     flexDirection: 'row',
     justifyContent: 'center',
     margin: 10,
     marginTop: 0,
-    marginBottom: 1,
-    borderRadius: 10,
-    backgroundColor: CLUEDIN_DARK_SCHEME.home.row3_bg,
-    borderTopRightRadius: 0,
-    borderTopLeftRadius: 0, // Remove top left radius
+    marginBottom: 0,
+    backgroundColor: CLUEDIN_THEME.white,
+    paddingBottom: 5,
   },
   sevenRow: {
     flexDirection: 'row',
@@ -96,22 +84,20 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     margin: 10,
-    marginTop: 1,
+    marginTop: 0,
     marginBottom: 0,
-    borderRadius: 20,
     padding: 10,
-    backgroundColor: CLUEDIN_DARK_SCHEME.home.row3_bg,
-    borderBottomRightRadius: 0,
-    borderBottomLeftRadius: 0, // Remove top left radius
+    backgroundColor: CLUEDIN_THEME.white,
   },
   eightRow: {
     justifyContent: 'center',
     margin: 10,
     marginTop: 0,
-    borderRadius: 10,
-    backgroundColor: CLUEDIN_DARK_SCHEME.home.row3_bg,
+    borderRadius: 25,
+    backgroundColor: CLUEDIN_THEME.white,
     borderTopRightRadius: 0,
     borderTopLeftRadius: 0, // Remove top left radius
+    paddingBottom: 10,
   },
   optionRow: {
     flexDirection: 'row',
@@ -119,13 +105,6 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingHorizontal: 16, // Adjust as needed
     paddingVertical: 8, // Adjust as needed
-    borderBottomWidth: 1, // Add a border to separate rows
-    borderColor: CLUEDIN_THEME.light_grey, // Customize border color
-  },
-  optionRowText: {
-    fontSize: 16,
-    fontWeight: '300',
-    color: CLUEDIN_DARK_SCHEME.home.row3_bg_text,
   },
   buttonContainer: {
     flexDirection: 'row',
@@ -133,21 +112,21 @@ export const styles = StyleSheet.create({
     margin: 10,
   },
   buttonAnswer: {
-    backgroundColor: CLUEDIN_DARK_SCHEME.home.clue_btn_bg,
+    backgroundColor: CLUEDIN_THEME.black,
     padding: 10,
     borderRadius: 10,
-    width: '70%',
+    width: '100%',
     alignItems: 'center',
   },
   disabledButtonAnswer: {
     backgroundColor: CLUEDIN_THEME.yellow,
     padding: 10,
     borderRadius: 10,
-    width: '70%',
+    width: '100%',
     alignItems: 'center',
   },
   button: {
-    backgroundColor: CLUEDIN_DARK_SCHEME.home.clue_btn_bg,
+    backgroundColor: CLUEDIN_THEME.black,
     padding: 10,
     borderRadius: 10,
     width: '32%',
@@ -162,22 +141,24 @@ export const styles = StyleSheet.create({
   },
   usedAnsButtonText: {
     backgroundColor: CLUEDIN_DARK_SCHEME.home.used_ans_bg,
-    fontSize: 16,
     color: CLUEDIN_DARK_SCHEME.home.used_ans_bg_text,
     textDecorationLine: 'line-through',
     textDecorationStyle: 'solid',
   },
   buttonText: {
     fontSize: 16,
-    color: CLUEDIN_THEME.black,
+    color: CLUEDIN_THEME.white,
   },
   ansButtonText: {
-    fontSize: 16,
-    color: CLUEDIN_THEME.black,
+    color: CLUEDIN_THEME.white,
   },
   ansDisButtonText: {
-    fontSize: 16,
     color: CLUEDIN_THEME.yellow,
+  },
+  baseAnsText: {
+    fontSize: 16,
+    alignSelf:'flex-start',
+    fontWeight:'600',
   },
   box: {
     flex: 1,
@@ -199,8 +180,12 @@ export const styles = StyleSheet.create({
     color: CLUEDIN_DARK_SCHEME.home.row2_bg_text,
     fontSize: 18,
   },
+  boxTextLBl: {
+    color: CLUEDIN_THEME.black,
+    fontSize: 18,
+  },
   boxTextTitle: {
-    color: CLUEDIN_DARK_SCHEME.home.row2_bg_text,
+    color: CLUEDIN_THEME.black,
     fontWeight: 'bold',
     fontSize: 24,
   },
