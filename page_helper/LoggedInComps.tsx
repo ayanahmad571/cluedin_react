@@ -1,17 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import Home from '../pages/Home';
+import NavHome from '../pages/NavHome';
 import SettingsPage from '../pages/SettingsPage';
 import HelpPage from '../pages/HelpPage';
 import LeaderboardPage from '../pages/LeaderboardPage';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import TopBarRealComponent from '../utils/TopBarRealComponent';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { CLUEDIN_DARK_SCHEME, CLUEDIN_THEME } from '../utils/constants';
+import {CLUEDIN_DARK_SCHEME, CLUEDIN_THEME} from '../utils/constants';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import NewLoginUsername from './NewLoginUsername';
+import SoonPage from '../pages/SoonPage';
 
 const Tab = createBottomTabNavigator();
-
 
 const LoggedInComponents = () => {
   const [isNewLogin, setIsNewLogin] = useState(false);
@@ -33,7 +34,7 @@ const LoggedInComponents = () => {
     <NewLoginUsername setIsNewLogin={setIsNewLogin} />
   ) : (
     <Tab.Navigator
-      initialRouteName="Home" // Set the initial route name to "Home"
+      initialRouteName="Menu" // Set the initial route name to "Home"
       backBehavior="initialRoute" // Set the back behavior to initialRou
       screenOptions={({route}) => ({
         // unmountOnBlur: true,
@@ -50,6 +51,8 @@ const LoggedInComponents = () => {
             iconName = focused ? 'globe' : 'globe';
           } else if (route.name === 'Help') {
             iconName = focused ? 'help-outline' : 'help';
+          } else if (route.name === 'Menu') {
+            iconName = focused ? 'menu' : 'menu';
           } else {
           }
           // You can return any component that you like here!
@@ -57,7 +60,7 @@ const LoggedInComponents = () => {
             <Ionicons name={iconName} size={size} style={{color: iconCol}} />
           );
         },
-        // eslint-disable-next-line react/no-unstable-nested-components
+
         headerStyle: {
           backgroundColor: CLUEDIN_DARK_SCHEME.header_background,
         },
@@ -79,8 +82,26 @@ const LoggedInComponents = () => {
       {/* <Tab.Screen name="LeaderBoard" component={Home} /> */}
       <Tab.Screen name="Leaderboard" component={LeaderboardPage} />
       <Tab.Screen name="Home" component={Home} />
-      <Tab.Screen name="Help" component={HelpPage} />
-      <Tab.Screen name="Settings" component={SettingsPage} options={{ headerShown: false }}/>
+      <Tab.Screen
+        name="Menu"
+        component={NavHome}
+        options={{headerShown: false}}
+      />
+      <Tab.Screen
+        name="Help"
+        component={HelpPage}
+        options={{tabBarButton: () => null}}
+      />
+      <Tab.Screen
+        name="Settings"
+        component={SettingsPage}
+        options={{headerShown: false, tabBarButton: () => null}}
+      />
+      <Tab.Screen
+        name="Soon"
+        component={SoonPage}
+        options={{tabBarButton: () => null}}
+      />
     </Tab.Navigator>
   );
 };
