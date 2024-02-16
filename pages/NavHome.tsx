@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {CLUEDIN_DARK_SCHEME} from '../utils/constants';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const NavHome = ({route, navigation}) => {
   const renderBox = (title, chevron, isPremium, routeName = 'Soon') => {
@@ -29,9 +30,9 @@ const NavHome = ({route, navigation}) => {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Text style={styles.title}>Pick a Journey</Text>
-      <ScrollView>
+      <ScrollView style={{flex: 1,}}>
         <Text style={styles.subject}>Our Classics</Text>
         <View style={styles.row}>
           {renderBox('Daily Trivia', 'calendar-number-sharp', false, 'Home')}
@@ -58,7 +59,7 @@ const NavHome = ({route, navigation}) => {
           {renderBox('Settings', 'settings', false, 'Settings')}
         </View>
       </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -68,6 +69,7 @@ const styles = StyleSheet.create({
     backgroundColor: CLUEDIN_DARK_SCHEME.navigator.background,
     padding: 20,
     paddingTop: 10,
+    paddingBottom: 0,
   },
   title: {
     fontSize: 30,
@@ -80,7 +82,7 @@ const styles = StyleSheet.create({
   subject: {
     fontSize: 18,
     textAlign: 'right',
-    marginTop: 10,
+    marginTop: 30,
     fontWeight: '500',
     color: CLUEDIN_DARK_SCHEME.navigator.backgroundText,
   },
