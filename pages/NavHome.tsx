@@ -58,6 +58,7 @@ const NavHome = ({route, navigation}) => {
           {renderBox('Help', 'help', false, 'Help')}
           {renderBox('Settings', 'settings', false, 'Settings')}
         </View>
+        <View style={{paddingBottom: 20}} />
       </ScrollView>
     </SafeAreaView>
   );

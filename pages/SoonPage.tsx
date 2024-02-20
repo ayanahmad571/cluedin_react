@@ -4,12 +4,9 @@ import TestBackground from '../utils/components/TestBackground';
 
 const SoonPage = () => {
   return (
-    <>
       <View style={styles.container}>
         <Text style={styles.text}>Feature Coming Soon</Text>
       </View>
-      <TestBackground />
-    </>
   );
 };
 
@@ -19,6 +16,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingTop: 20,
+    flex :1,
   },
   text: {
     fontSize: 24,
