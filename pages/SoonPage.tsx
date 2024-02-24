@@ -1,28 +1,13 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
-import TestBackground from '../utils/components/TestBackground';
+import {View, Text} from 'react-native';
+import UserAuthCheckComp from '../utils/components/UserAuthCheckComp';
 
 const SoonPage = () => {
   return (
-      <View style={styles.container}>
-        <Text style={styles.text}>Feature Coming Soon</Text>
-      </View>
+    <UserAuthCheckComp>
+      <Text style={{color: 'red', fontSize: 72}}>This is the SoonPage after loading</Text>
+    </UserAuthCheckComp>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: 'black',
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingTop: 20,
-    flex :1,
-  },
-  text: {
-    fontSize: 24,
-    color: 'white',
-    textAlign: 'center',
-  },
-});
 
 export default SoonPage;
