@@ -4,7 +4,6 @@ global.atob = decode;
 
 const jwtDecodeHelper = (token) => {
   try {
-    d
     const decodedToken = jwtDecode(token);
     console.log('Recieved: ', token);
     return decodedToken;

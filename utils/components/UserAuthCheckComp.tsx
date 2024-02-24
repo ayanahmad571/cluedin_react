@@ -13,12 +13,10 @@ const UserAuthCheckComp = ({children}) => {
   const [userAuthResp, setUserAuthResp] = useState(0);
   const [userDecodedJWT, setuserDecodedJWT] = useState(null);
 
-  const setUpJWT = () => {
-    setTimeout(async () => {
-      const jwtUser = await AsyncStorage.getItem('JWT_USER');
-      const jwtDecoded = jwtDecodeHelper(jwtUser);
-      setuserDecodedJWT(jwtDecoded);
-    }, 5000); // 5000 milliseconds = 5 seconds
+  const setUpJWT = async () => {
+    const jwtUser = await AsyncStorage.getItem('JWT_USER');
+    const jwtDecoded = jwtDecodeHelper(jwtUser);
+    setuserDecodedJWT(jwtDecoded);
   };
 
   const pageAuthSetup = async () => {
@@ -68,7 +66,7 @@ const AuthenticatedPage = ({children, userDecodedJWT}) => {
   return userDecodedJWT === null ? (
     <LoadingPageBody />
   ) : userDecodedJWT === '' ? (
-    <View style={{flex :1}}><ErrorPageBody errorMsg={'User is not asdasd authenticated.'} /></View>
+    <ErrorPageBody errorMsg={'User is not authenticated.'} />
   ) : (
     children
   );
