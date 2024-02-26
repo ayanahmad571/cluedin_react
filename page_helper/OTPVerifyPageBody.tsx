@@ -16,6 +16,7 @@ import {useContext} from 'react';
 import AuthContext from '../utils/AuthContext'; // Adjust the import path as needed
 import {setupFirebase} from '../utils/firebaseScripts';
 import OTPResend from '../utils/OTPResend';
+import { setupRevCat } from '../utils/setupRevCat';
 
 const OTPVerifyPageBody = ({route, navigation}) => {
   const {emailID} = route.params;
@@ -90,6 +91,7 @@ const OTPVerifyPageBody = ({route, navigation}) => {
             await AsyncStorage.setItem('NEW_LOGIN', 'yes');
             // Navigate to the EnterOtp.tsx screen (make sure to import the necessary modules for navigation)
             setupFirebase();
+            setupRevCat(otpRespData['Access-Token']);
             setUser(otpRespData['Access-Token']);
             return;
           } catch (error) {

@@ -9,7 +9,7 @@ const jwtDecodeHelper = (token) => {
     return decodedToken;
   } catch (error) {
     console.error('Error decoding JWT:', error);
-    return '';
+    return null;
   }
 };
 
