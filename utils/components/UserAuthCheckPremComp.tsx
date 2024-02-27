@@ -6,7 +6,27 @@ import LoadingPageBody from '../LoadingPageBody';
 import {CLUEDIN_DARK_SCHEME, CLUEDIN_THEME} from '../constants';
 import ErrorPageBody from '../ErrorPageBody';
 import {useRevenueCat} from '../RevenueCatProvider';
+import RevenueCatUI, {PAYWALL_RESULT} from 'react-native-purchases-ui';
 
+const presentPaywall = async (): Promise<boolean> => {
+  // Present paywall for current offering:
+  const paywallResult: PAYWALL_RESULT = await RevenueCatUI.presentPaywall();
+
+  switch (paywallResult) {
+    case PAYWALL_RESULT.NOT_PRESENTED:
+    case PAYWALL_RESULT.ERROR:
+    case PAYWALL_RESULT.CANCELLED:
+      // return false;
+      console.log('cancelled');
+    case PAYWALL_RESULT.PURCHASED:
+      console.log('purchased');
+    case PAYWALL_RESULT.RESTORED:
+      console.log('restored');
+    // return true;
+    default:
+      return false;
+  }
+};
 const UserAuthCheckPremComp = ({children}) => {
   const {setUser} = useContext(AuthContext);
   const [userAuthResp, setUserAuthResp] = useState(0);
@@ -60,11 +80,7 @@ const AuthenticatedPage = ({children}) => {
   if (userInfoPrem) {
     return children;
   } else {
-    return (
-      <ErrorPageBody
-        errorMsg={'User is not premium. Please buy pack to continue.'}
-      />
-    );
+    return presentPaywall();
   }
 };
 
