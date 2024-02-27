@@ -91,7 +91,7 @@ const OTPVerifyPageBody = ({route, navigation}) => {
             await AsyncStorage.setItem('NEW_LOGIN', 'yes');
             // Navigate to the EnterOtp.tsx screen (make sure to import the necessary modules for navigation)
             setupFirebase();
-            setupRevCat(otpRespData['Access-Token']);
+            // setupRevCat(otpRespData['Access-Token']);
             setUser(otpRespData['Access-Token']);
             return;
           } catch (error) {

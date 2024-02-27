@@ -14,6 +14,7 @@ import LoggedInComponents from './page_helper/LoggedInComps';
 import {Platform} from 'react-native';
 import ForceAPIUpdate from './pages/ForceAPIUpdate';
 import {setupFirebase, unSetFirebase} from './utils/firebaseScripts';
+import {RevenueCatProvider} from './utils/RevenueCatProvider';
 
 // Create an AuthProvider component
 const AuthProvider = ({children}) => {
@@ -107,7 +108,9 @@ const AuthProvider = ({children}) => {
         <SplashScreenPage />
       ) : user ? (
         // User is logged in
-        <LoggedInComponents />
+        <RevenueCatProvider>
+          <LoggedInComponents />
+        </RevenueCatProvider>
       ) : (
         // User is not logged in
         <NotLoggedInComponents />

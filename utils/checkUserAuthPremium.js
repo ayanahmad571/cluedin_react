@@ -1,27 +1,24 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { API_BASE_URL } from './constants';
+import {Purchases} from 'react-native-purchases';
 
-const checkUserAuthentication = async (setUser) => {
-  const jwtUser = await AsyncStorage.getItem('JWT_USER');
-
+const checkUserPremium = async () => {
   try {
-    const response = await fetch(`${API_BASE_URL}/check_login_status_premium`, {
-      method: 'GET', // Or use POST as per your API's requirements
-      headers: {
-        Authorization: `Bearer ${jwtUser}`,
-      },
-    });
+    const customerInfo = await Purchases.getCustomerInfo();
+    console.log('PREM CHECK:', customerInfo);
 
-    if (response.status !== 200) {
-      // Token is not valid, user is not logged in
-      setUser('');
-      return 2;
+    // Check users Entitlement for PREMIUM Subscription.
+    if (typeof customerInfo.entitlements.active.asdasd !== 'undefined') {
+      // Grant user "pro" access as Entitlement was found.
+      return true;
     } else {
-      return 1;
+      // User is not Premium User.
+      return false;
     }
-  } catch (error) {
-    return 3;
+
+  } catch (e) {
+    // Error fetching customer info
+    console.error(e);
+    return false;
   }
 };
 
-export default checkUserAuthentication;
+export default checkUserPremium;

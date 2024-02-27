@@ -1,12 +1,12 @@
 import React from 'react';
 import {View, Text} from 'react-native';
-import UserAuthCheckComp from '../utils/components/UserAuthCheckComp';
+import UserAuthCheckPremComp from '../utils/components/UserAuthCheckPremComp';
 
 const SoonPage = () => {
   return (
-    <UserAuthCheckComp>
-      <Text style={{color: 'red', fontSize: 72}}>This is the SoonPage after loading</Text>
-    </UserAuthCheckComp>
+    <UserAuthCheckPremComp>
+      <Text style={{color: 'red', fontSize: 72}}>This is a test paid page. User cant see this in free version.</Text>
+    </UserAuthCheckPremComp>
   );
 };
 
