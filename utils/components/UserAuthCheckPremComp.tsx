@@ -1,5 +1,6 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {useEffect, useContext, useState} from 'react';
-import {View, Text, ScrollView} from 'react-native';
+import {View, Text, ScrollView, Button} from 'react-native';
 import checkUserAuthentication from '../checkUserAuth'; // import the checkUserAuthentication function
 import AuthContext from '../AuthContext'; // import your AuthContext
 import LoadingPageBody from '../LoadingPageBody';
@@ -16,13 +17,13 @@ const presentPaywall = async (): Promise<boolean> => {
     case PAYWALL_RESULT.NOT_PRESENTED:
     case PAYWALL_RESULT.ERROR:
     case PAYWALL_RESULT.CANCELLED:
-      // return false;
       console.log('cancelled');
+      return false;
     case PAYWALL_RESULT.PURCHASED:
       console.log('purchased');
     case PAYWALL_RESULT.RESTORED:
       console.log('restored');
-    // return true;
+      return true;
     default:
       return false;
   }
@@ -80,7 +81,7 @@ const AuthenticatedPage = ({children}) => {
   if (userInfoPrem) {
     return children;
   } else {
-    return presentPaywall();
+    return <PaywallComp />;
   }
 };
 
@@ -98,6 +99,35 @@ const PageBG = ({children}) => {
   return (
     <View style={{backgroundColor: CLUEDIN_DARK_SCHEME.background, flex: 1}}>
       <ScrollView>{children}</ScrollView>
+    </View>
+  );
+};
+
+const PaywallComp = () => {
+  useEffect(() => {
+    loadPaywall();
+  }, []);
+
+  const loadPaywall = async () => {
+    try {
+      await presentPaywall();
+    } catch (error) {
+      console.error('Error presenting paywall:', error);
+    }
+  };
+
+  return (
+    <View
+      style={{
+        flex: 1,
+        backgroundColor: 'black',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}>
+      <Text style={{color: 'white', marginBottom: 20}}>
+        Please purchase the premium pack to continue.
+      </Text>
+      <Button title="Purchase Premium Pack" onPress={loadPaywall} />
     </View>
   );
 };

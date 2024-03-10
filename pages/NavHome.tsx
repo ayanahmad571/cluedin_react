@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {CLUEDIN_DARK_SCHEME} from '../utils/constants';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 const NavHome = ({route, navigation}) => {
   const renderBox = (title, chevron, isPremium, routeName = 'Soon') => {
@@ -32,25 +32,30 @@ const NavHome = ({route, navigation}) => {
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.title}>Pick a Journey</Text>
-      <ScrollView style={{flex: 1,}}>
+      <ScrollView style={{flex: 1}}>
         <Text style={styles.subject}>Our Classics</Text>
         <View style={styles.row}>
           {renderBox('Daily Trivia', 'calendar-number-sharp', false, 'Home')}
-          {renderBox('Suggestions', 'add-circle', false)}
+          {renderBox('Suggestions', 'add-circle', false, 'Suggestions')}
         </View>
         <View style={styles.row}>
-          {renderBox('Standard Offline Edition', 'cloud-download', false)}
-          {renderBox('Wallet', 'wallet', false)}
+          {renderBox(
+            'Community Trivia',
+            'globe-outline',
+            false,
+            'Community Trivia',
+          )}
+          {renderBox('Wallet', 'wallet', false, 'Wallet')}
         </View>
 
         <Text style={styles.subject}>CluedIn Premiums</Text>
         <View style={styles.row}>
           {renderBox('CluedIn Leagues', 'trophy', true)}
-          {renderBox('Community Trivia', 'globe-outline', true)}
+          {renderBox('Multi-Player', 'people', true)}
         </View>
         <View style={styles.row}>
           {renderBox('Multi-Player', 'people', true)}
-          {renderBox('Offline Trivia', 'cloud-download', true)}
+          {renderBox('Stats', 'trending-up', true)}
         </View>
 
         <Text style={styles.subject}>General Admin</Text>

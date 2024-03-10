@@ -11,6 +11,9 @@ import {CLUEDIN_DARK_SCHEME, CLUEDIN_THEME} from '../utils/constants';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import NewLoginUsername from './NewLoginUsername';
 import SoonPage from '../pages/SoonPage';
+import CommunityTriviaPage from '../pages/CommunityTriviaPage';
+import SuggestionsPage from '../pages/SuggestionsPage';
+import WalletPage from '../pages/WalletPage';
 
 const Tab = createBottomTabNavigator();
 
@@ -54,6 +57,7 @@ const LoggedInComponents = () => {
           } else if (route.name === 'Menu') {
             iconName = focused ? 'menu' : 'menu';
           } else {
+            iconName = focused ? 'menu' : 'menu';
           }
           // You can return any component that you like here!
           return (
@@ -100,6 +104,21 @@ const LoggedInComponents = () => {
       <Tab.Screen
         name="Soon"
         component={SoonPage}
+        options={{tabBarButton: () => null}}
+      />
+      <Tab.Screen
+        name="Community Trivia"
+        component={CommunityTriviaPage}
+        options={{tabBarButton: () => null}}
+      />
+      <Tab.Screen
+        name="Suggestions"
+        component={SuggestionsPage}
+        options={{tabBarButton: () => null}}
+      />
+      <Tab.Screen
+        name="Wallet"
+        component={WalletPage}
         options={{tabBarButton: () => null}}
       />
     </Tab.Navigator>
